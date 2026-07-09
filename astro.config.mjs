@@ -11,6 +11,9 @@ export default defineConfig({
       sidebar: [
         { label: '🏠 Home', link: '/' },
 
+        // Featured Mods (user guides)
+        { label: '🧩 Featured Mods', collapsed: false, items: [{ autogenerate: { directory: 'mods' } }] },
+
         // Game Model
         { label: '🌌 World',      collapsed: true, items: [{ autogenerate: { directory: 'game/world' } }] },
         { label: '🚀 Objects',    collapsed: true, items: [{ autogenerate: { directory: 'game/objects' } }] },
