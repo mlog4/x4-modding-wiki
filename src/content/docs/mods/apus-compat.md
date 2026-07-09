@@ -1,127 +1,105 @@
 ---
 title: Apus Compat Patch
-description: Full DeadAir Scripts integration for the Apus Stellar Treaty faction. XL expedition flagships, dynamic patrol / trader / miner fleets, full quota menu integration.
+description: Full DeadAir Scripts integration for the Apus Stellar Treaty faction. XL expedition flagships, dynamic patrols, full quota menu integration.
 ---
 
-Companion mod that lets the **Apus Stellar Treaty** faction (by Cyber1j1e) participate fully in **DeadAir Scripts**' Jobs — Expeditions AND Jobs — Situational Sector Threat (SST) systems alongside vanilla factions.
+Companion mod that lets the **Apus Stellar Treaty** faction (by Cyber1j1e) participate fully in **DeadAir Scripts**' Jobs — Expeditions AND Jobs — Situational Sector Threat (SST) systems alongside vanilla factions. Adds 28 job templates (1 expedition + 27 SST) that mirror DA's own vanilla-faction template shape.
 
-## What it does
+## Installation & configuration
 
-Without this patch, DA's Jobs systems only recognize vanilla + DLC + storyline factions. Apus has `tag.claimspace` but no DA-specific job tags — so DA's runtime skips it, the Jobs Quotas menu shows "No suitable ships available!", and no dynamic patrol / trader / miner ships spawn for the Apus faction.
+### Requirements
 
-This patch adds **28 job templates** that mirror DA's own vanilla-faction template shape:
-
-- **1 expedition job** — XL flagship with subordinate escort tree, `Patrol` default order
-- **12 patrol jobs** — Critical / Core / Border / Contested Sector Patrol × Small / Medium / Large Fleet
-- **9 escort jobs** — L destroyer, M frigate, S fighter subordinate templates × 3 fleet sizes
-- **6 economy jobs** — L / M Trader, L / M Solid Miner, L / M Gas Miner
-
-Once installed alongside DA + Apus:
-
-1. DA's runtime picks up the expedition template → Apus auto-added to `$DAJobsEXPFactions` → XL flagship starts building at Apus shipyards
-2. DA's SST library picks up the 10 role-tagged jobs → Apus gets full quota rows in the DA menu **Jobs → Jobs Quotas** with working Galaxy Quota / Sector Quota / Fleet Size sliders
-3. DA's runtime scheduler orders dynamic patrol / trader / miner ships from Apus shipyards on its 15-minute cycle
-
-## What you'll see in-game
-
-**Within ~15-30 minutes of a new game:**
-- Apus appears in Jobs Quotas menu with full quota rows (identical layout to Antigone / Argon)
-- Dynamic patrol ships (AST Interior Patrol Independence, AST Strategic Patrol Constellation, etc.) start spawning in Apus territory
-- Traders (AST Container Freighter Specter, AST Container Transporter Baldric) start their trade routes
-
-**After ~90 minutes to 2 hours:**
-- Apus XL Expedition Force flagship (Constellation / Asgard / Freyr / Carrier Freyr) spawns from an Apus shipyard
-- Fleet Commander requests escort subordinates
-- Full expedition fleet visible on the map, Patrolling Apus sectors
-
-Verified via 5.5-hour multi-mod soak on X4 9.0. 30 SST ships auto-ordered across all 10 role tags. Zero errors from this compat mod.
-
-## Requirements
-
-- **Apus Stellar Treaty** by Cyber1j1e — [Nexus](https://www.nexusmods.com/x4foundations/mods/2189) or [Steam Workshop ws_3751955071](https://steamcommunity.com/sharedfiles/filedetails/?id=3751955071) — **hard dependency**
-- **DeadAir Scripts** ([standard fork](/x4-modding-wiki/mods/deadair-scripts-fork/) or [No DA Wares fork](/x4-modding-wiki/mods/deadair-scripts-no-wares-fork/)) — recommended (compat is inert without it, but does not break anything)
+- **[Apus Stellar Treaty](https://www.nexusmods.com/x4foundations/mods/2189)** by Cyber1j1e — [Steam ws_3751955071](https://steamcommunity.com/sharedfiles/filedetails/?id=3751955071) — **hard dependency**
+- **DeadAir Scripts** ([standard fork](/x4-modding-wiki/mods/deadair-scripts-fork/) or [No DA Wares fork](/x4-modding-wiki/mods/deadair-scripts-no-wares-fork/)) — recommended (compat is inert without it)
 - **X4 Foundations 9.0** or newer
 
-## Installation
+### Install
 
-### Nexus (manual)
-1. Download `mlog_da_apus_compat_v2.0.0.zip` from Nexus
-2. Extract into `X4 Foundations/extensions/`
-3. Folder should be named `mlog_da_apus_compat`
-4. Launch X4 → Extensions menu → verify it's enabled
+- **Nexus (manual):** Download `mlog_da_apus_compat_v2.0.0.zip`, extract into `X4 Foundations/extensions/` (folder must be named `mlog_da_apus_compat`).
+- **Steam Workshop:** Subscribe to [ws_3760545874](https://steamcommunity.com/sharedfiles/filedetails/?id=3760545874). Steam auto-installs the Apus dependency.
 
-### Steam Workshop
-Subscribe to [ws_3760545874](https://steamcommunity.com/sharedfiles/filedetails/?id=3760545874). Steam handles the install; the mod auto-installs the Apus dependency too.
+### Verification
 
-## Verification
-
-**Right after loading a new game:**
+Right after loading a new game:
 
 1. Open DA menu → **Jobs → Jobs Quotas**
 2. Scroll to **Apus Stellar Treaty (AST)**
-3. You should see full quota rows: Critical / Core / Border / Contested Sector Patrol + L/M Trader + L/M Miner rows with working sliders
+3. Should show full quota rows (Critical / Core / Border / Contested Sector Patrol + L/M Trader + L/M Miner) with working sliders
 
-If you instead see **"No suitable ships available!"** — the compat mod is not loaded. Check that the folder is `X4 Foundations/extensions/mlog_da_apus_compat/content.xml` (not nested), and that it's enabled in the Extensions menu.
+If you see **"No suitable ships available!"** for AST — the compat mod is not loaded. Check that the folder is `X4 Foundations/extensions/mlog_da_apus_compat/content.xml` (not nested one level deeper), and that it's enabled in the Extensions menu.
 
-**After playing ~90 minutes:**
+### Configuration
 
-Property Owned filter → Apus faction → should show XL flagship + patrol destroyers + traders + miners in Apus sectors (The Ubica Sisters, Astesia, Astgenne).
+The compat mod itself has no settings — it registers jobs that DA controls. Adjust Apus's fleet sizes via the standard DA menu → Jobs Quotas — same sliders as for vanilla factions.
 
-## Configuration
+## Known conflicts
 
-The compat mod itself has no settings — it just registers jobs that DA controls.
+| With | Status | Notes |
+|------|--------|-------|
+| **Apus Stellar Treaty** (v3.0+) | ✅ Required | Hard dependency. |
+| **DeadAir Scripts** (either variant) | ✅ Yes | Full DA integration for Apus. |
+| **DeadAir Economy Overhaul** (either variant) | ✅ Yes | Apus stations get DA-Eco enhancements. |
+| **ETW Compat Patch** | ✅ Yes | Both compat mods coexist cleanly. |
+| **VRO 5.01** | ✅ Yes | Apus is Terran-race, works with VRO ship pool. |
+| **No known conflicts otherwise** | — | Compat mod is a small pure-XML addition; nothing to conflict with. |
 
-You can adjust Apus's fleet sizes via the standard DA menu → Jobs Quotas — same sliders as for vanilla factions:
+## Deep dive: functionality & game mechanics
 
-- **Galaxy Quota** — how many ships of this role Apus fields galaxy-wide
-- **Sector Quota** — how many per sector
-- **Fleet Size** (Small / Medium / Large) — subordinate group size
+### What the 28 job templates do
 
-## Compatibility
+**1 expedition job (`apus_stellar_treaty_expedition_DA`):**
+- Category: `[daexpedition]` tag, size `ship_xl`
+- Ship selector: `<select faction="apus_stellar_treaty" tags="[military]" size="ship_xl"/>` — picks from Apus's XL military hulls (Constellation, Asgard, Freyr, Carrier Freyr)
+- Subordinates: 2× destroyer escort, 2× frigate escort, 1× fighter carrier
+- Default order: Patrol, range `class.sector`
+- Quota: galaxy 1, maxgalaxy 1 (only ever one expedition alive at a time)
+- Location: `xu_ep2_universe_macro`, faction-owned space, relation self
 
-| Mod | Works? | Notes |
-|-----|--------|-------|
-| **Apus Stellar Treaty** (v3.0+) | ✅ Required | Hard dependency |
-| **DeadAir Scripts (standard fork)** | ✅ Yes | Full DA integration for Apus |
-| **DeadAir Scripts (No DA Wares fork)** | ✅ Yes | Full DA integration for Apus |
-| **DeadAir Economy Overhaul** (either variant) | ✅ Yes | Apus stations get DA-Eco enhancements |
-| **ETW Compat Patch** | ✅ Yes | Both compat mods can be installed side-by-side |
-| **VRO 5.01** | ✅ Yes | Compat with all-Terran-race ship pool |
+**12 patrol jobs** (Critical/Core/Border/Contested × Small/Medium/Large fleet sizes):
+- Critical + Contested use XL flagships from `[military]` tag pool
+- Core + Border use L destroyers from `[military, destroyer]` tag pool
+- Fleet sizes control subordinate quotas (Small = 1 L escort, Medium = 3 L + 9 M + 18 S, Large = 5 L + 15 M + 30 S)
 
-## Troubleshooting
+**9 escort jobs** — L destroyer, M frigate, S fighter, each × Small/Medium/Large fleet variants:
+- Used as subordinates by patrol + expedition jobs
+- Each has `subordinate="true"` modifier
+- Ships selected from Apus's own escort tags
 
-### "No suitable ships available!" for Apus
+**6 economy jobs** (L/M Trader, L/M Solid Miner, L/M Gas Miner):
+- L/M Trader — uses vanilla `all_container_terran` basket
+- L/M Solid Miner — mines minerals, uses `minerals` region basket
+- L/M Gas Miner — mines gases, uses `gases` region basket
 
-The compat mod isn't loaded. Check:
-- Folder is `X4 Foundations/extensions/mlog_da_apus_compat/content.xml`, not nested
-- Mod is enabled in Extensions menu
-- You have v2.0.0 of the compat (v1.0.0 only added the expedition job, not the SST jobs)
+### DA runtime integration
 
-### Apus expedition XL flagship hasn't spawned after 2 hours
+Once the compat mod is loaded, DA's runtime library discovers our jobs:
 
-Apus's economy needs time to build an XL-capable shipyard first. On a fresh new-game start, this usually takes ~90 min to 2 hours. If your galaxy is heavily populated by other factions competing for space, Apus may take longer.
+**LibraryJobsEXPCheckFactionsandJobs** — Runs on ~15 min tick. Scans all `tag.claimspace` factions for `[daexpedition]` jobs. Sees our Apus expedition template → adds `apus_stellar_treaty` to `$DAJobsEXPFactions` → activates the expedition job → Fleet Commander starts building XL flagship at next Apus shipyard.
 
-Check debug log for:
-```
-Apus Stellar Treaty Report: 1 Expedition Ship(s) Found.
-Fleet Commander Preparing: AST Expeditionary Force Constellation ...
-```
+**LibraryJobsSSTFactionSituationDebug** — Runs per-faction on regular tick. For each active claimspace faction (Apus qualifies), looks up jobs by tags `DACriticalTagapus_stellar_treaty`, `DACoreTagapus_stellar_treaty`, etc. Finds our 12 tagged jobs → populates `$DAJobsSSTJobSizeQuotas.{Apus}` with 10 role entries → Jobs Quotas menu shows AST with full quota rows.
 
-That confirms the expedition job is active and DA has queued the fleet build.
+**TimerJobsSSTOrderShips** — Runs on 15 min interval. Iterates SST factions, checks each faction's quotas vs actually-alive ship count per role, orders more ships from faction shipyards to close the gap. Apus ships get ordered through this pipeline.
 
-### Existing save — compat installed mid-save
+### What you'll see in-game
 
-Save-compatible. DA's runtime library discovers our new job templates on the normal 15-30 min cycle, then Apus starts populating. No need to start a new game (but a fresh start gives cleaner initial state and faster expedition XL spawn).
+**Within ~15-30 minutes of a new game:**
+- Apus appears in Jobs Quotas menu with full quota rows (identical layout to Antigone / Argon)
+- Dynamic patrol ships start spawning: AST Interior Patrol Independence, AST Strategic Patrol Constellation, AST Boundary Patrol Syn
+- Traders (AST Container Freighter Specter, AST Container Transporter Baldric) begin trade routes
+- Miners (AST M Mineral Miner Bolo, AST M Gas Miner Bolo Gas) appear in Apus territory
 
-## Building compat for other faction mods
+**After ~90 minutes to 2 hours:**
+- Apus XL Expedition Force flagship spawns from an Apus shipyard
+- Fleet Commander logs indicate escort subordinates being requested
+- Full expedition fleet visible on the map, Patrolling Apus sectors (The Ubica Sisters, Astesia, Astgenne)
 
-We built a Python generator tool that produces DA-compatible SST jobs from a small JSON config per faction. Takes ~30 minutes per new faction from download to deployed compat.
+### Reference soak numbers (X4 9.0, 5.5h play)
 
-If you want compat for another modded faction (The Ancients, Rise of the Ossian Raider, etc.), drop a request on the Nexus / Steam mod page comments and we'll build it as demand shows up.
+30 SST ships spawned for Apus across all 10 role tags. Zero errors in mod namespace.
 
 ## Links and source
 
-- **Nexus:** (new page)
+- **Nexus:** (new mod page)
 - **Steam Workshop:** [ws_3760545874](https://steamcommunity.com/sharedfiles/filedetails/?id=3760545874)
 - **GitHub:** [mlog4/deadair_scripts](https://github.com/mlog4/deadair_scripts) (compat mod source under `mlog_da_apus_compat/`)
 - **License:** GPL-3.0 (inherits from DA)

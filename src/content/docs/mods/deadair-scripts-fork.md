@@ -1,108 +1,102 @@
 ---
 title: DeadAir Scripts (mlog4 fork)
-description: 9.0-compatible fork of the classic DeadAir Dynamic Universe mod. Full feature set with dynamic modded-faction support in v2.0.0.
+description: 9.0-compatible fork of the classic DeadAir Dynamic Universe mod. Adds Dynamic War, Xenon Evolution, Jobs Expeditions and more. Full feature set with dynamic modded-faction support in v2.0.0.
 ---
 
-The mlog4 fork of the classic **DeadAir Scripts** (aka Dynamic Universe) by DeadAirRT. Maintained under DA's retirement GPL-3.0 grant, updated for X4 9.0 with all core features intact plus a new dynamic modded-faction support layer.
+The mlog4 fork of the classic **DeadAir Scripts** (aka Dynamic Universe) by DeadAirRT, maintained under DA's retirement GPL-3.0 grant. Updated for X4 9.0 with all core dynamic-universe features intact plus a new dynamic modded-faction layer that lets Apus, Eternal Twilight and other faction expansions plug straight into DA's expedition and SST systems.
 
-## What it does
+## Installation & configuration
 
-Adds a rich dynamic-universe layer on top of vanilla X4. The galaxy feels less static, factions react and shift over time, and long-term play develops in ways vanilla never quite delivered.
-
-### Core feature list
-
-| Feature | What it does |
-|---------|--------------|
-| **Dynamic War** | Periodic AI-to-AI relation shifts. Six event types from soft nudges to instant max-relation flips. Wars start, alliances form, and the political map genuinely changes across a long playthrough. |
-| **Dynamic News** | Logbook + notification feed for galaxy-scale events. Sector ownership shifts, big station events, notable relation changes get reported like actual news. |
-| **Xenon Evolution** | Xenon adaptively upgrade their ships over 10 levels × 6 categories. Late-game Xenon fields significantly tougher hulls, better shields, upgraded weapons. At L1/3/5 Xenon expand their shipyards. |
-| **Station Fill** | Top up trade stations, shipyards, and wharves at configurable intervals. Fixes vanilla's tendency to leave empty/half-empty stations sitting idle. |
-| **Jobs Expeditions** | Long-range attack fleets similar to Terran Interventions. XL flagships + escort trees launch from a faction's shipyards and go patrol distant sectors. |
-| **Jobs SST** (Situational Sector Threat) | Sectors classified as Critical / Core / Border / Contested. Fleet quotas per sector role, dynamically ordered from faction shipyards. |
-| **Blueprint Scanning** | Police assets scan enemy ships for blueprint fragments, awarded to the player after enough fragments accumulate. |
-| **In-game menu** | Every subsystem is toggleable and configurable via the DA Menu (accessed via SirNukes Mod Support APIs). |
-
-### NEW in v2.0.0 — Dynamic modded-faction support
-
-Prior versions of DA hardcoded 8 vanilla factions as expedition-eligible. v2.0.0 populates the Jobs Expeditions initial-list dynamically from all `tag.claimspace` factions — so modded factions (Apus, Eternal Twilight, Ancients, etc.) participate in the expedition system from turn 1 of a new game, as long as a companion compat mod provides the actual expedition job templates.
-
-Runtime library auto-adds and auto-removes factions based on `[daexpedition]` job availability. Combined with our companion compat mods:
-
-- **[Apus Compat Patch](/x4-modding-wiki/mods/apus-compat/)** — full DA integration for Apus Stellar Treaty
-- **[ETW Compat Patch](/x4-modding-wiki/mods/etw-compat/)** — full DA integration for all 3 ETW factions
-
-## Requirements
+### Requirements
 
 - **X4 Foundations 9.0** or newer
-- **SirNukes Mod Support APIs** — required for the DA menu ([Nexus](https://www.nexusmods.com/x4foundations/mods/503))
-- **DeadAir Economy Overhaul** (optional but recommended for the DA custom wares — schematics + labor contracts)
+- **[SirNukes Mod Support APIs](https://www.nexusmods.com/x4foundations/mods/503)** — required for the DA menu
+- **[DeadAir Economy Overhaul (mlog4 fork)](/x4-modding-wiki/mods/deadair-eco-fork/)** — optional but recommended companion
 - **All Egosoft DLCs** — all optional; mod adapts to what you have
 
-## Installation
+### Install
 
-### Nexus (manual)
-1. Download `deadair_scripts_v2.0.0.zip` from [Nexus mods/2205](https://www.nexusmods.com/x4foundations/mods/2205)
-2. Extract into `X4 Foundations/extensions/`
-3. Folder should be named `deadair_scripts`
-4. Launch X4 → Extensions menu → verify it's enabled
+- **Nexus (manual):** Download `deadair_scripts_v2.0.0.zip` from [mods/2205](https://www.nexusmods.com/x4foundations/mods/2205), extract into `X4 Foundations/extensions/` (folder must be named `deadair_scripts`).
+- **Steam Workshop:** Subscribe to [ws_3757960765](https://steamcommunity.com/sharedfiles/filedetails/?id=3757960765). Steam handles the install.
 
-### Steam Workshop
-Subscribe to [ws_3757960765](https://steamcommunity.com/sharedfiles/filedetails/?id=3757960765). Steam handles the install; the mod appears in the Extensions menu on next X4 launch.
+### Configuration
 
-## Configuration
+Launch a game and open **Main Menu → DA Menu** (icon appears once SirNukes API is loaded). Every subsystem is toggleable. Recommended defaults work for most players — leave the mod on default first, then adjust:
 
-Once installed, launch a game and open **Main Menu → DA Menu** (the icon appears once SirNukes API is loaded).
+- **Dynamic War → Event frequency** — how often AI relations shift
+- **Xenon Evolution → Level cap** — cap Xenon endgame growth (default 10, lower = milder mid/late-game)
+- **Station Fill → Cycle interval** — how often stations top up
+- **Jobs Quotas** — per-faction, per-role sliders for patrol / trader / miner fleet sizes
 
-### Recommended defaults (for most players)
+## Known conflicts
 
-Leave the mod on default. The gameplay is tuned for a slightly harder-than-vanilla experience without forcing changes. Everything can be adjusted later if needed.
+| With | Status | Notes |
+|------|--------|-------|
+| **Original DeadAir Scripts by DeadAirRT** | ❌ Conflict | This IS the fork; don't install both. Disable/remove upstream. |
+| **DeadAir Scripts (No DA Wares fork)** | ❌ Conflict | Alternative variant — pick one, not both. |
+| **X4-Reemergence** | ❌ Not yet | RE isn't on 9.0. Waiting on RE v1.9 update. |
+| **Everything else** | ✅ Compatible | VRO 5.01, SirNukes, DA Eco, Apus, ETW, Galactic Heroes, Zero-Transporter — all coexist cleanly. |
 
-### Common tweaks
+## Deep dive: functionality & game mechanics
 
-**Dynamic War → Event frequency slider** — controls how often AI relations change. Lower = more stable galaxy, higher = more chaos.
+### Dynamic War
 
-**Xenon Evolution → Level cap** — cap how high Xenon evolution goes. Default 10 gets endgame-level nasty; setting cap to 5 keeps mid-game feel.
+Periodic AI-to-AI relation shifts drive galaxy politics on their own. Six event types range from small nudges to instant max-relation flips.
 
-**Station Fill → Fill cycle interval** — how often stations top up. Faster = more spending, faster faction growth. Slower = economy takes longer to develop.
+**Effect over a long playthrough:** wars start, alliances form, and the political map genuinely changes. Instead of vanilla's largely-static faction relations, you'll see events like Antigone declaring war on Argon after 40 hours of tension, or Split forming an unexpected pact with Teladi. The event picker weights by proximity, existing relation state, and military strength (weaker factions bias toward making friends, stronger toward making enemies).
 
-**Jobs Quotas** — per-faction, per-role quotas for Critical / Core / Border / Contested Sector Patrols + L/M Traders + L/M Miners + L/M Gas Miners. Set higher galaxy quota / sector quota to see more traffic in the associated sectors.
+Controlled via DA Menu → Dynamic War → Event frequency + Excluded factions (some players prefer certain factions locked at their vanilla relations for narrative reasons).
 
-### Modded-faction quota rows
+### Dynamic News
 
-If you have Apus or ETW installed alongside their compat mods, their factions appear in Jobs Quotas menu with full quota rows just like vanilla factions. Move the sliders to tune fleet sizes per role.
+Logbook + notification feed for galaxy-scale events. Sector ownership shifts, major station events, notable relation changes get reported like actual news bulletins.
 
-If a modded faction shows **"No suitable ships available!"** — that means the compat mod for that faction isn't installed. Install the matching compat.
+Sits on the same DA Menu → Dynamic News toggle. Great for a chill/RP playstyle where you want the galaxy to feel alive without micromanaging.
 
-## Compatibility
+### Xenon Evolution
 
-| Mod | Works? | Notes |
-|-----|--------|-------|
-| **DeadAir Economy Overhaul** (standard fork) | ✅ Optimal | Full DA experience with custom wares |
-| **Variety and Rebalance Overhaul** (VRO 5.01) | ✅ Yes | Consider using the [No DA Wares fork](/x4-modding-wiki/mods/deadair-scripts-no-wares-fork/) instead if you don't want the DA custom wares |
-| **X4-Reemergence** | ❌ Not yet — RE isn't on 9.0 | Waiting on RE 1.9 update |
-| **Apus Stellar Treaty** | ✅ Yes — pair with [Apus Compat Patch](/x4-modding-wiki/mods/apus-compat/) | Full DA integration |
-| **Eternal Twilight Expansion** | ✅ Yes — pair with [ETW Compat Patch](/x4-modding-wiki/mods/etw-compat/) | Full DA integration |
-| **SirNukes Mod Support APIs** | ✅ Required | For DA menu |
-| **Galactic Heroes (mlog_heroes)** | ✅ Yes | Both mods can run simultaneously |
-| **Zero-Transporter (mlog_zt)** | ✅ Yes | No conflicts |
+Xenon adaptively upgrade their ships across 10 levels × 6 equipment categories (engines, ships, shields, weapons, missiles, eco). Each level increment adds better mods to Xenon-built ships. At levels 1, 3, and 5 the Xenon expand their shipyards with additional production modules.
 
-## Troubleshooting
+**Practical impact:** late-game Xenon fields significantly tougher hulls than vanilla. A level-8 Xenon K is noticeably harder than a fresh-spawned one. This keeps Xenon relevant as a threat past the early-game turret spam phase.
 
-### "Extension not showing in Extensions menu"
+Configurable via DA Menu → Xenon Evolution → Level cap (default 10, lower = milder endgame difficulty).
 
-Verify the mod folder is `X4 Foundations/extensions/deadair_scripts/content.xml` — not nested one level deeper (`.../deadair_scripts/deadair_scripts/content.xml`).
+### Station Fill
 
-### "MLOG_DA banner shows old build in log"
+Tops up trade stations, shipyards, and wharves at adjustable intervals. Fixes vanilla's tendency to leave stations sitting half-empty when faction economy stalls.
 
-X4 loads extensions at launch. If you replaced files after X4 was already open, you'll see the previous build's tag in the log. Exit X4 completely and relaunch to load the current build.
+Uses per-faction accounts (tracks each faction's spending) and per-station intelligence — critical wares get topped first, luxury wares last. Configurable fill floor / ceiling per ware category.
 
-### "No suitable ships available!" for a modded faction
+### Jobs Expeditions
 
-That specific faction doesn't have the DA-compat jobs installed. Install the matching compat mod (Apus, ETW, etc.), or verify the compat mod is present and enabled in the Extensions menu.
+Long-range attack fleets similar to Terran Interventions. An XL flagship + escort tree launches from a faction's shipyard and goes patrol distant sectors. Each faction gets one active expedition at a time (galaxy quota 1).
 
-### "Mid-save station enhancement not working"
+**v2.0.0 change:** the initial expedition-eligible faction list is now populated dynamically from all `tag.claimspace` factions instead of a hardcoded 8-vanilla list. Modded factions (Apus, Eternal Twilight, Ancients if you have compat) participate from turn 1 of a new game.
 
-DA Eco's storage / habitation / dock enhancements fire at station-creation time only. Existing stations in the save keep their vanilla-scale storage; only newly-built stations get the improvements. Mid-save is still worth adding — DA God keeps expanding NPC stations with new modules that DO get the enhancements.
+DA's runtime library auto-adds and removes factions based on `[daexpedition]` job availability. Companion compat mods provide the actual expedition job templates for modded factions:
+
+- **[Apus Compat Patch](/x4-modding-wiki/mods/apus-compat/)** — for Apus Stellar Treaty
+- **[ETW Compat Patch](/x4-modding-wiki/mods/etw-compat/)** — for all 3 Eternal Twilight factions
+
+### Jobs SST (Situational Sector Threat)
+
+Sectors classified as Critical / Core / Border / Contested. Each faction has fleet quotas per sector role — Critical sectors get heavier patrols than Border. DA runtime scheduler dynamically orders ships from faction shipyards to keep quotas met.
+
+**Per-faction menu:** DA Menu → Jobs → Jobs Quotas → scroll to each faction → adjust Galaxy Quota / Sector Quota / Fleet Size sliders for each role (Critical / Core / Border / Contested Sector Patrol + L/M Trader + L/M Miner + L/M Gas Miner).
+
+Higher galaxy quota = more traffic in that role's sectors. Higher fleet size = bigger subordinate groups per patrol.
+
+Modded factions appear in this menu with full quota rows only if a companion compat mod is installed. Without compat, the modded faction row shows "No suitable ships available!".
+
+### Blueprint Scanning
+
+Police assets scan enemy ships for blueprint fragments. Once a ship's blueprint accumulates enough fragments across scans, the blueprint is awarded to the player.
+
+Works with the vanilla `policeassetscannedship` engine signal. Fires when your police-tagged ship scans an enemy ship. Fragments per scan and required-total configurable per macro class.
+
+### In-game menu
+
+Every subsystem above is toggleable and configurable via the DA Menu (requires SirNukes Mod Support APIs). Save-safe — turning features on/off mid-save is fine.
 
 ## Links and source
 
