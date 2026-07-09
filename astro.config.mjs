@@ -6,63 +6,85 @@ export default defineConfig({
   base: '/x4-modding-wiki',
   integrations: [
     starlight({
-      title: 'X4 Modding Wiki (prototype)',
-      description: 'API reference + architectural overviews for X4 Foundations modders.',
+      title: 'X4 Modding Wiki',
+      description: 'API reference, architectural overviews, and tutorials for X4 Foundations modders.',
       sidebar: [
         { label: 'Home', link: '/' },
         {
-          label: 'API Reference',
+          label: '🎮 Game Model',
+          collapsed: false,
           items: [
-            { label: 'Overview', link: '/api/' },
             {
               label: '🌌 World',
-              items: [{ autogenerate: { directory: 'api/world' } }],
+              autogenerate: { directory: 'game/world' },
             },
             {
-              label: '🚀 Object types',
-              items: [{ autogenerate: { directory: 'api/objects' } }],
+              label: '🚀 Objects',
+              autogenerate: { directory: 'game/objects' },
             },
             {
               label: '🏴 Factions',
-              items: [{ autogenerate: { directory: 'api/factions' } }],
+              autogenerate: { directory: 'game/factions' },
             },
             {
               label: '💰 Economy',
-              items: [{ autogenerate: { directory: 'api/economy' } }],
+              autogenerate: { directory: 'game/economy' },
             },
             {
               label: '🎯 Behavior',
-              items: [{ autogenerate: { directory: 'api/behavior' } }],
+              autogenerate: { directory: 'game/behavior' },
             },
             {
-              label: '⚙️ MD Framework',
-              items: [{ autogenerate: { directory: 'api/md-framework' } }],
+              label: '👤 Characters',
+              autogenerate: { directory: 'game/characters' },
             },
             {
-              label: '🤖 Aiscript',
-              items: [{ autogenerate: { directory: 'api/aiscript' } }],
-            },
-            {
-              label: '📦 Data layer',
-              items: [{ autogenerate: { directory: 'api/data' } }],
-            },
-            {
-              label: '🖥️ UI / Lua',
-              items: [{ autogenerate: { directory: 'api/ui-lua' } }],
+              label: '🎬 Missions',
+              autogenerate: { directory: 'game/missions' },
             },
           ],
         },
         {
-          label: 'Architectural overviews',
-          link: '/overviews/',
+          label: '💻 Modding Languages',
+          collapsed: true,
+          items: [
+            {
+              label: '⚙️ MD Framework',
+              autogenerate: { directory: 'lang/md-framework' },
+            },
+            {
+              label: '🤖 AI Script',
+              autogenerate: { directory: 'lang/aiscript' },
+            },
+            {
+              label: '📦 Data Layer',
+              autogenerate: { directory: 'lang/data' },
+            },
+            {
+              label: '🖥️ UI / Lua',
+              autogenerate: { directory: 'lang/ui-lua' },
+            },
+          ],
         },
         {
-          label: 'Modding Wiki',
-          link: '/wiki/',
+          label: '📚 Architectural Overviews',
+          collapsed: true,
+          autogenerate: { directory: 'overviews' },
         },
         {
-          label: 'About',
-          link: '/about/',
+          label: '🌐 Vanilla Content',
+          collapsed: true,
+          autogenerate: { directory: 'vanilla-content' },
+        },
+        {
+          label: '📖 Modding Wiki',
+          collapsed: true,
+          autogenerate: { directory: 'wiki' },
+        },
+        {
+          label: 'ℹ️ About',
+          collapsed: true,
+          autogenerate: { directory: 'about' },
         },
       ],
     }),
