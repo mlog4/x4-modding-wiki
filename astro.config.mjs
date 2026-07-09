@@ -14,77 +14,44 @@ export default defineConfig({
           label: '🎮 Game Model',
           collapsed: false,
           items: [
-            {
-              label: '🌌 World',
-              autogenerate: { directory: 'game/world' },
-            },
-            {
-              label: '🚀 Objects',
-              autogenerate: { directory: 'game/objects' },
-            },
-            {
-              label: '🏴 Factions',
-              autogenerate: { directory: 'game/factions' },
-            },
-            {
-              label: '💰 Economy',
-              autogenerate: { directory: 'game/economy' },
-            },
-            {
-              label: '🎯 Behavior',
-              autogenerate: { directory: 'game/behavior' },
-            },
-            {
-              label: '👤 Characters',
-              autogenerate: { directory: 'game/characters' },
-            },
-            {
-              label: '🎬 Missions',
-              autogenerate: { directory: 'game/missions' },
-            },
+            { label: '🌌 World',      items: [{ autogenerate: { directory: 'game/world' } }] },
+            { label: '🚀 Objects',    items: [{ autogenerate: { directory: 'game/objects' } }] },
+            { label: '🏴 Factions',   items: [{ autogenerate: { directory: 'game/factions' } }] },
+            { label: '💰 Economy',    items: [{ autogenerate: { directory: 'game/economy' } }] },
+            { label: '🎯 Behavior',   items: [{ autogenerate: { directory: 'game/behavior' } }] },
+            { label: '👤 Characters', items: [{ autogenerate: { directory: 'game/characters' } }] },
+            { label: '🎬 Missions',   items: [{ autogenerate: { directory: 'game/missions' } }] },
           ],
         },
         {
           label: '💻 Modding Languages',
           collapsed: true,
           items: [
-            {
-              label: '⚙️ MD Framework',
-              autogenerate: { directory: 'lang/md-framework' },
-            },
-            {
-              label: '🤖 AI Script',
-              autogenerate: { directory: 'lang/aiscript' },
-            },
-            {
-              label: '📦 Data Layer',
-              autogenerate: { directory: 'lang/data' },
-            },
-            {
-              label: '🖥️ UI / Lua',
-              autogenerate: { directory: 'lang/ui-lua' },
-            },
+            { label: '⚙️ MD Framework', items: [{ autogenerate: { directory: 'lang/md-framework' } }] },
+            { label: '🤖 AI Script',    items: [{ autogenerate: { directory: 'lang/aiscript' } }] },
+            { label: '📦 Data Layer',   items: [{ autogenerate: { directory: 'lang/data' } }] },
+            { label: '🖥️ UI / Lua',    items: [{ autogenerate: { directory: 'lang/ui-lua' } }] },
           ],
         },
         {
           label: '📚 Architectural Overviews',
           collapsed: true,
-          autogenerate: { directory: 'overviews' },
+          items: [{ autogenerate: { directory: 'overviews' } }],
         },
         {
           label: '🌐 Vanilla Content',
           collapsed: true,
-          autogenerate: { directory: 'vanilla-content' },
+          items: [{ autogenerate: { directory: 'vanilla-content' } }],
         },
         {
           label: '📖 Modding Wiki',
           collapsed: true,
-          autogenerate: { directory: 'wiki' },
+          items: [{ autogenerate: { directory: 'wiki' } }],
         },
         {
           label: 'ℹ️ About',
           collapsed: true,
-          autogenerate: { directory: 'about' },
+          items: [{ autogenerate: { directory: 'about' } }],
         },
       ],
     }),
