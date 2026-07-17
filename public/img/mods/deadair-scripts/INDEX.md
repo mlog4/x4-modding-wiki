@@ -18,10 +18,19 @@ Master reference for every screenshot used on `mods/deadair-scripts-fork.md`. Up
 
 ## Live screenshots
 
-| Slug | Original file | What it shows | Doc section | Notes |
-|------|--------------|---------------|-------------|-------|
-| `menu-root.jpg` | `20260717103654_1.jpg` | DA Mod Main Menu top-level list — 13 items (Configuration Presets, Dynamic War, Dynamic News, Evolution, Fill, Jobs, Gate, God, Blueprint Analysis, Trade Optimizer, Extension, Cheat, Information Menus) | [In-game menu tour](../../../src/content/docs/mods/deadair-scripts-fork.md#in-game-menu-tour) | Uncropped; menu takes upper-right third. Could crop to that region for web. |
-| `menu-presets.jpg` | `20260717103724_1.jpg` | Configuration Presets submenu — "Currently applied: (none)" + 3 Built-in presets rows (All disabled, Debug verbose logging, Default recommended) each with Apply button + explanation footer | [Presets system](../../../src/content/docs/mods/deadair-scripts-fork.md#presets-system) | Uncropped; same layout as menu-root. |
+| Slug | Original file | What it shows | Doc section |
+|------|--------------|---------------|-------------|
+| `menu-root.jpg` | `20260717103654_1.jpg` | DA Mod Main Menu top-level list — 13 items | Overview → In-game menu tour |
+| `menu-presets.jpg` | `20260717103724_1.jpg` | Mlog: Configuration Presets submenu — 3 built-in presets with Apply buttons | configuration/presets |
+| `menu-dynamic-war.jpg` | `20260717141123_1.jpg` | DA Dynamic War main menu — 20 options + 6 sub-menu list | configuration/dynamic-war (index) |
+| `dw-increase-relations.jpg` | `20260717141204_1.jpg` | Increase Relations — Buy +5 Relation via Diplomatic Favors | configuration/dynamic-war/increase-relations |
+| `dw-decrease-relations.jpg` | `20260717141210_1.jpg` | Decrease Relations — Buy -5 Relation via Diplomatic Favors | configuration/dynamic-war/decrease-relations |
+| `dw-unlock-relations.jpg` | `20260717141216_1.jpg` | Unlock Relations — Locked/Unlocked per faction | configuration/dynamic-war/unlock-relations |
+| `dw-ignored-factions.jpg` | `20260717141223_1.jpg` | DW Ignored Factions — Allowed/Ignored per faction (with informational rows) | configuration/dynamic-war/ignored-factions |
+| `dw-sector-faction-logic.jpg` | `20260717141314_1.jpg` | Sector Faction Logic Menu — per-sector Enabled/Disabled with cluster warning tooltip | configuration/dynamic-war/sector-faction-logic |
+| `dw-war-history.jpg` | `20260717141321_1.jpg` | War History — statistics per faction pair (Fatigue, Score, ships/stations killed by class) | configuration/dynamic-war/war-history |
+
+All screenshots are Steam 4K captures (3818x2032), uncropped. Web-optimization pass is a follow-up task.
 
 ---
 
