@@ -12,11 +12,9 @@ Every DA Menu subsystem has its own reference page. The order below matches the 
 3. **[DA Dynamic News](./dynamic-news/)** — logbook + notification feed for galaxy events.
 4. **[DA Evolution](./evolution/)** — Xenon adaptive upgrades + job pool sizing.
 5. **[DA Fill](./fill/)** — trade station / wharf / shipyard restocking.
-6. **[DA Jobs](./jobs/)** — parent submenu for Expeditions / SST / ST / PST.
-   - **[Jobs Expeditions](./jobs-expeditions/)**
-   - **[Jobs SST (Situational Sector Threat)](./jobs-sst/)**
-   - **[Station Traders (ST)](./jobs-station-traders/)**
-   - **[Prod Station Traders (PST)](./jobs-prod-station-traders/)**
+6. **[DA Jobs](./jobs/)** — parent submenu for Expeditions + Smart Sector Tags (SST) + 2 sub-menus.
+   - **[Jobs Quotas](./jobs/quotas/)** — per-faction fleet quotas.
+   - **[Vanilla Spawned Jobs Menu](./jobs/vanilla-spawned/)** — vanilla-job whitelist toggle.
 7. **[DA Gate](./gate/)** — rogue-gate spawn behavior.
 8. **[DA God](./god/)** — faction station-building AI overrides.
 9. **[DA Blueprint Analysis](./blueprint-analysis/)** — police-scan blueprint acquisition.

@@ -53,10 +53,8 @@ const daScriptsForkSidebar = {
           collapsed: true,
           items: [
             { slug: 'mods/deadair-scripts-fork/configuration/jobs', label: 'Overview' },
-            { slug: 'mods/deadair-scripts-fork/configuration/jobs-expeditions' },
-            { slug: 'mods/deadair-scripts-fork/configuration/jobs-sst' },
-            { slug: 'mods/deadair-scripts-fork/configuration/jobs-station-traders' },
-            { slug: 'mods/deadair-scripts-fork/configuration/jobs-prod-station-traders' },
+            { slug: 'mods/deadair-scripts-fork/configuration/jobs/quotas' },
+            { slug: 'mods/deadair-scripts-fork/configuration/jobs/vanilla-spawned' },
           ],
         },
         { slug: 'mods/deadair-scripts-fork/configuration/gate' },

@@ -29,6 +29,9 @@ Master reference for every screenshot used on `mods/deadair-scripts-fork.md`. Up
 | `fill-faction-menu.jpg` | `20260717154633_1.jpg` | Fill Faction Menu — 22 factions × 2 toggle columns (Trading Station + Ship Building Station) | configuration/fill/faction-menu |
 | `fill-statistics-1.jpg` | `20260717154717_1.jpg` | Fill Statistics Menu — top half (Faction Account balances + start of Wares Added/Removed) | configuration/fill/statistics |
 | `fill-statistics-2.jpg` | `20260717154724_1.jpg` | Fill Statistics Menu — bottom half (rest of Wares Added/Removed + Ships Modified table) | configuration/fill/statistics |
+| `menu-jobs.jpg` | `20260717155834_1.jpg` | DA Jobs main menu — 6 options (Enable Expeditions/SST/Remove Exclusivity + 3 debug flags) + 2 sub-menu links | configuration/jobs (index) |
+| `jobs-quotas.jpg` | `20260717155843_1.jpg` | Jobs Quotas — Antigone Republic panel with all 10 quota rows (4 Patrol + L/M Trader + L/M Mineral + L/M Gas Miner) + start of Argon Federation panel | configuration/jobs/quotas |
+| `jobs-vanilla-spawned.jpg` | `20260717155906_1.jpg` | Vanilla Spawned Jobs Menu — 15 visible rows of the 22-entry whitelist (Hatikvah/Scale Plate/Buccaneers/Kha'ak) | configuration/jobs/vanilla-spawned |
 | `dw-increase-relations.jpg` | `20260717141204_1.jpg` | Increase Relations — Buy +5 Relation via Diplomatic Favors | configuration/dynamic-war/increase-relations |
 | `dw-decrease-relations.jpg` | `20260717141210_1.jpg` | Decrease Relations — Buy -5 Relation via Diplomatic Favors | configuration/dynamic-war/decrease-relations |
 | `dw-unlock-relations.jpg` | `20260717141216_1.jpg` | Unlock Relations — Locked/Unlocked per faction | configuration/dynamic-war/unlock-relations |
@@ -53,10 +56,6 @@ Reference list — user shoots as they play through each menu. Slug ready in doc
 | `menu-evolution.jpg` | DA Evolution submenu — main toggles + level cap | [Xenon Evolution](#xenon-evolution) |
 | `menu-evolution-rates.jpg` | DA Evolution → Job Rate sliders | [Xenon Evolution — rates](#job-rate-multipliers) |
 | `menu-fill.jpg` | DA Fill submenu | [Station Fill](#station-fill-da-fill) |
-| `menu-jobs.jpg` | DA Jobs — root submenu list (should reveal expedition/SST/quotas/ST/PST layout) | [Jobs](#da-jobs) — |
-| `menu-jobs-quotas-root.jpg` | DA Jobs → Quotas — list of factions | [Jobs SST](#jobs-sst-situational-sector-threat) |
-| `menu-jobs-quotas-argon.jpg` | DA Jobs → Quotas → Argon — full quota-slider list | [Jobs SST — per-faction quotas](#per-faction-quotas) |
-| `menu-jobs-quotas-apus.jpg` | DA Jobs → Quotas → Apus (if compat mod installed) | [Jobs SST — per-faction quotas](#per-faction-quotas) |
 | `menu-gate.jpg` | DA Gate submenu | [Gates (DA Gate)](#gates-da-gate) |
 | `menu-god.jpg` | DA God submenu — all station-creation sliders | [God (Station Creation)](#god-station-creation) |
 | `menu-blueprint.jpg` | DA Blueprint Analysis submenu | [Blueprint Scanning (DA Blueprint Analysis)](#blueprint-scanning-da-blueprint-analysis) |
@@ -87,10 +86,11 @@ Reference list — user shoots as they play through each menu. Slug ready in doc
 
 ## Nested question marks
 
-Items I documented but haven't seen a top-level menu entry for. Might be nested under DA Jobs or Information Menus — need to verify:
+Items I documented but haven't seen a top-level menu entry for. Might be nested under DA Information Menus or somewhere else — need to verify:
 
 - **UI settings** (`UI_*` fields) — where does the sub-menu live? Nested under Information? Or missing UI?
-- **Station Traders (ST)** — separate submenu? Nested under DA Jobs?
-- **Prod Station Traders (PST)** — same question.
 
-Once we open DA Jobs and DA Information Menus in-game and confirm, update this file + fix the doc's cross-references.
+**Resolved 2026-07-17 (DA Jobs screenshots):**
+- ~~Station Traders (ST)~~ — confirmed **MD-only, no UI**. Documented as "Related subsystems" inside `configuration/jobs/index.md`.
+- ~~Prod Station Traders (PST)~~ — confirmed **MD-only, no UI**. Same treatment.
+- DA Jobs sub-menus are only Jobs Quotas + Vanilla Spawned Jobs Menu (2, not 4-5 as I guessed).
