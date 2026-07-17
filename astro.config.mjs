@@ -66,7 +66,24 @@ const daScriptsForkSidebar = {
             { slug: 'mods/deadair-scripts-fork/configuration/god/quotas' },
           ],
         },
-        { slug: 'mods/deadair-scripts-fork/configuration/blueprint-analysis' },
+        {
+          label: 'DA Blueprint Analysis',
+          collapsed: true,
+          items: [
+            { slug: 'mods/deadair-scripts-fork/configuration/blueprint-analysis', label: 'Overview' },
+            {
+              label: 'Progress Menus',
+              collapsed: true,
+              items: [
+                { slug: 'mods/deadair-scripts-fork/configuration/blueprint-analysis/progress-menus', label: 'Overview' },
+                { slug: 'mods/deadair-scripts-fork/configuration/blueprint-analysis/progress-menus/station-modules' },
+                { slug: 'mods/deadair-scripts-fork/configuration/blueprint-analysis/progress-menus/ships' },
+                { slug: 'mods/deadair-scripts-fork/configuration/blueprint-analysis/progress-menus/equipment' },
+                { slug: 'mods/deadair-scripts-fork/configuration/blueprint-analysis/progress-menus/misc' },
+              ],
+            },
+          ],
+        },
         { slug: 'mods/deadair-scripts-fork/configuration/trade-optimizer' },
         { slug: 'mods/deadair-scripts-fork/configuration/extension' },
         { slug: 'mods/deadair-scripts-fork/configuration/cheat' },

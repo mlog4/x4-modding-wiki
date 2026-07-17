@@ -35,6 +35,12 @@ Master reference for every screenshot used on `mods/deadair-scripts-fork.md`. Up
 | `menu-gate.jpg` | `20260717161756_1.jpg` | DA Gate main menu — 3 options + 8 Jump Gate connection rows (all Inactive) | configuration/gate |
 | `menu-god.jpg` | `20260717162642_1.jpg` | DA God main menu — 9 options + Shortcut section + God Quotas sub-menu link | configuration/god (index) |
 | `god-quotas.jpg` | `20260717162645_1.jpg` | God Quotas — Antigone Republic panel with all 33 wares listed (2-33 modules each) + start of Argon Federation panel | configuration/god/quotas |
+| `menu-blueprint.jpg` | `20260717164035_1.jpg` | DA Blueprint Analysis main menu — 2 options + Scan Settings 34-class table + Progress Menus link | configuration/blueprint-analysis (index) |
+| `bp-progress-menus.jpg` | `20260717164100_1.jpg` | Progress Menus root — 4 sub-menu links (Station Modules / Ships / Equipment / Misc) | configuration/blueprint-analysis/progress-menus (index) |
+| `bp-station-modules.jpg` | `20260717164048_1.jpg` | BP Progress → Station Modules — Pier + Dock Area + start of Production Modules sections (with 4 completed rows) | configuration/blueprint-analysis/progress-menus/station-modules |
+| `bp-ships.jpg` | `20260717164051_1.jpg` | BP Progress → Ships — XS Ships + start of S Ships (all 0/N — no ship blueprints completed yet) | configuration/blueprint-analysis/progress-menus/ships |
+| `bp-equipment.jpg` | `20260717164055_1.jpg` | BP Progress → Equipment — Missile Turrets + start of Non-Missile Turrets sections | configuration/blueprint-analysis/progress-menus/equipment |
+| `bp-misc.jpg` | `20260717164211_1.jpg` | BP Progress → Misc — 9 entries with Venture Platform + Wide Area Sensor Array completed | configuration/blueprint-analysis/progress-menus/misc |
 | `dw-increase-relations.jpg` | `20260717141204_1.jpg` | Increase Relations — Buy +5 Relation via Diplomatic Favors | configuration/dynamic-war/increase-relations |
 | `dw-decrease-relations.jpg` | `20260717141210_1.jpg` | Decrease Relations — Buy -5 Relation via Diplomatic Favors | configuration/dynamic-war/decrease-relations |
 | `dw-unlock-relations.jpg` | `20260717141216_1.jpg` | Unlock Relations — Locked/Unlocked per faction | configuration/dynamic-war/unlock-relations |
@@ -59,7 +65,6 @@ Reference list — user shoots as they play through each menu. Slug ready in doc
 | `menu-evolution.jpg` | DA Evolution submenu — main toggles + level cap | [Xenon Evolution](#xenon-evolution) |
 | `menu-evolution-rates.jpg` | DA Evolution → Job Rate sliders | [Xenon Evolution — rates](#job-rate-multipliers) |
 | `menu-fill.jpg` | DA Fill submenu | [Station Fill](#station-fill-da-fill) |
-| `menu-blueprint.jpg` | DA Blueprint Analysis submenu | [Blueprint Scanning (DA Blueprint Analysis)](#blueprint-scanning-da-blueprint-analysis) |
 | `menu-trade-optimizer.jpg` | Mlog Trade Optimizer submenu | [Trade Optimizer](#trade-optimizer) |
 | `menu-extension.jpg` | Mlog: Extension submenu — all Ext_* sliders | [Extension](#extension) |
 | `menu-cheat.jpg` | Mlog: Cheat submenu — Observer Satellite button + any other cheat toggles | [Cheat Menu](#cheat-menu) |

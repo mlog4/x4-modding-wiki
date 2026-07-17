@@ -18,7 +18,12 @@ Every DA Menu subsystem has its own reference page. The order below matches the 
 7. **[DA Gate](./gate/)** — player control over dormant jump gates.
 8. **[DA God](./god/)** — faction station-building AI (module quotas + expansion).
    - **[God Quotas](./god/quotas/)** — per-faction per-ware module targets.
-9. **[DA Blueprint Analysis](./blueprint-analysis/)** — police-scan blueprint acquisition.
+9. **[DA Blueprint Analysis](./blueprint-analysis/)** — police-scan blueprint acquisition + 34-class scan-requirement table.
+   - **[Progress Menus](./blueprint-analysis/progress-menus/)** — read-only viewer hub.
+     - [Station Modules](./blueprint-analysis/progress-menus/station-modules/)
+     - [Ships](./blueprint-analysis/progress-menus/ships/)
+     - [Equipment](./blueprint-analysis/progress-menus/equipment/)
+     - [Misc](./blueprint-analysis/progress-menus/misc/)
 10. **[Mlog Trade Optimizer](./trade-optimizer/)** — ware-price top-up for factories and trade stations.
 11. **[Mlog: Extension](./extension/)** — universe-expansion targeting.
 12. **[Mlog: Cheat](./cheat/)** — developer / testing menu (Observer Satellite spawner).
