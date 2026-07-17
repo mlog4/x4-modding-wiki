@@ -39,7 +39,15 @@ const daScriptsForkSidebar = {
             { slug: 'mods/deadair-scripts-fork/configuration/evolution/xenon-ship-mods' },
           ],
         },
-        { slug: 'mods/deadair-scripts-fork/configuration/fill' },
+        {
+          label: 'DA Fill',
+          collapsed: true,
+          items: [
+            { slug: 'mods/deadair-scripts-fork/configuration/fill', label: 'Overview' },
+            { slug: 'mods/deadair-scripts-fork/configuration/fill/faction-menu' },
+            { slug: 'mods/deadair-scripts-fork/configuration/fill/statistics' },
+          ],
+        },
         {
           label: 'DA Jobs',
           collapsed: true,
