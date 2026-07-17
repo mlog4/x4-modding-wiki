@@ -15,8 +15,9 @@ Every DA Menu subsystem has its own reference page. The order below matches the 
 6. **[DA Jobs](./jobs/)** — parent submenu for Expeditions + Smart Sector Tags (SST) + 2 sub-menus.
    - **[Jobs Quotas](./jobs/quotas/)** — per-faction fleet quotas.
    - **[Vanilla Spawned Jobs Menu](./jobs/vanilla-spawned/)** — vanilla-job whitelist toggle.
-7. **[DA Gate](./gate/)** — rogue-gate spawn behavior.
-8. **[DA God](./god/)** — faction station-building AI overrides.
+7. **[DA Gate](./gate/)** — player control over dormant jump gates.
+8. **[DA God](./god/)** — faction station-building AI (module quotas + expansion).
+   - **[God Quotas](./god/quotas/)** — per-faction per-ware module targets.
 9. **[DA Blueprint Analysis](./blueprint-analysis/)** — police-scan blueprint acquisition.
 10. **[Mlog Trade Optimizer](./trade-optimizer/)** — ware-price top-up for factories and trade stations.
 11. **[Mlog: Extension](./extension/)** — universe-expansion targeting.

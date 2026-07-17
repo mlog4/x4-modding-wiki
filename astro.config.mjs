@@ -58,7 +58,14 @@ const daScriptsForkSidebar = {
           ],
         },
         { slug: 'mods/deadair-scripts-fork/configuration/gate' },
-        { slug: 'mods/deadair-scripts-fork/configuration/god' },
+        {
+          label: 'DA God',
+          collapsed: true,
+          items: [
+            { slug: 'mods/deadair-scripts-fork/configuration/god', label: 'Overview' },
+            { slug: 'mods/deadair-scripts-fork/configuration/god/quotas' },
+          ],
+        },
         { slug: 'mods/deadair-scripts-fork/configuration/blueprint-analysis' },
         { slug: 'mods/deadair-scripts-fork/configuration/trade-optimizer' },
         { slug: 'mods/deadair-scripts-fork/configuration/extension' },
