@@ -23,6 +23,7 @@ Master reference for every screenshot used on `mods/deadair-scripts-fork.md`. Up
 | `menu-root.jpg` | `20260717103654_1.jpg` | DA Mod Main Menu top-level list — 13 items | Overview → In-game menu tour |
 | `menu-presets.jpg` | `20260717103724_1.jpg` | Mlog: Configuration Presets submenu — 3 built-in presets with Apply buttons | configuration/presets |
 | `menu-dynamic-war.jpg` | `20260717141123_1.jpg` | DA Dynamic War main menu — 20 options + 6 sub-menu list | configuration/dynamic-war (index) |
+| `menu-dynamic-news.jpg` | `20260717151229_1.jpg` | DA Dynamic News main menu — 7 options + embedded Recent News feed (12+ live events visible) | configuration/dynamic-news |
 | `dw-increase-relations.jpg` | `20260717141204_1.jpg` | Increase Relations — Buy +5 Relation via Diplomatic Favors | configuration/dynamic-war/increase-relations |
 | `dw-decrease-relations.jpg` | `20260717141210_1.jpg` | Decrease Relations — Buy -5 Relation via Diplomatic Favors | configuration/dynamic-war/decrease-relations |
 | `dw-unlock-relations.jpg` | `20260717141216_1.jpg` | Unlock Relations — Locked/Unlocked per faction | configuration/dynamic-war/unlock-relations |
