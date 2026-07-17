@@ -32,6 +32,7 @@ Master reference for every screenshot used on `mods/deadair-scripts-fork.md`. Up
 | `menu-jobs.jpg` | `20260717155834_1.jpg` | DA Jobs main menu — 6 options (Enable Expeditions/SST/Remove Exclusivity + 3 debug flags) + 2 sub-menu links | configuration/jobs (index) |
 | `jobs-quotas.jpg` | `20260717155843_1.jpg` | Jobs Quotas — Antigone Republic panel with all 10 quota rows (4 Patrol + L/M Trader + L/M Mineral + L/M Gas Miner) + start of Argon Federation panel | configuration/jobs/quotas |
 | `jobs-vanilla-spawned.jpg` | `20260717155906_1.jpg` | Vanilla Spawned Jobs Menu — 15 visible rows of the 22-entry whitelist (Hatikvah/Scale Plate/Buccaneers/Kha'ak) | configuration/jobs/vanilla-spawned |
+| `menu-gate.jpg` | `20260717161756_1.jpg` | DA Gate main menu — 3 options + 8 Jump Gate connection rows (all Inactive) | configuration/gate |
 | `dw-increase-relations.jpg` | `20260717141204_1.jpg` | Increase Relations — Buy +5 Relation via Diplomatic Favors | configuration/dynamic-war/increase-relations |
 | `dw-decrease-relations.jpg` | `20260717141210_1.jpg` | Decrease Relations — Buy -5 Relation via Diplomatic Favors | configuration/dynamic-war/decrease-relations |
 | `dw-unlock-relations.jpg` | `20260717141216_1.jpg` | Unlock Relations — Locked/Unlocked per faction | configuration/dynamic-war/unlock-relations |
@@ -56,7 +57,6 @@ Reference list — user shoots as they play through each menu. Slug ready in doc
 | `menu-evolution.jpg` | DA Evolution submenu — main toggles + level cap | [Xenon Evolution](#xenon-evolution) |
 | `menu-evolution-rates.jpg` | DA Evolution → Job Rate sliders | [Xenon Evolution — rates](#job-rate-multipliers) |
 | `menu-fill.jpg` | DA Fill submenu | [Station Fill](#station-fill-da-fill) |
-| `menu-gate.jpg` | DA Gate submenu | [Gates (DA Gate)](#gates-da-gate) |
 | `menu-god.jpg` | DA God submenu — all station-creation sliders | [God (Station Creation)](#god-station-creation) |
 | `menu-blueprint.jpg` | DA Blueprint Analysis submenu | [Blueprint Scanning (DA Blueprint Analysis)](#blueprint-scanning-da-blueprint-analysis) |
 | `menu-trade-optimizer.jpg` | Mlog Trade Optimizer submenu | [Trade Optimizer](#trade-optimizer) |
