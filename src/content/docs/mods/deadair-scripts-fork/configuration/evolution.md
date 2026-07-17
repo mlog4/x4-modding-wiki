@@ -1,55 +1,100 @@
 ---
 title: DA Evolution
-description: Xenon adaptive equipment upgrades and shipyard expansion. 10 levels × 6 equipment categories driven by player military strength vs Xenon losses.
+description: Xenon adaptive equipment upgrades + shipyard/wharf module growth per level + Xenon Fleet jobs. Includes live level status and Fleet Size selector.
 sidebar:
   order: 4
 ---
 
-The Xenon evolution engine. Xenon adaptively upgrade their ships across 10 levels × 6 equipment categories (engines, ship mods, shields, weapons, missiles, eco). At certain levels the Xenon also expand their production capacity through shipyard extensions.
+The Xenon evolution engine. Xenon adaptively upgrade their ships across 10 levels of equipment mods (engines, ship mods, shields, weapons, missiles, eco). Every level unlock spawns extra shipyard/wharf modules — the growth rates below control which module types grow how fast. A separate **Xenon Fleets** job pool spawns dedicated attack fleets at configurable size, tracked live in the same menu.
+
+## In-game view
+
+![DA Evolution — Options section on top + Mlog Xenon Growth Rates section below](/x4-modding-wiki/img/mods/deadair-scripts/menu-evolution.jpg)
+
+Layout:
+
+- **`DA Evolution Options`** — 11 fields covering master toggles, interval, level cap, Fleet Size selector, and live status displays.
+- **`Mlog: Xenon Growth Rates (per Evolution level, per xen shipyard/wharf)`** — 5 growth-rate sliders that determine what modules the Xenon add to their shipyards/wharfs each level.
 
 ## Mechanic
 
-Every `EvoMain_Interval` minutes DA evaluates player military strength and Xenon losses. Losses accrue "evo points". When accumulated points cross a level threshold, Xenon unlock the next tier of equipment mods across all six categories. Newly-built Xenon ships from that point forward receive the new mods automatically via `apply_equipment_mods`.
+Every `Evolution Interval` minutes DA evaluates Xenon losses vs player military strength. Loss data accumulates "evo points". When points cross a level threshold, the level counter increments and:
 
-At levels **1, 3, and 5** the Xenon get additional wharf/shipyard modules for storage / defence / solar / build / miner. Which slots grow depends on the `Evo_*Rate` sliders.
+1. **Equipment mods unlock** — newly built Xenon ships from that point forward receive the next tier of mods across all six categories.
+2. **Shipyard/wharf modules spawn** — the `Xenon Growth Rates` fire, adding N storage / defence / solar / build / miner-related modules per level per yard.
+3. **Xenon Fleet pool grows** — if `Enable Evolution Xenon Fleets` is on, up to `Maximum Xenon Fleets Added` extra attack fleets can spawn at the configured Fleet Size.
 
-**Note on XP:** Xenon evolution points accrue on **kills only**, not damage. Ship-mode damage without a kill = no XP. See [Kill-based Xenon Evolution XP](../../mechanics/#kill-based-xenon-evolution-xp).
+The menu doubles as a **live status display** — you can see the current level, the pending build queue, and how many fleets are already active without leaving the options screen.
 
-> **📷 Screenshot needed:** DA Evolution submenu (main toggles + level cap).
-> _File: `menu-evolution.jpg`_
+## DA Evolution Options
 
-> **📷 Screenshot needed:** DA Evolution → Job Rate sliders (Storage / Defence / Solar / Build / Miner).
-> _File: `menu-evolution-rates.jpg`_
-
-## Main toggles
+### Master toggles
 
 | Setting | Default | Effect |
 |---|---|---|
-| `EvoMain_Enable` | `true` | Master toggle. |
-| `EvoMain_Interval` | `240` (min = 4h game time) | How often DA re-evaluates the Xenon level. Lower = faster escalation. |
-| `EvoMain_PlayerMaxLevel` | `10` | Hard cap on Xenon evolution level (1-10). Lower for a milder endgame. |
-| `EvoMain_EnableJobs` | `true` | Allow the Xenon **job pool size** to grow with level. Off = level up equipment but not fleet size. |
-| `EvoMain_MaxXenonJobs` | `10` | Multiplier for the Xenon galaxy quota. Each Xenon level adds this many to the pool. |
-| `EvoMain_EnableUpgradeStations` | `true` | Allow Xenon shipyards to expand modules at levels 1/3/5. Off = fixed shipyard size. |
-| `EvoMain_EnableFastOrder` | `true` | Fast-track new Xenon ships from shipyard queue (skip normal build backlog if already-tier-appropriate). |
-| `EvoMain_DetailedDebug` | `false` | Verbose `[EVOLUTION]` log lines. |
+| **Enable Evolution** | `Enabled` | Master toggle for the whole system. |
+| **Enable Evolution Xenon Fleets** | `Enabled` | Allow the Xenon Fleet job pool to grow with level. Off = level up equipment/modules but not fleet size. |
+| **Evolution Interval** | `240 min` | How often DA re-evaluates the Xenon level. Lower = faster escalation. |
 
-## Job rate multipliers (`Evo_*Rate`)
-
-Controls which shipyard modules the Xenon build during level-1/3/5 expansions. These are weight ratios — the higher a rate, the more of that module category the Xenon add.
+### Level cap and Fleet cap
 
 | Setting | Default | Effect |
 |---|---|---|
-| `Evo_StorageRate` | `1` | Storage modules (holds unfinished ship parts). |
-| `Evo_DefenceRate` | `1` | Defence modules (turret platforms on the shipyard). |
-| `Evo_SolarRate` | `2` | Solar panels (energy production for the yard). |
-| `Evo_BuildRate` | `1` | Build modules (ships-under-construction slots). |
-| `Evo_MinerRate` | `2` | Miner-support facilities. |
+| **Evolution Max Level Setting** | `10` | Hard cap on Xenon evolution level (1-10). Lower for a milder endgame. |
+| **Evolution Current Level / Max Level** | *(live)* | **Read-only display** — shows current achieved level and the cap. In the screenshot: `Current: 10 / Max: 10`. |
+| **Maximum Xenon Fleets Added** | `10 fleet(s)` | Cap on how many extra attack fleets DA can add through the evolution pool. Higher = larger endgame threat. |
+| **Active / Building** | *(live)* | **Read-only display** — shows currently-active fleets vs those still under construction at shipyards. In the screenshot: `Active: 10 / Building: 0` (pool fully allocated and shipped). |
+
+### Fleet Size selector
+
+| Setting | Default | Effect |
+|---|---|---|
+| **Xenon Fleet Size** | Medium + Large | Three toggle buttons — **Small / Medium / Large** — controlling which fleet sizes are eligible to spawn. In the screenshot Small is disabled (red-ish) while Medium and Large are enabled (green). Enable Small for early-game harassment threats, keep only Large for boss-tier endgame. |
+
+### Station evolution and ordering
+
+| Setting | Default | Effect |
+|---|---|---|
+| **Enable Xenon Station Evolution** | `Enabled` | Allow Xenon shipyards/wharfs to expand their module count at level-up events. Off = fixed shipyard size. |
+| **Enable Evolution Fast Fleet Ordering** | `Enabled` | Fast-track new Xenon ships from shipyard queue (skip normal build backlog if the equipment/tier already matches). |
+| **Enable Evolution Debug** | `Disabled` | Verbose `[EVOLUTION]` log lines. |
+
+## Mlog: Xenon Growth Rates
+
+Per-level growth rates for what the Xenon add to their shipyards/wharfs at each level-up. **Units are important — different rows use different scaling.**
+
+| Setting | Default | What grows | Cadence |
+|---|---|---|---|
+| **Storage modules per level** | `1` | Storage module count | Every level → +1 module |
+| **Defence modules per level** | `1` | Defence turret module count | Every level → +1 module |
+| **Solar panels per level** | `2` | Solar panel count (energy production) | Every level → +2 panels |
+| **Build modules per 2 levels** | `1` | Ship-under-construction slots | **Every 2 levels** → +1 slot (slower growth than the rest) |
+| **Miner subordinates per level** | `2` | **Subordinate mining ships**, not modules | Every level → +2 miners assigned to the yard |
+
+**Miner distinction:** the last row spawns **ships**, not station modules — subordinate M-class miners bound to the yard for gas/mineral supply. All other rows are station modules.
+
+## Total growth across all 10 levels (default rates)
+
+At default rates, by the time Xenon reach level 10 each shipyard/wharf will have gained:
+
+- **Storage modules:** +10
+- **Defence modules:** +10
+- **Solar panels:** +20
+- **Build modules:** +5 (half rate)
+- **Miner subordinates:** +20 (as ships, tied to the yard)
 
 ## Gameplay effect at recommended defaults
 
-At 10 game-hours a fresh save typically sits at Evolution level 1-2. By 50h you'll see level 4-6 Xenon ships in border sectors — noticeably harder hulls, better weapon range, more armour piercing. By endgame (200h+) level 8-10 Xenon fields significantly tougher hulls than vanilla, and their shipyards produce ships 30-50% faster due to accumulated build/solar expansions.
+- **10 game-hours:** Evolution level 1-2. Xenon ships slightly tougher than vanilla.
+- **50h:** Level 4-6. Border-sector Xenon ships noticeably harder to kill; shipyards visibly grown.
+- **200h+:** Level 8-10. Xenon shipyards 30-50% faster ship output (accumulated build+solar), fields of tier-8+ hulls in the border, additional 10-fleet Xenon Fleet pool actively harassing player claims.
 
 ## Turn off if
 
-You want vanilla Xenon difficulty curve. Set `EvoMain_Enable = false`.
+You want the vanilla Xenon difficulty curve. Set **Enable Evolution** to `Disabled`. All sub-toggles keep their values in case you want to re-enable later.
+
+## Related
+
+- [DA Jobs — Expeditions](../jobs/) — the Xenon Fleet pool interacts with the vanilla expedition system.
+- [DA God](../god/) — station module additions from Evolution route through the God engine, so `God_MaxModuleSetting` still applies as an outer cap.
+- [Kill-based Xenon Evolution XP](../../mechanics/#kill-based-xenon-evolution-xp) — the point-accrual mechanic.
