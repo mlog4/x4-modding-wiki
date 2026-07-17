@@ -1,6 +1,8 @@
 ---
 title: Jobs SST (Situational Sector Threat)
 description: Per-faction, per-sector-role patrol quotas. Sectors classified as Critical / Core / Border / Contested with different threat weights.
+sidebar:
+  order: 8
 ---
 
 Sectors are classified as Critical / Core / Border / Contested. Each faction has fleet quotas per sector role — Critical sectors get heavier patrols than Border. DA's runtime scheduler dynamically orders ships from faction shipyards to keep quotas met.

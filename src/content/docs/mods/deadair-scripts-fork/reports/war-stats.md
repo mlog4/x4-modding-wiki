@@ -1,6 +1,8 @@
 ---
 title: Dynamic War stats
 description: Historical event log, favor ledger, and fatigue timers for the Dynamic War subsystem. Requires War_StatTracking = true.
+sidebar:
+  order: 4
 ---
 
 If `War_StatTracking` is enabled, DA records historical events and displays them here — event counts per faction, favor ledger, fatigue timers.

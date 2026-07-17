@@ -1,6 +1,8 @@
 ---
 title: 'Mlog: Configuration Presets'
 description: One-click configuration profiles for the DA Menu — three built-in presets (Default / All disabled / Debug) covering 82 fields across every subsystem.
+sidebar:
+  order: 1
 ---
 
 Apply an entire configuration profile in one click instead of touching 60+ sliders individually. Introduced in v3.0-beta1 Phase B (mlog080+).

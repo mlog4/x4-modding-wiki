@@ -1,6 +1,8 @@
 ---
 title: Blueprint scan progress
 description: Per-ship-class blueprint fragment progress — how many fragments you've collected against the requirement.
+sidebar:
+  order: 5
 ---
 
 Per-ship-class blueprint fragment progress — how many fragments you've collected against the requirement.

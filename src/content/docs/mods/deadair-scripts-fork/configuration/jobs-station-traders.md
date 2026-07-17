@@ -1,6 +1,8 @@
 ---
 title: Station Traders (ST)
 description: Subordinate M-class traders spawned for each player-friendly trade station. Introduced in v3.0-beta1 Phase 2+3+5v2 with a 5-sector close-neighbor blacklist.
+sidebar:
+  order: 9
 ---
 
 Each player-friendly trade station gets a set of subordinate M-class traders that shuttle wares in/out on the player's behalf. Reduces micromanagement of a sprawling logistics network. Introduced in v3.0-beta1 Phase 2+3+5v2.

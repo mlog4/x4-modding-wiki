@@ -1,6 +1,8 @@
 ---
 title: DA Dynamic News
 description: Logbook + notification feed for galaxy-scale events — sector ownership shifts, major station events, notable relation changes.
+sidebar:
+  order: 3
 ---
 
 Logbook + notification feed for galaxy-scale events. Sector ownership shifts, major station events, notable relation changes get reported like real news bulletins.

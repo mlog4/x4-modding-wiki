@@ -1,6 +1,8 @@
 ---
 title: DA Evolution
 description: Xenon adaptive equipment upgrades and shipyard expansion. 10 levels × 6 equipment categories driven by player military strength vs Xenon losses.
+sidebar:
+  order: 4
 ---
 
 The Xenon evolution engine. Xenon adaptively upgrade their ships across 10 levels × 6 equipment categories (engines, ship mods, shields, weapons, missiles, eco). At certain levels the Xenon also expand their production capacity through shipyard extensions.

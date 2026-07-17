@@ -1,6 +1,8 @@
 ---
 title: DA Blueprint Analysis
 description: Police-scan blueprint acquisition. Enemy ships accumulate blueprint fragments across scans; enough fragments awards the blueprint to the player.
+sidebar:
+  order: 13
 ---
 
 Police assets scan enemy ships for blueprint fragments. Once a ship's blueprint accumulates enough fragments across scans, the blueprint is awarded to the player.

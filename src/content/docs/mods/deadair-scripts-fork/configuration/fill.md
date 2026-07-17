@@ -1,6 +1,8 @@
 ---
 title: DA Fill
 description: Station Fill mechanic — tops up trade stations, shipyards, wharfs with wares at adjustable intervals. Fixes vanilla's half-empty stations problem.
+sidebar:
+  order: 5
 ---
 
 Tops up trade stations, shipyards, and wharfs with wares at adjustable intervals. Fixes vanilla's tendency to leave stations sitting half-empty when faction economy stalls. Also handles ship-mod (paint/tuning) topups for the faction ship pool.

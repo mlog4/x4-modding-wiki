@@ -1,6 +1,8 @@
 ---
 title: Mlog Trade Optimizer
 description: Economic top-up pass for trade stations and production factories. Keeps ware prices moving so vanilla NPC traders don't stall on flat prices.
+sidebar:
+  order: 14
 ---
 
 Economic top-up pass that walks trade stations and production factories, adjusting ware prices when supply is stuck / demand is high. Keeps the price signal moving so vanilla NPC traders don't stall on flat prices.

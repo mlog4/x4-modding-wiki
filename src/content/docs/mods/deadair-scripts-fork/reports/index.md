@@ -1,6 +1,8 @@
 ---
 title: DA Information Menus
 description: Read-only report menus about the current galaxy state — trade stations, extension progress, Xenon Evolution status, war stats, blueprint progress.
+sidebar:
+  order: 2
 ---
 
 DA ships several read-only info/report menus surfaced via **DA Menu → DA Information Menus**. Each report is a snapshot of live game state formatted for browsing.

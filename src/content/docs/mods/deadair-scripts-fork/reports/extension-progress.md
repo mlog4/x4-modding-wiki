@@ -1,6 +1,8 @@
 ---
 title: Extension progress
 description: Observed clusters and Built lists for the Extension subsystem — which sectors have been evaluated and marked as expansion targets.
+sidebar:
+  order: 2
 ---
 
 The [Extension subsystem](../../configuration/extension/) reports which sectors have been evaluated as expansion targets and what the current "Built" tracking says (per mlog087 6h TTL).

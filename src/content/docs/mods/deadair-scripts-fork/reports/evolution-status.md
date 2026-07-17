@@ -1,6 +1,8 @@
 ---
 title: Xenon Evolution status
 description: Current Xenon level, per-category equipment mod status, next-level ETA / accumulated points.
+sidebar:
+  order: 3
 ---
 
 Current Xenon evolution level, per-category equipment mod status (engines / ship / shield / weapon / missile / eco), and the next-level ETA / accumulated evo points.

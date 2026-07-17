@@ -1,6 +1,8 @@
 ---
 title: DA Dynamic War
 description: Periodic AI-to-AI relation shifts drive galaxy politics on their own. Six event types range from small nudges to instant max-relation flips.
+sidebar:
+  order: 2
 ---
 
 Periodic AI-to-AI relation shifts drive galaxy politics on their own. Six event types range from small nudges to instant max-relation flips (declarations of war, alliance pacts, temporary favors).

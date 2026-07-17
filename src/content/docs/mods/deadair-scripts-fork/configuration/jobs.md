@@ -1,6 +1,8 @@
 ---
 title: DA Jobs
 description: Parent submenu for faction jobs — Expeditions (long-range attack fleets), SST (per-sector patrol quotas), and subordinate trader subsystems (ST, PST).
+sidebar:
+  order: 6
 ---
 
 Parent submenu grouping the four job-related subsystems that DA adds on top of vanilla faction jobs.

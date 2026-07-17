@@ -1,6 +1,8 @@
 ---
 title: DA Gate
 description: Rogue-gate spawn behavior — accidental or dynamic gate discoveries that can rewrite the connectivity map.
+sidebar:
+  order: 11
 ---
 
 Governs "rogue gate" spawn behavior — accidental / dynamic gate discoveries that can rewrite the connectivity map.

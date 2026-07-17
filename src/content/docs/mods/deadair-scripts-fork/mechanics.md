@@ -1,6 +1,8 @@
 ---
 title: Mechanics deep dive
 description: Under-the-hood architecture — modded-faction dynamic support, kill-based Xenon XP, save-safety, 6h Extension TTL, and engine integration points.
+sidebar:
+  order: 3
 ---
 
 Architecture and internals that don't fit inside one specific menu. Useful for modders, integrators, and users diagnosing unusual behavior.

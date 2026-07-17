@@ -1,6 +1,8 @@
 ---
 title: 'Mlog: Cheat'
 description: Developer / testing menu — Observer Satellite spawner and other cheat toggles.
+sidebar:
+  order: 16
 ---
 
 Developer / testing menu. Currently exposes the **Observer Satellite** spawner — an invisible always-friendly satellite you can drop for map reconnaissance without triggering the police-scan penalty of a normal sat.

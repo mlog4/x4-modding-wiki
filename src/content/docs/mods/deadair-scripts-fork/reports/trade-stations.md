@@ -1,6 +1,8 @@
 ---
 title: Trade Stations Report
 description: Galaxy-wide trade-station browser — faction, sector, M subordinates, storage capacity in millions m³. Introduced mlog088-089 in v3.0-beta1.
+sidebar:
+  order: 1
 ---
 
 Lists every trade station galaxy-wide with faction, sector, subordinate count, and storage capacity. Introduced mlog088-089 in v3.0-beta1.

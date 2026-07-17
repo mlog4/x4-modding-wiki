@@ -1,6 +1,8 @@
 ---
 title: Jobs Expeditions
 description: Long-range XL-flagship attack fleets similar to Terran Interventions. One active expedition per faction, dynamically populated for tag.claimspace factions in v2.0.0.
+sidebar:
+  order: 7
 ---
 
 Long-range attack fleets similar to Terran Interventions. An XL flagship + escort tree launches from a faction's shipyard and patrols distant sectors. Each faction gets one active expedition at a time.

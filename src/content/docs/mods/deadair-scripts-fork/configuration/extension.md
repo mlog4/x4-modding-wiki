@@ -1,6 +1,8 @@
 ---
 title: 'Mlog: Extension'
 description: Governs when and where factions plan new economic expansion — additional trade stations, wharfs, shipyards. 6h TTL on failed-build attempts.
+sidebar:
+  order: 15
 ---
 
 Governs when and where factions plan new economic expansion — additional trade stations, wharfs, shipyards. Introduced in mlog062+. Uses a 6h TTL on failed-build attempts (mlog087) so that failed placements don't permanently block a cluster.

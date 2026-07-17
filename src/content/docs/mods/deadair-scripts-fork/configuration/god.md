@@ -1,6 +1,8 @@
 ---
 title: DA God
 description: Override / augment the vanilla God engine — controls faction station creation rate, permitted build sites, upgrade behavior, and max module count.
+sidebar:
+  order: 12
 ---
 
 Override / augment the vanilla God engine (which controls faction station creation). DA can accelerate or gate station requests, expand attempted recovery on failed builds, and change the max module count factions try to grow to.
