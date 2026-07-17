@@ -24,6 +24,6 @@ Every DA Menu subsystem has its own reference page. The order below matches the 
      - [Ships](./blueprint-analysis/progress-menus/ships/)
      - [Equipment](./blueprint-analysis/progress-menus/equipment/)
      - [Misc](./blueprint-analysis/progress-menus/misc/)
-10. **[Mlog Trade Optimizer](./trade-optimizer/)** — ware-price top-up for factories and trade stations.
+10. **[Mlog Trade Optimizer](./trade-optimizer/)** — price cycle + Station Subordinate Traders (ST) + Production Station Traders (PST).
 11. **[Mlog: Extension](./extension/)** — universe-expansion targeting.
 12. **[Mlog: Cheat](./cheat/)** — developer / testing menu (Observer Satellite spawner).

@@ -41,6 +41,7 @@ Master reference for every screenshot used on `mods/deadair-scripts-fork.md`. Up
 | `bp-ships.jpg` | `20260717164051_1.jpg` | BP Progress → Ships — XS Ships + start of S Ships (all 0/N — no ship blueprints completed yet) | configuration/blueprint-analysis/progress-menus/ships |
 | `bp-equipment.jpg` | `20260717164055_1.jpg` | BP Progress → Equipment — Missile Turrets + start of Non-Missile Turrets sections | configuration/blueprint-analysis/progress-menus/equipment |
 | `bp-misc.jpg` | `20260717164100_1.jpg` | BP Progress → Misc — 9 entries with Venture Platform + Wide Area Sensor Array completed | configuration/blueprint-analysis/progress-menus/misc |
+| `menu-trade-optimizer.jpg` | `20260717165515_1.jpg` | Mlog Trade Optimizer — 3 sections: Options (4 fields) + Station Subordinate Traders (4 fields + Discovered:23/Fleet:371) + Production Station Traders (4 fields + Discovered:345/Fleet:403) | configuration/trade-optimizer |
 | `dw-increase-relations.jpg` | `20260717141204_1.jpg` | Increase Relations — Buy +5 Relation via Diplomatic Favors | configuration/dynamic-war/increase-relations |
 | `dw-decrease-relations.jpg` | `20260717141210_1.jpg` | Decrease Relations — Buy -5 Relation via Diplomatic Favors | configuration/dynamic-war/decrease-relations |
 | `dw-unlock-relations.jpg` | `20260717141216_1.jpg` | Unlock Relations — Locked/Unlocked per faction | configuration/dynamic-war/unlock-relations |
@@ -65,7 +66,6 @@ Reference list — user shoots as they play through each menu. Slug ready in doc
 | `menu-evolution.jpg` | DA Evolution submenu — main toggles + level cap | [Xenon Evolution](#xenon-evolution) |
 | `menu-evolution-rates.jpg` | DA Evolution → Job Rate sliders | [Xenon Evolution — rates](#job-rate-multipliers) |
 | `menu-fill.jpg` | DA Fill submenu | [Station Fill](#station-fill-da-fill) |
-| `menu-trade-optimizer.jpg` | Mlog Trade Optimizer submenu | [Trade Optimizer](#trade-optimizer) |
 | `menu-extension.jpg` | Mlog: Extension submenu — all Ext_* sliders | [Extension](#extension) |
 | `menu-cheat.jpg` | Mlog: Cheat submenu — Observer Satellite button + any other cheat toggles | [Cheat Menu](#cheat-menu) |
 | `menu-info-root.jpg` | DA Information Menus — root list of reports | [Reports and info menus](#reports-and-info-menus) |

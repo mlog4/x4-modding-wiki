@@ -67,33 +67,14 @@ Fully-editable per-faction values live in the [Jobs Quotas](./quotas/) sub-menu.
 
 **Modded factions:** SST automatically enumerates factions with the required job tags. Without a companion compat mod, a modded faction row will show "No suitable ships available!" — the compat mod is what registers the modded ship classes into DA's job pool.
 
-## Related MD-only subsystems (no UI in this menu)
+## Related subsystems documented elsewhere
 
-DA has two additional job subsystems that don't have configuration menus — they're MD-driven and their behavior is fixed. They're mentioned here because they're conceptually adjacent to the Jobs system.
+Two additional job-adjacent subsystems live under a different menu:
 
-### Station Traders (ST)
+- **Station Subordinate Traders (ST)** — subordinate M-traders for player-friendly trade stations. Introduced Phase 2+3+5v2. Configured in [Mlog Trade Optimizer](../trade-optimizer/#station-subordinate-traders-middle).
+- **Production Station Traders (PST)** — subordinate M-traders for production factories. Introduced Phase 4. Configured in [Mlog Trade Optimizer](../trade-optimizer/#production-station-traders-bottom).
 
-Introduced in v3.0-beta1 Phase 2+3+5v2. Each player-friendly trade station (owned by a faction the player is `>= friend` with) gets a set of subordinate M-class traders that shuttle wares in/out on the player's behalf. Reduces micromanagement of a sprawling logistics network.
-
-| Setting | Value | Effect |
-|---|---|---|
-| `ST_Enabled` | `true` (fixed) | Master toggle — hardcoded on. |
-| `ST_QuotaPerStation` | `20` | M-traders per trade station. |
-| `ST_ReconcileIntervalMin` | `30 min` | How often the reconcile pass runs (rebuild roster, cleanup dead entries). |
-
-A **5-sector blacklist** excludes trade stations that sit too close to another trade station (added mlog094 via sector.macro references for save-stability): Earth, Reflected Stars, Towering Wave, Atreus' Clouds, Rolk's Demise. The blacklist is hardcoded in [`md/mlog_da_station_traders.xml`](https://github.com/mlog4/deadair_scripts) — you can inspect the runtime state via mlog_dev_bridge (developer tool).
-
-### Prod Station Traders (PST)
-
-Introduced in v3.0-beta1 Phase 4. Analog of ST for **production factories** (not trade stations). Each factory gets subordinate M-traders that specifically shuttle inputs/outputs for that recipe.
-
-| Setting | Value | Effect |
-|---|---|---|
-| `PST_Enabled` | `true` (fixed) | Master toggle. |
-| `PST_QuotaPerStation` | `2` | M-traders per factory (lower than ST because factories usually have fewer wares in play). |
-| `PST_ReconcileIntervalMin` | `60 min` | Reconcile pass interval. |
-
-Both subsystems are documented in the source at [`md/mlog_da_station_traders.xml`](https://github.com/mlog4/deadair_scripts) and [`md/mlog_da_prod_station_traders.xml`](https://github.com/mlog4/deadair_scripts).
+These were originally planned as separate submenus but Phase 5v2 (mlog094) merged them into the Trade Optimizer menu as sub-sections rather than adding another top-level DA menu entry.
 
 ## Gameplay effect at recommended defaults
 

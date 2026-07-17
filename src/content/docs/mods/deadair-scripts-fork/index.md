@@ -49,7 +49,7 @@ Every menu label below is a link to its own reference page:
 | **[DA Dynamic News](./configuration/dynamic-news/)** | Logbook + notification feed for galaxy events. |
 | **[DA Evolution](./configuration/evolution/)** | Xenon adaptive upgrades + job pool sizing. |
 | **[DA Fill](./configuration/fill/)** | Trade station / wharf / shipyard restocking. |
-| **[DA Jobs](./configuration/jobs/)** | Faction Expeditions + SST patrol quotas + subordinate traders (ST/PST). |
+| **[DA Jobs](./configuration/jobs/)** | Faction Expeditions + SST patrol quotas. |
 | **[DA Gate](./configuration/gate/)** | Rogue-gate spawn behavior. |
 | **[DA God](./configuration/god/)** | Faction station-building AI overrides. |
 | **[DA Blueprint Analysis](./configuration/blueprint-analysis/)** | Police-scan blueprint acquisition. |
