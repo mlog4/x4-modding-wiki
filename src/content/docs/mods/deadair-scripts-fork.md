@@ -30,76 +30,107 @@ This page is the **full user reference** — every subsystem, every setting, eve
 5. If you're diagnosing an issue, apply the **Debug (verbose logging)** preset — expect heavy `script.log` spam but every subsystem will narrate what it's doing.
 
 > **📷 Screenshot needed:** DA Menu icon location in the Main Menu (highlight where it appears once SirNukes API loads).
-> _File: `da-scripts-mainmenu-icon.png`_
-
-> **📷 Screenshot needed:** Root of the DA Menu — top-level list of all subsystems.
-> _File: `da-scripts-menu-root.png`_
+> _File: `mainmenu-icon.jpg`_
 
 ## In-game menu tour
 
 The DA Menu is your control panel for every mod feature. All settings persist across saves. Toggling features mid-save is safe.
 
-Top-level structure (as of v3.0-beta1):
+Below is the actual top-level menu as it appears in v3.0-beta1 (mlog094 build):
 
-| Section | Purpose |
+![DA Mod Main Menu — top-level list](/x4-modding-wiki/img/mods/deadair-scripts/menu-root.jpg)
+
+Top-level layout in menu order:
+
+| Menu label (in-game) | Purpose |
 |---|---|
-| **Presets** | Apply / manage saved configuration profiles ([details](#presets-system)) |
-| **Extension** | Universe-expansion targeting — where factions plan new trade stations, wharfs, shipyards ([details](#extension)) |
-| **Xenon Evolution** | Xenon adaptive upgrades and job pool sizing ([details](#xenon-evolution)) |
-| **Dynamic News** | Logbook + notification feed for galaxy events ([details](#dynamic-news)) |
-| **Dynamic War** | Periodic AI-to-AI relation shifts ([details](#dynamic-war)) |
-| **Station Fill** | Trade station / wharf / shipyard restocking ([details](#station-fill)) |
-| **Jobs Expeditions** | Faction long-range attack fleets ([details](#jobs-expeditions)) |
-| **Jobs SST** | Situational Sector Threat quotas per faction ([details](#jobs-sst-situational-sector-threat)) |
-| **Gates** | Rogue-gate spawn behavior ([details](#gates)) |
-| **God (Station Creation)** | Faction station-building AI overrides ([details](#god-station-creation)) |
-| **Blueprint Scanning** | Police-scan blueprint acquisition ([details](#blueprint-scanning)) |
-| **Trade Optimizer** | Ware-price top-up for factories and trade stations ([details](#trade-optimizer)) |
-| **Station Traders (ST)** | Subordinate M-class traders for player-friendly trade stations ([details](#station-traders-st)) |
-| **Prod Station Traders (PST)** | Subordinate traders for production factories ([details](#prod-station-traders-pst)) |
-| **UI settings** | Menu display preferences ([details](#ui-settings)) |
-| **DA Information** | Reports about the galaxy — trade stations, extension progress, etc. ([details](#reports-and-info-menus)) |
-| **Cheat Menu** | Observer satellite spawner ([details](#cheat-menu)) |
+| **Mlog: Configuration Presets** | Apply / manage saved configuration profiles ([details](#presets-system)) |
+| **DA Dynamic War** | Periodic AI-to-AI relation shifts ([details](#da-dynamic-war)) |
+| **DA Dynamic News** | Logbook + notification feed for galaxy events ([details](#da-dynamic-news)) |
+| **DA Evolution** | Xenon adaptive upgrades and job pool sizing ([details](#da-evolution)) |
+| **DA Fill** | Trade station / wharf / shipyard restocking ([details](#da-fill)) |
+| **DA Jobs** | Faction expeditions + SST patrol quotas + subordinate traders (ST/PST) ([details](#da-jobs)) |
+| **DA Gate** | Rogue-gate spawn behavior ([details](#da-gate)) |
+| **DA God** | Faction station-building AI overrides ([details](#da-god)) |
+| **DA Blueprint Analysis** | Police-scan blueprint acquisition ([details](#da-blueprint-analysis)) |
+| **Mlog Trade Optimizer** | Ware-price top-up for factories and trade stations ([details](#mlog-trade-optimizer)) |
+| **Mlog: Extension** | Universe-expansion targeting — where factions plan new trade stations, wharfs, shipyards ([details](#mlog-extension)) |
+| **Mlog: Cheat** | Observer satellite spawner ([details](#mlog-cheat)) |
+| **DA Information Menus** | Reports about the galaxy — trade stations, extension progress, etc. ([details](#reports-and-info-menus)) |
 
 Each section documented below has: **purpose**, **screenshot placeholder**, **every setting** (name, default, effect), and **mechanics notes** where the behavior is non-obvious.
 
+> **Naming convention:** section headings match the in-game menu label so you can find what you see. Setting variable names (`$Ext_Enable` etc.) match the internal MD runtime — useful when reading `script.log` or the source XML.
+
 ## Configuration reference
 
-### Extension
+Sections below are ordered to match the in-game menu order. Every heading uses the exact in-game label — Ctrl+F for what you see on screen.
 
-**Purpose:** governs when and where factions plan new economic expansion — additional trade stations, wharfs, shipyards. Introduced in mlog062+. Uses a 6h TTL on failed-build attempts (mlog087) so that failed placements don't permanently block a cluster.
+### Mlog: Configuration Presets
 
-**Mechanic in one paragraph:** the Extension observer polls faction wharf/shipyard counts every 30 min. When a faction has fewer than expected assets and a valid extension target exists (distant enough from existing owned space per `MinDist*`), it queues a build request. Failed placements are tracked with a timestamp; after 6 hours of game time the block is cleared and the cluster becomes eligible again.
+*(Documented as a standalone [Presets system](#presets-system) section below — see there for the full description.)*
 
-> **📷 Screenshot needed:** DA Menu → Extension submenu, showing all Extension_* sliders.
-> _File: `da-scripts-menu-extension.png`_
+### DA Dynamic War
+
+**Purpose:** periodic AI-to-AI relation shifts drive galaxy politics on their own. Six event types range from small nudges to instant max-relation flips (declarations of war, alliance pacts, temporary favors, etc.).
+
+**Mechanic in one paragraph:** every `War_Interval` minutes, the war engine picks a random subset of factions (up to `War_PossibleFactionsPerEvent`) and evaluates whether the current relation state warrants an event. Event weights consider proximity, military strength, and the "fatigue" system — factions that recently participated in an event get a cool-down before they can be picked again. Optional favor system (`War_FavorsEnable`) lets factions "call in debts" from prior alliance events.
+
+> **📷 Screenshot needed:** DA Dynamic War submenu — main toggles + interval + PossibleFactionsPerEvent.
+> _File: `menu-dynamic-war.jpg`_
 
 | Setting | Default | Effect |
 |---|---|---|
-| `Ext_Enable` | `true` | Master toggle. Off = no extension planning at all. |
-| `Ext_EnableLog` | `false` | Emit `[EXT]` debug lines to `script.log`. Turn on to diagnose why a build isn't happening; expect heavy spam. |
-| `Ext_AllowFactionTradeStation` | `true` | Allow expansion of **trade stations** (peaceful factions). |
-| `Ext_MinDistTradeStation` | `2` (jumps) | Minimum jump distance from the faction's existing trade station to allow a new one. `0` = allow same sector; `2` = must be at least 2 jumps away. Prevents clustering. |
-| `Ext_AllowFactionWharfShipyard` | `true` | Allow expansion of **wharfs and shipyards** for lawful factions. |
-| `Ext_MinDistFactionWharfShipyard` | `5` (jumps) | Minimum jump distance for new wharf/shipyard sites. Higher = more spread out. |
-| `Ext_AllowXenonWharfShipyard` | `true` | Allow Xenon to expand their own wharfs and shipyards. |
-| `Ext_MinDistXenonWharfShipyard` | `2` (jumps) | Minimum jump distance between Xenon shipyards. Lower than lawful factions since Xenon expand more aggressively. |
+| `War_Enable` | `true` | Master toggle. |
+| `War_FavorsEnable` | `true` | Enable the favor system — factions can "call in debts" from past events. |
+| `War_Interval` | `30` (min) | How often the war engine evaluates. Lower = more frequent shifts. |
+| `War_FlavorEnable` | `true` | Enable flavor events (small, thematic relation nudges) alongside major events. |
+| `War_DetailedDebug` | `false` | Verbose `[WAR]` log lines. |
+| `War_RelationsFixEnable` | `true` | Periodically correct out-of-bounds relations from stray vanilla/mod events. |
+| `War_PossibleFactionsPerEvent` | `4` | Max number of factions considered for a single event. Higher = larger politics ripples. |
+| `War_FatigueTimer` | `120` (min) | Fatigue cool-down after a faction participates in an event. |
+| `War_StatTracking` | `true` | Track war-event statistics for reports/info menus. |
+| `War_Fatigue` | `true` | Enable the fatigue system. Turning off = faster / more chaotic politics. |
 
-**Gameplay effect at recommended defaults:** every faction attempts to grow. Peaceful factions add trade stations in newly-secured sectors after ~5-15 game hours; wharfs after 20-40h. Xenon rebuild shipyards after you demolish one (unless you also cap-nuke their supply chain).
+**Gameplay effect at recommended defaults:** you'll see 1-2 minor events per game hour, and a major shift (war declaration, alliance) every 8-15 hours. Feels organic. In a 100+ hour save you can watch the political map fully redraw itself.
 
-**Turn off if:** you want a fixed-map, static-economy experience where factions never expand beyond their gamestart assets. Set all three `Allow*` flags to `false`.
+**Turn off if:** you want vanilla static faction relations (some players prefer canonical Argon-Antigone / Split-Paranid tension without evolution).
 
-### Xenon Evolution
+### DA Dynamic News
 
-**Purpose:** Xenon adaptively upgrade their ships across 10 levels × 6 equipment categories (engines, ship mods, shields, weapons, missiles, eco). At certain levels the Xenon also expand their production capacity through shipyard extensions.
+**Purpose:** logbook + notification feed for galaxy-scale events. Sector ownership shifts, major station events, notable relation changes get reported like real news bulletins.
+
+**Mechanic in one paragraph:** every `News_Interval` minutes, DA scans the last window of galaxy events (station losses, gate captures, ownership changes) and packages them into player-facing notifications. Optionally filtered to known-factions-only so you don't get spammed with intel about factions you've never met.
+
+> **📷 Screenshot needed:** DA Dynamic News submenu with all toggles.
+> _File: `menu-dynamic-news.jpg`_
+
+> **📷 Screenshot needed:** In-game logbook showing a Dynamic News entry.
+> _File: `news-logbook-entry.jpg`_
+
+| Setting | Default | Effect |
+|---|---|---|
+| `News_Enable` | `true` | Master toggle. |
+| `News_EnableNotifications` | `true` | Show news as top-of-screen notification popups. |
+| `News_EnableLogbook` | `true` | Write news to the player logbook (persistent, browsable later). |
+| `News_EnableNewsStorage` | `true` | Store news history internally so the reader menu can browse past bulletins. |
+| `News_Interval` | `10` (min) | How often DA generates news. Lower = more chatter. |
+| `News_KnownFactionsOnly` | `true` | Only surface events involving factions you've discovered. Recommended — otherwise early-game feels overwhelming. |
+| `News_DetailedDebug` | `false` | Verbose `[NEWS]` log lines. |
+
+**Gameplay effect at recommended defaults:** you get about one meaningful news bulletin per hour of play. Feels alive, doesn't spam. Turning `KnownFactionsOnly` off floods the log until you've discovered most factions.
+
+### DA Evolution
+
+**Purpose:** the Xenon evolution engine. Xenon adaptively upgrade their ships across 10 levels × 6 equipment categories (engines, ship mods, shields, weapons, missiles, eco). At certain levels the Xenon also expand their production capacity through shipyard extensions.
 
 **Mechanic in one paragraph:** every `EvoMain_Interval` minutes, DA evaluates player military strength and Xenon losses. Losses accrue "evo points". When accumulated points cross a level threshold, Xenon unlock the next tier of equipment mods across all six categories. Newly-built Xenon ships from that point forward receive the new mods automatically via `apply_equipment_mods`. At levels 1, 3, and 5 the Xenon get additional wharf/shipyard modules for storage / defence / solar / build / miner (which slots grow depends on the `Evo_*Rate` sliders).
 
-> **📷 Screenshot needed:** DA Menu → Xenon Evolution submenu (main toggles + level cap).
-> _File: `da-scripts-menu-xenon-evolution.png`_
+> **📷 Screenshot needed:** DA Evolution submenu (main toggles + level cap).
+> _File: `menu-evolution.jpg`_
 
-> **📷 Screenshot needed:** DA Menu → Xenon Evolution → Job Rate sliders (Storage/Defence/Solar/Build/Miner).
-> _File: `da-scripts-menu-xenon-evolution-rates.png`_
+> **📷 Screenshot needed:** DA Evolution → Job Rate sliders (Storage/Defence/Solar/Build/Miner).
+> _File: `menu-evolution-rates.jpg`_
 
 #### Main toggles
 
@@ -130,67 +161,14 @@ Controls which shipyard modules the Xenon build during level-1/3/5 expansions. T
 
 **Turn off if:** you want vanilla Xenon difficulty curve. Set `EvoMain_Enable = false`.
 
-### Dynamic News
+### DA Fill
 
-**Purpose:** logbook + notification feed for galaxy-scale events. Sector ownership shifts, major station events, notable relation changes get reported like real news bulletins.
-
-**Mechanic in one paragraph:** every `News_Interval` minutes, DA scans the last window of galaxy events (station losses, gate captures, ownership changes) and packages them into player-facing notifications. Optionally filtered to known-factions-only so you don't get spammed with intel about factions you've never met.
-
-> **📷 Screenshot needed:** DA Menu → Dynamic News submenu with all toggles.
-> _File: `da-scripts-menu-dynamic-news.png`_
-
-> **📷 Screenshot needed:** In-game logbook showing a Dynamic News entry (with the "DA-DN" or similar prefix so users can identify it).
-> _File: `da-scripts-news-logbook-entry.png`_
-
-| Setting | Default | Effect |
-|---|---|---|
-| `News_Enable` | `true` | Master toggle. |
-| `News_EnableNotifications` | `true` | Show news as top-of-screen notification popups. |
-| `News_EnableLogbook` | `true` | Write news to the player logbook (persistent, browsable later). |
-| `News_EnableNewsStorage` | `true` | Store news history internally so the reader menu can browse past bulletins. |
-| `News_Interval` | `10` (min) | How often DA generates news. Lower = more chatter. |
-| `News_KnownFactionsOnly` | `true` | Only surface events involving factions you've discovered. Recommended — otherwise early-game feels overwhelming. |
-| `News_DetailedDebug` | `false` | Verbose `[NEWS]` log lines. |
-
-**Gameplay effect at recommended defaults:** you get about one meaningful news bulletin per hour of play. Feels alive, doesn't spam. Turning `KnownFactionsOnly` off floods the log until you've discovered most factions.
-
-### Dynamic War
-
-**Purpose:** periodic AI-to-AI relation shifts drive galaxy politics on their own. Six event types range from small nudges to instant max-relation flips (declarations of war, alliance pacts, temporary favors, etc.).
-
-**Mechanic in one paragraph:** every `War_Interval` minutes, the war engine picks a random subset of factions (up to `War_PossibleFactionsPerEvent`) and evaluates whether the current relation state warrants an event. Event weights consider proximity, military strength, and the "fatigue" system — factions that recently participated in an event get a cool-down before they can be picked again. Optional favor system (`War_FavorsEnable`) lets factions "call in debts" from prior alliance events.
-
-> **📷 Screenshot needed:** DA Menu → Dynamic War submenu — main toggles + interval + PossibleFactionsPerEvent.
-> _File: `da-scripts-menu-dynamic-war.png`_
-
-> **📷 Screenshot needed:** DA Menu → Dynamic War → Fatigue timer + Fatigue toggle (if separate submenu).
-> _File: `da-scripts-menu-dynamic-war-fatigue.png`_
-
-| Setting | Default | Effect |
-|---|---|---|
-| `War_Enable` | `true` | Master toggle. |
-| `War_FavorsEnable` | `true` | Enable the favor system — factions can "call in debts" from past events. |
-| `War_Interval` | `30` (min) | How often the war engine evaluates. Lower = more frequent shifts. |
-| `War_FlavorEnable` | `true` | Enable flavor events (small, thematic relation nudges) alongside major events. |
-| `War_DetailedDebug` | `false` | Verbose `[WAR]` log lines. |
-| `War_RelationsFixEnable` | `true` | Periodically correct out-of-bounds relations from stray vanilla/mod events. |
-| `War_PossibleFactionsPerEvent` | `4` | Max number of factions considered for a single event. Higher = larger politics ripples. |
-| `War_FatigueTimer` | `120` (min) | Fatigue cool-down after a faction participates in an event. |
-| `War_StatTracking` | `true` | Track war-event statistics for reports/info menus. |
-| `War_Fatigue` | `true` | Enable the fatigue system. Turning off = faster / more chaotic politics. |
-
-**Gameplay effect at recommended defaults:** you'll see 1-2 minor events per game hour, and a major shift (war declaration, alliance) every 8-15 hours. Feels organic. In a 100+ hour save you can watch the political map fully redraw itself.
-
-**Turn off if:** you want vanilla static faction relations (some players prefer canonical Argon-Antigone / Split-Paranid tension without evolution).
-
-### Station Fill
-
-**Purpose:** tops up trade stations, shipyards, and wharfs with wares at adjustable intervals. Fixes vanilla's tendency to leave stations sitting half-empty when faction economy stalls. Also handles ship-mod (paint/tuning) topups for the faction ship pool.
+**Purpose:** the Station Fill mechanic. Tops up trade stations, shipyards, and wharfs with wares at adjustable intervals. Fixes vanilla's tendency to leave stations sitting half-empty when faction economy stalls. Also handles ship-mod (paint/tuning) topups for the faction ship pool.
 
 **Mechanic in one paragraph:** every `Fill_Interval` minutes, DA walks each faction's stations. For each station, DA computes the target fill (per DA-Eco storage sizing if installed, else vanilla capacity) and orders wares up to that level. Faction-account gating prevents infinite spending — poor factions fill less. Optional `LimitByValue` throttles top-ups when the ware price is high (defer buying overpriced wares until economy stabilizes).
 
-> **📷 Screenshot needed:** DA Menu → Station Fill submenu.
-> _File: `da-scripts-menu-station-fill.png`_
+> **📷 Screenshot needed:** DA Fill submenu.
+> _File: `menu-fill.jpg`_
 
 | Setting | Default | Effect |
 |---|---|---|
@@ -205,14 +183,20 @@ Controls which shipyard modules the Xenon build during level-1/3/5 expansions. T
 
 **Gameplay effect at recommended defaults:** you can visit any trade station and reliably find wares available (unlike vanilla where stations often sit at 5% fill for hours). Faction economies stay responsive; player-owned stations still have to compete on price.
 
-### Jobs Expeditions
+### DA Jobs
 
-**Purpose:** long-range attack fleets similar to Terran Interventions. An XL flagship + escort tree launches from a faction's shipyard and patrols distant sectors. Each faction gets one active expedition at a time.
+**Purpose:** parent submenu that groups the three job-related subsystems — long-range Expeditions, per-sector patrol quotas (SST), and the subordinate trader subsystems (ST + PST).
+
+> **📷 Screenshot needed:** DA Jobs — root submenu list, revealing the exact child items (Expeditions / Quotas / ST / PST or nested-different).
+> _File: `menu-jobs.jpg`_
+
+> ⚠ Menu tree note: as of writing, ST and PST are documented here as children of DA Jobs. Confirm actual layout when the next screenshot arrives — if they turn out to be separate top-level items, we'll promote them accordingly.
+
+#### Jobs Expeditions
+
+Long-range attack fleets similar to Terran Interventions. An XL flagship + escort tree launches from a faction's shipyard and patrols distant sectors. Each faction gets one active expedition at a time.
 
 **Mechanic in one paragraph:** DA maintains a whitelist of `tag.claimspace` factions eligible for expeditions. Each faction can have 1 galaxy-wide expedition at a time (`galaxy` quota). When a faction's assigned expedition ship dies or completes, DA queues a replacement from a faction shipyard with a full loadout. Vanilla + modded factions with a companion compat mod ([Apus](/x4-modding-wiki/mods/apus-compat/), [ETW](/x4-modding-wiki/mods/etw-compat/)) participate.
-
-> **📷 Screenshot needed:** DA Menu → Jobs Expeditions submenu (usually just Enable + DetailedDebug, sometimes with per-faction visibility).
-> _File: `da-scripts-menu-jobs-expeditions.png`_
 
 | Setting | Default | Effect |
 |---|---|---|
@@ -221,22 +205,22 @@ Controls which shipyard modules the Xenon build during level-1/3/5 expansions. T
 
 **v2.0.0 change:** the initial expedition-eligible faction list is now populated **dynamically** from all `tag.claimspace` factions instead of a hardcoded 8-vanilla list. Modded factions plug in without patching the mod. See [modded-faction support](#modded-faction-dynamic-support) below.
 
-### Jobs SST (Situational Sector Threat)
+#### Jobs SST (Situational Sector Threat)
 
-**Purpose:** sectors are classified as Critical / Core / Border / Contested. Each faction has fleet quotas per sector role — Critical sectors get heavier patrols than Border. DA's runtime scheduler dynamically orders ships from faction shipyards to keep quotas met.
+Sectors are classified as Critical / Core / Border / Contested. Each faction has fleet quotas per sector role — Critical sectors get heavier patrols than Border. DA's runtime scheduler dynamically orders ships from faction shipyards to keep quotas met.
 
 **Mechanic in one paragraph:** each faction × sector-role × ship-class combo has a Galaxy Quota (max total in the pool) and a Fleet Size (subordinates per patrol). When patrols get destroyed, DA re-queues replacements. Modded factions participate if a companion compat mod is installed; without compat you'll see "No suitable ships available!" on the modded faction's row.
 
-> **📷 Screenshot needed:** DA Menu → Jobs → Jobs Quotas — root list of factions.
-> _File: `da-scripts-menu-jobs-quotas-root.png`_
+> **📷 Screenshot needed:** DA Jobs → Quotas — root list of factions.
+> _File: `menu-jobs-quotas-root.jpg`_
 
 > **📷 Screenshot needed:** Argon quota page — full row list (Critical / Core / Border / Contested Patrol + L/M Trader + L/M Miner + L/M Gas Miner sliders).
-> _File: `da-scripts-menu-jobs-quotas-argon.png`_
+> _File: `menu-jobs-quotas-argon.jpg`_
 
 > **📷 Screenshot needed:** A modded faction row (e.g. Apus Stellar Treaty) if compat mod installed — showing full quota rows.
-> _File: `da-scripts-menu-jobs-quotas-apus.png`_
+> _File: `menu-jobs-quotas-apus.jpg`_
 
-#### Main toggles
+##### Main toggles
 
 | Setting | Default | Effect |
 |---|---|---|
@@ -245,9 +229,9 @@ Controls which shipyard modules the Xenon build during level-1/3/5 expansions. T
 | `JobsSST_XtremelyDetailedDebug` | `false` | Very verbose — every ship-order attempt gets logged. Diagnostic only, huge spam. |
 | `JobsSST_RemoveExclusivity` | `true` | Allow multiple factions to patrol the same "Contested" sector simultaneously. Off = classical DA behavior (single dominant patroller per contested sector). |
 
-#### Per-faction quotas
+##### Per-faction quotas
 
-The per-faction quota rows live inside DA Menu → Jobs Quotas → `<faction>`. Each row is a slider pair — Galaxy Quota (total ships in the pool) + Fleet Size (subordinates per flagship). These are NOT in the preset scope (they're per-faction nested tables); they're edited directly in the per-faction submenus.
+The per-faction quota rows live inside **DA Jobs → Quotas → `<faction>`**. Each row is a slider pair — Galaxy Quota (total ships in the pool) + Fleet Size (subordinates per flagship). These are NOT in the preset scope (they're per-faction nested tables); they're edited directly in the per-faction submenus.
 
 Roles per faction:
 
@@ -264,12 +248,44 @@ Roles per faction:
 
 **Gameplay effect at recommended defaults:** any given sector in a lawful faction's Core zone has 2-4 patrol groups active at any time; a Critical sector (with an important shipyard) has 4-8. Xenon incursions get repelled unless heavily outnumbered.
 
-### Gates
+#### Station Traders (ST)
+
+Each player-friendly trade station gets a set of subordinate M-class traders that shuttle wares in/out on the player's behalf. Reduces micromanagement of a sprawling logistics network. Introduced in v3.0-beta1 Phase 2+3+5v2.
+
+**Mechanic in one paragraph:** on discovery of a new trade station belonging to a faction the player is `>= friend` with, DA spawns `ST_QuotaPerStation` M-class traders assigned to that station. Every `ST_ReconcileIntervalMin` minutes DA rebuilds the total roster — replaces destroyed traders, moves excess back to shipyards, migrates orphans when their parent station is destroyed. A **5-sector blacklist** (Earth, Reflected Stars, Towering Wave, Atreus' Clouds, Rolk's Demise) excludes trade stations that sit too close together (added mlog094 via sector.macro references for save-stability).
+
+> **📷 Screenshot needed:** DA Jobs → Station Traders submenu.
+> _File: `menu-station-traders.jpg`_
+
+| Setting | Default | Effect |
+|---|---|---|
+| `ST_Enabled` | `true` | Master toggle. |
+| `ST_QuotaPerStation` | `20` | M-traders per trade station. Higher = denser logistics, more CPU cost. |
+| `ST_ReconcileIntervalMin` | `30` (min) | How often the reconcile pass runs (rebuild roster, cleanup dead entries). |
+| `ST_DebugVerbose` | `false` | Verbose `[ST]` log lines. |
+
+**Blacklist:** the 5 close-neighbor sectors do NOT get subordinate traders. This isn't in the menu — it's hardcoded via sector.macro in [`md/mlog_da_station_traders.xml`](https://github.com/mlog4/deadair_scripts). You can dump the runtime blacklist status via mlog_dev_bridge (developer feature).
+
+#### Prod Station Traders (PST)
+
+Analog of ST for **production factories** (not trade stations). Each factory gets subordinate M-traders that specifically shuttle inputs/outputs for that recipe. Introduced in v3.0-beta1 Phase 4.
+
+> **📷 Screenshot needed:** DA Jobs → Prod Station Traders submenu.
+> _File: `menu-prod-station-traders.jpg`_
+
+| Setting | Default | Effect |
+|---|---|---|
+| `PST_Enabled` | `true` | Master toggle. |
+| `PST_QuotaPerStation` | `2` | M-traders per factory. Lower than ST because factories usually have fewer wares in play. |
+| `PST_ReconcileIntervalMin` | `60` (min) | Reconcile pass interval. |
+| `PST_DebugVerbose` | `false` | Verbose `[PST]` log lines. |
+
+### DA Gate
 
 **Purpose:** governs "rogue gate" spawn behavior — accidental / dynamic gate discoveries that can rewrite the connectivity map.
 
-> **📷 Screenshot needed:** DA Menu → Gates submenu.
-> _File: `da-scripts-menu-gates.png`_
+> **📷 Screenshot needed:** DA Gate submenu.
+> _File: `menu-gate.jpg`_
 
 | Setting | Default | Effect |
 |---|---|---|
@@ -277,12 +293,12 @@ Roles per faction:
 | `Gate_ShowAllGates` | `false` | Reveal every gate on the map from gamestart. Removes exploration challenge; useful for testing / role-play. |
 | `Gate_DetailedDebug` | `false` | Verbose `[GATE]` log lines. |
 
-### God (Station Creation)
+### DA God
 
 **Purpose:** override / augment the vanilla God engine (which controls faction station creation). DA can accelerate or gate station requests, expand attempted recovery on failed builds, and change the max module count factions try to grow to.
 
-> **📷 Screenshot needed:** DA Menu → God (Station Creation) submenu.
-> _File: `da-scripts-menu-god.png`_
+> **📷 Screenshot needed:** DA God submenu.
+> _File: `menu-god.jpg`_
 
 | Setting | Default | Effect |
 |---|---|---|
@@ -298,19 +314,19 @@ Roles per faction:
 
 **Gameplay effect at recommended defaults:** factions actively grow their industry. A 50-hour save typically has 15-25 more stations galaxy-wide than vanilla. `God_MaxModuleSetting = 40` is a good balance — larger stations look impressive but CPU cost grows.
 
-**mlog094 note (v3.0-beta1):** God-created stations respect the `hasstagedconstruction` guard so they participate in DA's staged expand-station mechanic rather than one-shot instant builds. See [x4_da_god_hasstagedconstruction_9_0_neutered](#) memory entry for why this matters on 9.0.
+**mlog094 note (v3.0-beta1):** God-created stations respect the `hasstagedconstruction` guard so they participate in DA's staged expand-station mechanic rather than one-shot instant builds.
 
-### Blueprint Scanning
+### DA Blueprint Analysis
 
 **Purpose:** police assets scan enemy ships for blueprint fragments. Once a ship's blueprint accumulates enough fragments across scans, the blueprint is awarded to the player.
 
 **Mechanic in one paragraph:** works with the vanilla `policeassetscannedship` engine signal. Fires when your police-tagged ship scans an enemy ship. Each scan awards fragments; the fragments-per-scan and required-total are configurable per macro class (S/M/L/XL). Once a specific ship's fragment total reaches the requirement, the blueprint is added to your bank.
 
-> **📷 Screenshot needed:** DA Menu → Blueprint Scanning submenu.
-> _File: `da-scripts-menu-bp.png`_
+> **📷 Screenshot needed:** DA Blueprint Analysis submenu.
+> _File: `menu-blueprint.jpg`_
 
 > **📷 Screenshot needed:** In-game notification when a blueprint fragment is collected.
-> _File: `da-scripts-bp-scan-notification.png`_
+> _File: `bp-scan-notification.jpg`_
 
 | Setting | Default | Effect |
 |---|---|---|
@@ -318,12 +334,12 @@ Roles per faction:
 | `BP_DebugEnable` | `false` | Verbose `[BP]` log lines. |
 | `BP_UnknownClassRequirement` | `20` | Fragments needed for an unknown-class ship blueprint (default fallback when no macro-specific rule applies). |
 
-### Trade Optimizer
+### Mlog Trade Optimizer
 
 **Purpose:** economic top-up pass that walks trade stations and production factories, adjusting ware prices when supply is stuck / demand is high. Keeps the price signal moving so vanilla NPC traders don't stall on flat prices.
 
-> **📷 Screenshot needed:** DA Menu → Trade Optimizer submenu.
-> _File: `da-scripts-menu-trade-optimizer.png`_
+> **📷 Screenshot needed:** Mlog Trade Optimizer submenu.
+> _File: `menu-trade-optimizer.jpg`_
 
 | Setting | Default | Effect |
 |---|---|---|
@@ -332,60 +348,42 @@ Roles per faction:
 | `TradeOpt_ProcessTradeStations` | `true` | Include trade stations in the pass. |
 | `TradeOpt_ProcessFactories` | `true` | Include production factories in the pass. |
 
-### Station Traders (ST)
+### Mlog: Extension
 
-**Purpose:** each player-friendly trade station gets a set of subordinate M-class traders that shuttle wares in/out on the player's behalf. Reduces micromanagement of a sprawling logistics network. Introduced in v3.0-beta1 Phase 2+3+5v2.
+**Purpose:** governs when and where factions plan new economic expansion — additional trade stations, wharfs, shipyards. Introduced in mlog062+. Uses a 6h TTL on failed-build attempts (mlog087) so that failed placements don't permanently block a cluster.
 
-**Mechanic in one paragraph:** on discovery of a new trade station belonging to a faction the player is `>= friend` with, DA spawns `ST_QuotaPerStation` M-class traders assigned to that station. Every `ST_ReconcileIntervalMin` minutes DA rebuilds the total roster — replaces destroyed traders, moves excess back to shipyards, migrates orphans when their parent station is destroyed. A **5-sector blacklist** (Earth, Reflected Stars, Towering Wave, Atreus' Clouds, Rolk's Demise) excludes trade stations that sit too close together (added mlog094 via sector.macro references for save-stability).
+**Mechanic in one paragraph:** the Extension observer polls faction wharf/shipyard counts every 30 min. When a faction has fewer than expected assets and a valid extension target exists (distant enough from existing owned space per `MinDist*`), it queues a build request. Failed placements are tracked with a timestamp; after 6 hours of game time the block is cleared and the cluster becomes eligible again.
 
-> **📷 Screenshot needed:** DA Menu → Station Traders submenu.
-> _File: `da-scripts-menu-station-traders.png`_
-
-| Setting | Default | Effect |
-|---|---|---|
-| `ST_Enabled` | `true` | Master toggle. |
-| `ST_QuotaPerStation` | `20` | M-traders per trade station. Higher = denser logistics, more CPU cost. |
-| `ST_ReconcileIntervalMin` | `30` (min) | How often the reconcile pass runs (rebuild roster, cleanup dead entries). |
-| `ST_DebugVerbose` | `false` | Verbose `[ST]` log lines. |
-
-**Blacklist:** the 5 close-neighbor sectors do NOT get subordinate traders. This isn't in the menu — it's hardcoded via sector.macro in [`md/mlog_da_station_traders.xml`](https://github.com/mlog4/deadair_scripts). You can dump the runtime blacklist status via mlog_dev_bridge (developer feature).
-
-### Prod Station Traders (PST)
-
-**Purpose:** analog of ST for **production factories** (not trade stations). Each factory gets subordinate M-traders that specifically shuttle inputs/outputs for that recipe. Introduced in v3.0-beta1 Phase 4.
-
-> **📷 Screenshot needed:** DA Menu → Prod Station Traders submenu.
-> _File: `da-scripts-menu-prod-station-traders.png`_
+> **📷 Screenshot needed:** DA Menu → Extension submenu, showing all Extension_* sliders.
+> _File: `da-scripts-menu-extension.png`_
 
 | Setting | Default | Effect |
 |---|---|---|
-| `PST_Enabled` | `true` | Master toggle. |
-| `PST_QuotaPerStation` | `2` | M-traders per factory. Lower than ST because factories usually have fewer wares in play. |
-| `PST_ReconcileIntervalMin` | `60` (min) | Reconcile pass interval. |
-| `PST_DebugVerbose` | `false` | Verbose `[PST]` log lines. |
+| `Ext_Enable` | `true` | Master toggle. Off = no extension planning at all. |
+| `Ext_EnableLog` | `false` | Emit `[EXT]` debug lines to `script.log`. Turn on to diagnose why a build isn't happening; expect heavy spam. |
+| `Ext_AllowFactionTradeStation` | `true` | Allow expansion of **trade stations** (peaceful factions). |
+| `Ext_MinDistTradeStation` | `2` (jumps) | Minimum jump distance from the faction's existing trade station to allow a new one. `0` = allow same sector; `2` = must be at least 2 jumps away. Prevents clustering. |
+| `Ext_AllowFactionWharfShipyard` | `true` | Allow expansion of **wharfs and shipyards** for lawful factions. |
+| `Ext_MinDistFactionWharfShipyard` | `5` (jumps) | Minimum jump distance for new wharf/shipyard sites. Higher = more spread out. |
+| `Ext_AllowXenonWharfShipyard` | `true` | Allow Xenon to expand their own wharfs and shipyards. |
+| `Ext_MinDistXenonWharfShipyard` | `2` (jumps) | Minimum jump distance between Xenon shipyards. Lower than lawful factions since Xenon expand more aggressively. |
 
-### UI settings
+**Gameplay effect at recommended defaults:** every faction attempts to grow. Peaceful factions add trade stations in newly-secured sectors after ~5-15 game hours; wharfs after 20-40h. Xenon rebuild shipyards after you demolish one (unless you also cap-nuke their supply chain).
 
-**Purpose:** menu display preferences.
+**Turn off if:** you want a fixed-map, static-economy experience where factions never expand beyond their gamestart assets. Set all three `Allow*` flags to `false`.
 
-> **📷 Screenshot needed:** DA Menu → UI settings submenu.
-> _File: `da-scripts-menu-ui-settings.png`_
-
-| Setting | Default | Effect |
-|---|---|---|
-| `UI_TPSortByName` | `false` | Trade Optimizer list sorted by name instead of default order. |
-| `UI_InfoMilDisplayOption` | `1` | Military info display style (1 = compact, 2 = expanded, etc.). |
-| `UI_InfoEcoDisplayOption` | `1` | Economy info display style. |
-| `UI_MenuDebugEnable` | `0` | Menu debug — reveal internal setting names / IDs alongside labels. `0` = off. |
-
-### Cheat Menu
+### Mlog: Cheat
 
 **Purpose:** the developer / testing menu. Currently exposes the **Observer Satellite** spawner (an invisible always-friendly satellite you can drop for map reconnaissance without triggering the police-scan penalty of a normal sat).
 
-> **📷 Screenshot needed:** DA Menu → Cheat Menu → Observer Satellite button.
-> _File: `da-scripts-menu-cheat.png`_
+> **📷 Screenshot needed:** Mlog: Cheat submenu → Observer Satellite button.
+> _File: `menu-cheat.jpg`_
 
 Not a preset-controlled subsystem — you use it or you don't. If you never want to see it, ignore the menu row.
+
+### DA Information Menus
+
+Read-only report menus about the current galaxy state. Full catalog: see [Reports and info menus](#reports-and-info-menus) below.
 
 ## Presets system
 
@@ -399,11 +397,14 @@ Not a preset-controlled subsystem — you use it or you don't. If you never want
 | **All disabled** | `all_off` | Every master toggle OFF. Sub-features and DA rates stay at DA-vanilla defaults so re-enabling a subsystem later gives sane behavior. Vanilla-like experience with the mod loaded. |
 | **Debug (verbose logging)** | `debug` | All masters ON with every `*_DetailedDebug` flag ON. Useful for issue reporting and development sessions. Expect heavy `script.log` spam. |
 
-> **📷 Screenshot needed:** DA Menu → Presets — root view showing all 3 built-in presets.
-> _File: `da-scripts-menu-presets-root.png`_
+The Presets submenu in v3.0-beta1:
 
-> **📷 Screenshot needed:** Preset detail view — showing the description, author, schema version, and Apply button.
-> _File: `da-scripts-menu-presets-detail.png`_
+![Mlog: Configuration Presets — 3 built-in profiles with Apply buttons](/x4-modding-wiki/img/mods/deadair-scripts/menu-presets.jpg)
+
+Layout:
+- **Currently applied:** shows the ID of the last-applied preset (`(none)` if no preset applied yet, or the ID of whichever built-in was applied last).
+- **Built-in presets** — three rows: `All disabled`, `Debug (verbose logging)`, `Default (recommended)`. Each row = one **Apply** button.
+- **Footer note:** "Applying a preset overwrites current settings. You can still tweak individual values in the other menus after."
 
 **Apply mechanism:** clicking **Apply** on a preset writes every field in the preset's `$settings` table to the corresponding DA runtime variable. Fields NOT present in the preset are left untouched (so future extensions of the preset scope don't reset existing user tweaks). Applied state persists across saves; the `last_applied_id` is tracked so the menu can visually indicate which preset is active.
 
