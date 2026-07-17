@@ -65,7 +65,7 @@ A one-time bootstrap button (see [`md/deadairdynamicuniversemenus.xml:6254-6300`
 
 ## Preset scope
 
-7 of the 9 options are in [Configuration Presets](../../presets/) scope: Enable DA God, Station Build Interval Multiplier, both Allow-Build toggles, Attempt Recovery, Ship Building Station Upgrades, both debug flags. The **Station Max Module Setting slider** and the **Shortcut button** are not in preset scope.
+7 of the 9 options are in [Configuration Presets](../presets/) scope: Enable DA God, Station Build Interval Multiplier, both Allow-Build toggles, Attempt Recovery, Ship Building Station Upgrades, both debug flags. The **Station Max Module Setting slider** and the **Shortcut button** are not in preset scope.
 
 ## Known issue on X4 9.0 — staged construction
 
