@@ -31,7 +31,14 @@ const daScriptsForkSidebar = {
           ],
         },
         { slug: 'mods/deadair-scripts-fork/configuration/dynamic-news' },
-        { slug: 'mods/deadair-scripts-fork/configuration/evolution' },
+        {
+          label: 'DA Evolution',
+          collapsed: true,
+          items: [
+            { slug: 'mods/deadair-scripts-fork/configuration/evolution', label: 'Overview' },
+            { slug: 'mods/deadair-scripts-fork/configuration/evolution/xenon-ship-mods' },
+          ],
+        },
         { slug: 'mods/deadair-scripts-fork/configuration/fill' },
         {
           label: 'DA Jobs',

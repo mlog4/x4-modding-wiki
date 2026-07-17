@@ -87,6 +87,10 @@ At default rates, by the time Xenon reach level 10 each shipyard/wharf will have
 - **Build modules:** +5 (half rate)
 - **Miner subordinates:** +20 (as ships, tied to the yard)
 
+## Per-level Xenon ship mods — the deep detail
+
+Every one of the 60 equipment mods (10 levels × 6 categories) applied to newly built Xenon ships is documented in a dedicated reference page: **[Xenon ship mods per Evolution level](./xenon-ship-mods/)**. Includes forward thrust, hull mass, hull HP, shield capacity, weapon damage, radar cloak, and travel charge deltas at every tier, straight from `libraries/equipmentmods.xml`.
+
 ## Gameplay effect at recommended defaults
 
 - **10 game-hours:** Evolution level 1-2. Xenon ships slightly tougher than vanilla.
