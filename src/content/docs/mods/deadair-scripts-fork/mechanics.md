@@ -1,6 +1,6 @@
 ---
 title: Mechanics deep dive
-description: Under-the-hood architecture — modded-faction dynamic support, kill-based Xenon XP, save-safety, 6h Extension TTL, and engine integration points.
+description: Under-the-hood architecture — modded-faction dynamic support, time-based Xenon evolution mechanic (verified against source), save-safety, 6h Extension TTL, and engine integration points.
 sidebar:
   order: 3
 ---
@@ -18,9 +18,30 @@ Companion mods provide the actual expedition / SST job templates:
 
 Without a compat mod, the modded faction shows in the Jobs SST menu with **"No suitable ships available!"** — the roster query succeeds (faction is enumerated) but no matching job template exists to build ships from.
 
-## Kill-based Xenon Evolution XP
+## Xenon Evolution is time-based, not combat-based
 
-Xenon evolution "points" accrue on **kills only**, not damage. Ship-mode damage without a kill = no XP contribution. This is by design — chip-damage from repeated engagements shouldn't cascade into runaway evolution.
+The level-up mechanic in DA-Scripts is **pure wall-clock time**, not tied to kills, damage, or player military strength. Verified against `LibraryEvolutionCheckLevels` in [`md/deadairdynamicuniverse.xml`](https://github.com/mlog4/deadair_scripts) around line 3571:
+
+```xml
+<find_station_by_true_owner name="$EvolutionXenonStations"
+  faction="faction.xenon" canbuildships="true" checkoperational="true"/>
+<do_if value="$EvolutionXenonStations.count" min="1">
+  <do_if value="$DAEvolutionCurrentLevel lt $DAEvolutionMaxLevel">
+    <set_value name="$DAEvolutionCurrentLevel" exact="1" operation="add"/>
+    <set_value name="$DAEvolutionLastUpgradeTime" exact="player.age"/>
+  </do_if>
+</do_if>
+```
+
+The gating logic reduces to three conditions per tick:
+
+1. `player.age >= LastUpgradeTime + Evolution Interval` — the time gate (default 240 min = 4 h game time).
+2. Xenon still have **at least one operational shipyard or wharf** (`canbuildships=true`, `checkoperational=true`). Wipe every Xenon yard and evolution freezes; the moment they rebuild one, it resumes.
+3. Current level < max level cap.
+
+**Consequence:** the fastest way to slow Xenon evolution is to **destroy their shipyards + wharfs**. Grinding kills against Xenon fleets is irrelevant to the level counter — those kills matter for tactical progress and the Fleet-Size pool, not for level. The `Enable Evolution` toggle stops the tick entirely if you want to freeze the current level.
+
+Interval and level cap live in [DA Evolution → Evolution Interval / Max Level Setting](../configuration/evolution/).
 
 ## Save-safety
 

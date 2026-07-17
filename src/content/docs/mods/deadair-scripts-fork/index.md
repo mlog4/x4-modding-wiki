@@ -62,7 +62,7 @@ Every menu label below is a link to its own reference page:
 
 ## Deep dives
 
-Cross-cutting architecture and internals: **[Mechanics deep dive](./mechanics/)** — modded-faction dynamic support, kill-based Xenon XP, save-safety, 6h Extension TTL, engine integration points.
+Cross-cutting architecture and internals: **[Mechanics deep dive](./mechanics/)** — modded-faction dynamic support, time-based Xenon evolution mechanic, save-safety, 6h Extension TTL, engine integration points.
 
 ## Known conflicts
 

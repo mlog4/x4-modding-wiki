@@ -18,13 +18,17 @@ Layout:
 
 ## Mechanic
 
-Every `Evolution Interval` minutes DA evaluates Xenon losses vs player military strength. Loss data accumulates "evo points". When points cross a level threshold, the level counter increments and:
+Level advancement is **pure wall-clock time**, gated only on Xenon shipyard existence. Every `Evolution Interval` minutes, if the Xenon still have at least one operational shipyard or wharf and the current level is below the cap, the level increments by 1. Kills, damage dealt to Xenon fleets, and player military strength are **not** part of the level equation — see [Xenon Evolution is time-based, not combat-based](../../mechanics/#xenon-evolution-is-time-based-not-combat-based) for the verified source snippet.
 
-1. **Equipment mods unlock** — newly built Xenon ships from that point forward receive the next tier of mods across all six categories.
-2. **Shipyard/wharf modules spawn** — the `Xenon Growth Rates` fire, adding N storage / defence / solar / build / miner-related modules per level per yard.
+Each level-up triggers three consequences:
+
+1. **Equipment mods unlock** — newly built Xenon ships from that point forward receive the next tier of mods across all six categories (engine / ship / shield / weapon / missile / eco), one ware id per tier per category.
+2. **Shipyard/wharf modules spawn** — the `Xenon Growth Rates` fire on every operational yard, adding N storage / defence / solar / build / miner-related modules per level per yard.
 3. **Xenon Fleet pool grows** — if `Enable Evolution Xenon Fleets` is on, up to `Maximum Xenon Fleets Added` extra attack fleets can spawn at the configured Fleet Size.
 
 The menu doubles as a **live status display** — you can see the current level, the pending build queue, and how many fleets are already active without leaving the options screen.
+
+**Practical implication:** to slow evolution, destroy Xenon shipyards/wharfs (freezes the ticker until they rebuild one). To stop it, set `Enable Evolution` to `Disabled`. Grinding kills against Xenon fleets does not slow the level counter.
 
 ## DA Evolution Options
 
@@ -97,4 +101,4 @@ You want the vanilla Xenon difficulty curve. Set **Enable Evolution** to `Disabl
 
 - [DA Jobs — Expeditions](../jobs/) — the Xenon Fleet pool interacts with the vanilla expedition system.
 - [DA God](../god/) — station module additions from Evolution route through the God engine, so `God_MaxModuleSetting` still applies as an outer cap.
-- [Kill-based Xenon Evolution XP](../../mechanics/#kill-based-xenon-evolution-xp) — the point-accrual mechanic.
+- [Xenon Evolution is time-based, not combat-based](../../mechanics/#xenon-evolution-is-time-based-not-combat-based) — verified level-up gate from the source.
