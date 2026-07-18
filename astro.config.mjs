@@ -160,6 +160,33 @@ export default defineConfig({
               ],
             },
             { slug: 'mods/deadair-eco-no-wares-fork' },
+            {
+              label: 'Galactic Heroes',
+              collapsed: true,
+              items: [
+                { slug: 'mods/galactic-heroes', label: 'Overview' },
+                {
+                  label: 'Mechanics',
+                  collapsed: true,
+                  items: [
+                    { slug: 'mods/galactic-heroes/mechanics/xp-and-stars' },
+                    { slug: 'mods/galactic-heroes/mechanics/death-cycle' },
+                    { slug: 'mods/galactic-heroes/mechanics/recovery-points' },
+                    { slug: 'mods/galactic-heroes/mechanics/lineage-succession' },
+                  ],
+                },
+                {
+                  label: 'Archetypes',
+                  collapsed: true,
+                  items: [
+                    { slug: 'mods/galactic-heroes/archetypes/admiral' },
+                    { slug: 'mods/galactic-heroes/archetypes/pirate-raider' },
+                    { slug: 'mods/galactic-heroes/archetypes/khaak-hive-lord' },
+                    { slug: 'mods/galactic-heroes/archetypes/khaak-seeder' },
+                  ],
+                },
+              ],
+            },
             { slug: 'mods/apus-compat' },
             { slug: 'mods/etw-compat' },
           ],
