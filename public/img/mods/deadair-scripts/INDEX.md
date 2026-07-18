@@ -43,6 +43,7 @@ Master reference for every screenshot used on `mods/deadair-scripts-fork.md`. Up
 | `bp-misc.jpg` | `20260717164100_1.jpg` | BP Progress → Misc — 9 entries with Venture Platform + Wide Area Sensor Array completed | configuration/blueprint-analysis/progress-menus/misc |
 | `menu-trade-optimizer.jpg` | `20260717165515_1.jpg` | Mlog Trade Optimizer — 3 sections: Options (4 fields) + Station Subordinate Traders (4 fields + Discovered:23/Fleet:371) + Production Station Traders (4 fields + Discovered:345/Fleet:403) | configuration/trade-optimizer |
 | `menu-extension.jpg` | `20260717165607_1.jpg` | Mlog Extension — 8 options (3 sections: TS/WH-SY/Xenon) + 3 active-builds tables (TS:2 rows, WH-SY WH=3 SY=3:6 rows, Xenon 4/4:4 rows) + Clear buttons | configuration/extension |
+| `menu-cheat.jpg` | `20260717170404_1.jpg` | Mlog Cheat — Observer mode toggle (Enabled) + status footer "Active observer sats: 152" | configuration/cheat |
 | `dw-increase-relations.jpg` | `20260717141204_1.jpg` | Increase Relations — Buy +5 Relation via Diplomatic Favors | configuration/dynamic-war/increase-relations |
 | `dw-decrease-relations.jpg` | `20260717141210_1.jpg` | Decrease Relations — Buy -5 Relation via Diplomatic Favors | configuration/dynamic-war/decrease-relations |
 | `dw-unlock-relations.jpg` | `20260717141216_1.jpg` | Unlock Relations — Locked/Unlocked per faction | configuration/dynamic-war/unlock-relations |
@@ -67,7 +68,6 @@ Reference list — user shoots as they play through each menu. Slug ready in doc
 | `menu-evolution.jpg` | DA Evolution submenu — main toggles + level cap | [Xenon Evolution](#xenon-evolution) |
 | `menu-evolution-rates.jpg` | DA Evolution → Job Rate sliders | [Xenon Evolution — rates](#job-rate-multipliers) |
 | `menu-fill.jpg` | DA Fill submenu | [Station Fill](#station-fill-da-fill) |
-| `menu-cheat.jpg` | Mlog: Cheat submenu — Observer Satellite button + any other cheat toggles | [Cheat Menu](#cheat-menu) |
 | `menu-info-root.jpg` | DA Information Menus — root list of reports | [Reports and info menus](#reports-and-info-menus) |
 
 **Info reports (opened from DA Information Menus):**
