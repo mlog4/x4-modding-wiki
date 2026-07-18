@@ -165,4 +165,4 @@ All values above come straight from [`libraries/equipmentmods.xml`](https://gith
 
 - [DA Evolution](../) — the main configuration menu.
 - [Xenon Evolution is time-based, not combat-based](../../../mechanics/#xenon-evolution-is-time-based-not-combat-based) — how levels advance.
-- [Xenon Evolution status report](../../../reports/evolution-status/) — the in-game read-only report for the current tier.
+- [DA Evolution main menu](../) — live level counter and per-tier fleet stats are shown in the main menu, not a separate report page.

@@ -44,6 +44,19 @@ Master reference for every screenshot used on `mods/deadair-scripts-fork.md`. Up
 | `menu-trade-optimizer.jpg` | `20260717165515_1.jpg` | Mlog Trade Optimizer — 3 sections: Options (4 fields) + Station Subordinate Traders (4 fields + Discovered:23/Fleet:371) + Production Station Traders (4 fields + Discovered:345/Fleet:403) | configuration/trade-optimizer |
 | `menu-extension.jpg` | `20260717165607_1.jpg` | Mlog Extension — 8 options (3 sections: TS/WH-SY/Xenon) + 3 active-builds tables (TS:2 rows, WH-SY WH=3 SY=3:6 rows, Xenon 4/4:4 rows) + Clear buttons | configuration/extension |
 | `menu-cheat.jpg` | `20260717170404_1.jpg` | Mlog Cheat — Observer mode toggle (Enabled) + status footer "Active observer sats: 152" | configuration/cheat |
+| `menu-info-root.jpg` | `20260717172828_1.jpg` | DA Information Menus root — 13-entry list | reports (index) |
+| `report-military-ship-count.jpg` | `20260717172831_1.jpg` | Military Ship Count — 23-faction matrix + Galaxy-wide totals (Xenon 4598 dominant) | reports/military-ship-count |
+| `report-economic-ship-station-count.jpg` | `20260717172835_1.jpg` | Economic Ship/Station Count — same faction matrix with Stations column (Xenon 362 stations top) | reports/economic-ship-station-count |
+| `report-ware-stored-wanted.jpg` | `20260717172839_1.jpg` | Ware Stored/Wanted (Alliance of the Word) — 18 wares with visual excess/shortage bars, tooltip on Field Coils | reports/ware-stored-wanted |
+| `report-station-storage.jpg` | `20260717172844_1.jpg` | Station Storage (Alliance of the Word) — Producer / Consumer columns with visual bars | reports/station-storage |
+| `report-production-module-count.jpg` | `20260717172855_1.jpg` | Production Module Count (Terran Protectorate) — 11 module types, Terran Energy Cell 224 dominant | reports/production-module-count |
+| `report-trader-profit-menu.jpg` | `20260717172908_1.jpg` | Trader Profit Menu — Enable toggle + Sort by dropdown (Total lifetime estimated profit) + tooltip | reports/trader-profit-menu |
+| `report-ship-details-menu.jpg` | `20260717172914_1.jpg` | Ship Details Menu (Terran) — Specialisation matrix (Fight/Aux/Trade/Build/Mine/Salvage/Dismantling) + XL/L/M/S ship-type breakdowns | reports/ship-details-menu |
+| `report-sector-details-menu.jpg` | `20260717172925_1.jpg` | Sector Details Menu — Adventure's Promise (empty) / Antigone Memorial (34 stations) / Argon Prime (Xenon captured!) / Asteroid Belt (Terran) / Atiya's Misfortune I (Xenon w/ 1 hostile) | reports/sector-details-menu |
+| `report-station-calculator.jpg` | `20260717172944_1.jpg` | Station Calculator — Options (Workforce/Secondary toggles) + empty Station Modules + Production & Consumption table | reports/station-calculator |
+| `report-trade-stations.jpg` | `20260717172948_1.jpg` | Mlog Trade Stations Report — 21 trade stations across 7 factions with M subs / Cont M / L/S M columns | reports/trade-stations |
+| `report-war-history.jpg` | `20260717172953_1.jpg` | War History — 5 conflict pairs (ANT-TEL, ARG-TEL, ARG-TER "Military Campaign", FRF-ZYA balanced, GDPAR-FRF) with Fatigue/Score/Kills breakdowns | reports/war-history |
+| `report-fill-statistics.jpg` | `20260717172958_1.jpg` | Fill Statistics (from Information Menus entry) — same content as DA Fill's own sub-menu | reports/fill-statistics |
 | `dw-increase-relations.jpg` | `20260717141204_1.jpg` | Increase Relations — Buy +5 Relation via Diplomatic Favors | configuration/dynamic-war/increase-relations |
 | `dw-decrease-relations.jpg` | `20260717141210_1.jpg` | Decrease Relations — Buy -5 Relation via Diplomatic Favors | configuration/dynamic-war/decrease-relations |
 | `dw-unlock-relations.jpg` | `20260717141216_1.jpg` | Unlock Relations — Locked/Unlocked per faction | configuration/dynamic-war/unlock-relations |
@@ -68,17 +81,6 @@ Reference list — user shoots as they play through each menu. Slug ready in doc
 | `menu-evolution.jpg` | DA Evolution submenu — main toggles + level cap | [Xenon Evolution](#xenon-evolution) |
 | `menu-evolution-rates.jpg` | DA Evolution → Job Rate sliders | [Xenon Evolution — rates](#job-rate-multipliers) |
 | `menu-fill.jpg` | DA Fill submenu | [Station Fill](#station-fill-da-fill) |
-| `menu-info-root.jpg` | DA Information Menus — root list of reports | [Reports and info menus](#reports-and-info-menus) |
-
-**Info reports (opened from DA Information Menus):**
-
-| Slug (planned) | Shows | Where in doc |
-|---|---|---|
-| `report-tradestations.jpg` | Trade Stations Report — multiple factions visible with 8-col layout | [Trade Stations Report](#trade-stations-report) |
-| `report-extension.jpg` | Extension progress report — observed clusters + Built lists | [Extension progress reports](#extension-progress-reports) |
-| `report-evolution.jpg` | Xenon Evolution status report | [Xenon Evolution status](#xenon-evolution-status) |
-| `report-war-stats.jpg` | Dynamic War stats report | [Dynamic War stats](#dynamic-war-stats) |
-| `report-bp-progress.jpg` | Blueprint scan progress | [Blueprint scan status](#blueprint-scan-status) |
 
 **Miscellaneous in-game visuals:**
 
