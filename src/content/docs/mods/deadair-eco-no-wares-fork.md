@@ -46,14 +46,16 @@ Use the **[standard DA Eco fork](/x4-modding-wiki/mods/deadair-eco-fork/)** if y
 
 ## Deep dive: functionality & game mechanics
 
-Same feature set and mechanics as the standard Eco fork, minus the DA custom wares. See **[DA Eco (standard) deep dive](/x4-modding-wiki/mods/deadair-eco-fork/#deep-dive-functionality--game-mechanics)** for full descriptions of:
+Same feature set and mechanics as the standard Eco fork, minus the DA custom wares. See the standard Eco fork's dedicated pages for full descriptions:
 
-- Station enhancements (DAIncreaseStartingStorage, DAImproveHabitation, DAImproveSMDocks, DAImproveStationLayouts)
-- Improved defence platforms
-- Recipe adjustments (hullparts → claytronics, advanced composites)
-- Workforce effects
-- Faction Job Helper integration
-- Xenon reclaimer + drain-stations
+- **[Mechanics overview](/x4-modding-wiki/mods/deadair-eco-fork/mechanics/)** — 3 core design principles + architecture map
+- **[Storage sizing](/x4-modding-wiki/mods/deadair-eco-fork/mechanics/storage-sizing/)** — DAIncreaseStartingStorage + DYN formula + type-floor + BoostNonFactoryStorage
+- **[Station improvements](/x4-modding-wiki/mods/deadair-eco-fork/mechanics/station-improvements/)** — racial connectors, habitation, docks, defence
+- **[Xenon specifics](/x4-modding-wiki/mods/deadair-eco-fork/mechanics/xenon-specifics/)** — Xenon Ship Construction Manager + Xenon jobs
+- **[Library changes](/x4-modding-wiki/mods/deadair-eco-fork/reference/library-changes/)** — per-file patch summary (wares.xml recipe changes, jobs, baskets, etc.)
+- **[mlog6 fork fixes](/x4-modding-wiki/mods/deadair-eco-fork/reference/mlog6-fork-fixes/)** — the 7 XPath restorations
+
+Note: **[DA custom wares](/x4-modding-wiki/mods/deadair-eco-fork/mechanics/da-wares/)** is the only page that doesn't apply — this variant removes those wares entirely.
 
 ### What's different from the standard fork
 

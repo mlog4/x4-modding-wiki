@@ -133,7 +133,32 @@ export default defineConfig({
             { slug: 'mods' },
             daScriptsForkSidebar,
             { slug: 'mods/deadair-scripts-no-wares-fork' },
-            { slug: 'mods/deadair-eco-fork' },
+            {
+              label: 'DeadAir Eco (mlog4 fork)',
+              collapsed: true,
+              items: [
+                { slug: 'mods/deadair-eco-fork', label: 'Overview' },
+                {
+                  label: 'Mechanics',
+                  collapsed: true,
+                  items: [
+                    { slug: 'mods/deadair-eco-fork/mechanics', label: 'Overview' },
+                    { slug: 'mods/deadair-eco-fork/mechanics/da-wares' },
+                    { slug: 'mods/deadair-eco-fork/mechanics/storage-sizing' },
+                    { slug: 'mods/deadair-eco-fork/mechanics/station-improvements' },
+                    { slug: 'mods/deadair-eco-fork/mechanics/xenon-specifics' },
+                  ],
+                },
+                {
+                  label: 'Reference',
+                  collapsed: true,
+                  items: [
+                    { slug: 'mods/deadair-eco-fork/reference/library-changes' },
+                    { slug: 'mods/deadair-eco-fork/reference/mlog6-fork-fixes' },
+                  ],
+                },
+              ],
+            },
             { slug: 'mods/deadair-eco-no-wares-fork' },
             { slug: 'mods/apus-compat' },
             { slug: 'mods/etw-compat' },
