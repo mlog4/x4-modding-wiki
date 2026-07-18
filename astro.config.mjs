@@ -173,6 +173,9 @@ export default defineConfig({
                     { slug: 'mods/galactic-heroes/mechanics/death-cycle' },
                     { slug: 'mods/galactic-heroes/mechanics/recovery-points' },
                     { slug: 'mods/galactic-heroes/mechanics/lineage-succession' },
+                    { slug: 'mods/galactic-heroes/mechanics/perks' },
+                    { slug: 'mods/galactic-heroes/mechanics/faction-missions' },
+                    { slug: 'mods/galactic-heroes/mechanics/satellite-sale' },
                   ],
                 },
                 {
@@ -180,9 +183,12 @@ export default defineConfig({
                   collapsed: true,
                   items: [
                     { slug: 'mods/galactic-heroes/archetypes/admiral' },
+                    { slug: 'mods/galactic-heroes/archetypes/coordinator' },
+                    { slug: 'mods/galactic-heroes/archetypes/engineer' },
                     { slug: 'mods/galactic-heroes/archetypes/pirate-raider' },
                     { slug: 'mods/galactic-heroes/archetypes/khaak-hive-lord' },
                     { slug: 'mods/galactic-heroes/archetypes/khaak-seeder' },
+                    { slug: 'mods/galactic-heroes/archetypes/saboteur' },
                   ],
                 },
               ],

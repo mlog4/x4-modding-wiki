@@ -17,7 +17,7 @@ The design goal is **emergent drama from system rules**, not authored quest cont
 
 - **X4 Foundations 9.0** or newer (currently developed against 9.0 beta)
 - **[SirNukes Mod Support APIs](https://www.nexusmods.com/x4foundations/mods/503)** — required for the Heroes menu (Simple Menu API)
-- **[DeadAir Scripts (mlog4 fork)](/x4-modding-wiki/mods/deadair-scripts-fork/)** and **[DeadAir Economy Overhaul (mlog4 fork)](/x4-modding-wiki/mods/deadair-eco-fork/)** — strongly recommended companions (Pirate Order Board sources faction Reputation Points from DA-Eco signals; without them, task generation falls back to a slow synthetic tick)
+- **[DeadAir Scripts (mlog4 fork)](/x4-modding-wiki/mods/deadair-scripts-fork/)** and **[DeadAir Economy Overhaul (mlog4 fork)](/x4-modding-wiki/mods/deadair-eco-fork/)** — recommended companions for the fuller ecosystem (economy signals, faction wars, station growth). Not required — **Heroes runs independently**: RP, faction relations, task board and hero decisions are all self-contained. No DA hooks. Heroes and DA can coexist without integration.
 - **All Egosoft DLCs** — all optional; mod adapts to what you have
 
 ### Install
@@ -54,9 +54,11 @@ Top-level items:
 |---|---|
 | **Roster** | Every living hero: name, faction, archetype, star rank, current activity, home sector. Filter by faction / archetype / star. |
 | **Hero detail** (click a row) | Biography, XP breakdown, kill count, RP balance, flagship + escort composition, current activity, Track button. |
-| **Order Board** | Pirate-only. Active tasks per pirate faction, faction savings, claim history. |
-| **KIA archive** _(planned)_ | Every dead hero — final stats, cause of death, name on the wall. |
-| **Settings** _(planned)_ | `$crit_fail_chance` d100 dial (cinematic / balanced / grimdark / roulette), tick rate overrides, debug logging. |
+| **Order Board (Доска приказов)** | Faction-level task board. Not pirate-only — every faction has a board with archetype-specific order types (admiral: station/fishing/recon/satellite/hunting; coordinator: commandeer ops; raider: trader ambush / satellite deploy; Kha'ak: hive_development / swarm_summon / resonance). See per-archetype pages. |
+| **KIA archive** | Every hero permanently lost. Final stats, cause of death, `$kia_at` timestamp. Records are frozen — no resurrection. |
+| **Retired archive** | Heroes mustered out by [faction succession](../galactic-heroes/mechanics/lineage-succession/) events (faction merger, dissolution). Not the same as KIA. |
+| **Perks catalog** | Full list of all defined perks (common / rare / epic tiers) with unlock rules and effects. See [Perks system](./mechanics/perks/). |
+| **Faction Missions** _(via own submenu)_ | Player-facing build contracts to raise a faction's hero cap or unlock corp archetypes. See [Faction Missions](./mechanics/faction-missions/). |
 
 Every hero has a **Track button** — attaches a live objective marker to the flagship via vanilla Guidance API. Same tracking overlay you'd get from a story mission.
 
@@ -72,24 +74,30 @@ Every mechanic gets its own page below. Read in the order shown for the full mod
 
 ### Mechanics
 
-- **[XP and star progression](./mechanics/xp-and-stars/)** — kill weights per class, XP thresholds, what each star unlocks, memorial preservation across recovery
+- **[XP and star progression](./mechanics/xp-and-stars/)** — kill weights per class, XP thresholds, full ★1–★5 fleet scaling matrix, memorial preservation across clones
 - **[Death cycle (d100 roll)](./mechanics/death-cycle/)** — the roll, the outcomes (KIA / wounded / unscathed), configurable difficulty
 - **[Recovery Points](./mechanics/recovery-points/)** — RP tick rates per rank, ship rebuild costs, the 200-cap, why rebuilds take at least 25 minutes
-- **[Lineage succession](./mechanics/lineage-succession/)** — pool templates, KIA archive, when a legend dies and who takes over
+- **[Lineage succession — clone system](./mechanics/lineage-succession/)** — pool templates, clone-of-founder ("Walter Korkov (Clone #1)"), KIA archive, perks inheritance across clones
+- **[Perks system](./mechanics/perks/)** — 28 perks in 3 tiers (common / rare / epic), authored per template, auto-unlock at 10M cr milestone, LEARN new at 20M/50M/100M by tier
+- **[Faction Missions (player-created)](./mechanics/faction-missions/)** — build Trade Hubs and Reserve Shipyards to earn cash + raise a faction's hero cap
+- **[Satellite Sale to Factions](./mechanics/satellite-sale/)** — sell your own basic/advanced satellites to any faction for intel on enemy fleets, stations, and Kha'ak infrastructure
 
 ### Archetypes
 
-- **[Admiral](./archetypes/admiral/)** — faction military leader; multi-sector campaigns; home-space defence
-- **[Pirate Raider](./archetypes/pirate-raider/)** — Order Board contractor; 4 task types; faction savings; per-hero cooldowns
-- **[Kha'ak Hive Lord](./archetypes/khaak-hive-lord/)** — warfront commander; counter-attack; hive rebuild
-- **[Kha'ak Seeder](./archetypes/khaak-seeder/)** — swarm expansion; drops new hives in undefended sectors
+- **[Admiral](./archetypes/admiral/)** — faction military leader; multi-sector campaigns; home-space defence + ★3+ combat decisions (outpost defense, брандеры, заманивание)
+- **[Military Coordinator](./archetypes/coordinator/)** — HQ-based faction strategist; commandeers scattered military jobs; ★-scaled capacity 5/10/20/30; mission-driven cascade defense → expansion → personal → XP
+- **[Engineer](./archetypes/engineer/)** — non-combat archetype; travels between own-faction stations; +20/30/50/80% production efficiency buffs at ★1-4 via cargo injection
+- **[Pirate Raider](./archetypes/pirate-raider/)** — freelance criminal; civilian target focus (`purpose.trade` / `.mine` / `.build`); Order Board dispatch + own economic outputs (Joint Raid ★3+, Pirate Base ★4+, base ship spawn cron)
+- **[Kha'ak Hive Lord](./archetypes/khaak-hive-lord/)** — psychic hive matriarch; commands scattered Kha'ak fighters (capacity 8/15/25/40); strike > gather > probe > harassment cascade
+- **[Kha'ak Seeder](./archetypes/khaak-seeder/)** — distributed network commander; drops outposts + hives; per-tier abilities ladder (★1 small summon → ★4 big summon apex); teleport-as-escape
+- **[Scout-Saboteur (shared)](./archetypes/saboteur/)** — asymmetric tactical primitive; one-way S-class deploys 2-10 mines, self-destructs; used by raider / coordinator / hive_lord
 
 ## Design philosophy — why the mod is thin
 
 Under the hood, the mod is deliberately minimal. Explicitly out of scope:
 
 - **No new ships, weapons, or station modules.** Heroes use whatever the faction already owns.
-- **No new ware types, economy nodes, or supply chains.** Faction Reputation Points plug into existing economy signals (DA-Eco hooks).
+- **No new ware types, economy nodes, or supply chains.** Faction task pool and hero RP are fully self-contained — no DA-Eco integration required.
 - **No new diplomatic mechanics.** Future Diplomat archetype will *call* vanilla diplomatic operations, not replace them.
 - **No custom save format.** Heroes are vanilla quest-NPCs with the standard yellow marker. Persistence is what X4 already does for Boso Ta.
 - **No custom UI framework.** Simple Menu API handles everything.
@@ -111,14 +119,13 @@ Result: **minimal engine footprint, low frame cost, deep integration with X4's l
 
 Honest list. None are blockers, but they are real:
 
-- **Pirate Order Board needs DA-Eco** for meaningful task flow. On vanilla install, task generation is very slow (falls back to synthetic tick).
-- **Performance tested up to ~30 active heroes.** Theoretical cap ~160 (16 factions × 10). No measurements past 30.
-- **Xenon archetype** currently uses Admiral templates — mechanically works but narratively wrong. Proper Xenon design pending.
-- **Coordinator, Engineer, ~10 more archetypes** designed in `concepts/` but unbuilt.
-- **Perk system** — designed in C-009, unbuilt.
-- **Player rep gating** — heroes visible at rep ≥ 0, bio at ≥ 10, live tracking at ≥ 20 — spec'd but not enforced yet.
-- **Modded faction support** — Apus / ETW / Kaiori don't get heroes yet.
+- **Performance tested up to ~45 active heroes across 22 factions** (multi-day soak 2026-07-04). No measurements past 60.
+- **Xenon** currently uses Admiral templates — mechanically works and their fleets look distinctive (XL_K flagships, no S/M escort — they use pure Xenon composition), but narrative model isn't Xenon-native. Proper Xenon-flavour design pending.
+- **Perks Phase 2 (game-event unlock triggers)** — the framework exists and is used by the auto-unlock at 10M cr milestone + LEARN system, but the "unlock on kill of 500 enemies" / "unlock on age 24h" style is deferred. Perks currently activate via cash milestone, LEARN purchase, or authored `$initially_active=true` on the pool template.
+- **Modded faction support** (Apus / ETW / Kaiori) — architecture supports it, but hand-authored hero pools for these factions aren't shipped yet. Base-game and DLC factions are fully covered.
+- **Player rep gating on hero visibility** — heroes visible at rep ≥ 0, bio at ≥ 10, live tracking at ≥ 20 — spec'd but not enforced yet. Currently all heroes visible unconditionally.
 - **Localization** — text mostly inline. EN + RU baseline. Full t-file extraction pending.
+- **Retired archive UI** — populated only by faction merger events (which don't fire yet at any regular rate); mostly empty in current saves.
 
 ## Links and source
 
