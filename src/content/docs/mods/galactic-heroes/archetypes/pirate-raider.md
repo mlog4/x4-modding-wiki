@@ -64,7 +64,7 @@ Barbarossa @ ★ satisfies `fleet_full` immediately after spawn, so raids trigge
 
 ## Order Board — the pirate task board
 
-The Order Board (Доска приказов) is faction-level, not archetype-specific — every faction has a board. But the **raider order types** are unique to pirates:
+The Order Board is faction-level, not archetype-specific — every faction has a board. But the **raider order types** are unique to pirates:
 
 | Task type | Requirement | Reward |
 |---|---|---|

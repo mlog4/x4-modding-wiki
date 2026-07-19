@@ -1,6 +1,6 @@
 ---
 title: Admiral archetype
-description: Faction military leader. Priority-chain decision cascade (retreat / replenish / retreat / attack / guard). Star-scaled fleet up to XL carrier. ★3+ combat decisions (outpost defense, брандеры, заманивание).
+description: Faction military leader. Priority-chain decision cascade (retreat / replenish / retreat / attack / guard). Star-scaled fleet up to XL carrier. ★3+ combat decisions (outpost defense, fireships, luring).
 ---
 
 The **Admiral** is the mod's original archetype and the most straightforward one. They fly a real flagship. They lead a real escort. They make territorial decisions on their own faction's behalf — patrol home space, respond to distress, take fights at high rank, retreat when hurt.
@@ -95,7 +95,7 @@ flowchart LR
 
 Extends `replenish` to any friendly station with repair facilities within combat zone — not just home. Loop terminates when enemies cleared or hero sufficiently damaged.
 
-### Брандеры (fireships) (★3+, high risk to subordinates)
+### Fireships (★3+, high risk to subordinates)
 
 **Trigger:** Admiral outnumbered AND has sub-fighters to spare (escort count ≥ minimum).
 
@@ -105,7 +105,7 @@ Same primitive as [Scout-Saboteur](../saboteur/) but used as a **combat decision
 
 **Survival-first compliant** — the admiral does NOT dive on the mine field; the escorts do. Admiral stays behind command distance, watches from safe range.
 
-### Заманивание (luring) (★3+, medium risk to bait)
+### Luring (★3+, medium risk to bait)
 
 **Trigger:** Pursued by superior force; a friendly ally trap (patrol / station) exists in a nearby own-faction sector.
 

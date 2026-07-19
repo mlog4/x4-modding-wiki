@@ -54,7 +54,7 @@ Top-level items:
 |---|---|
 | **Roster** | Every living hero: name, faction, archetype, star rank, current activity, home sector. Filter by faction / archetype / star. |
 | **Hero detail** (click a row) | Biography, XP breakdown, kill count, RP balance, flagship + escort composition, current activity, Track button. |
-| **Order Board (Доска приказов)** | Faction-level task board. Not pirate-only — every faction has a board with archetype-specific order types (admiral: station/fishing/recon/satellite/hunting; coordinator: commandeer ops; raider: trader ambush / satellite deploy; Kha'ak: hive_development / swarm_summon / resonance). See per-archetype pages. |
+| **Order Board** | Faction-level task board. Not pirate-only — every faction has a board with archetype-specific order types (admiral: station/fishing/recon/satellite/hunting; coordinator: commandeer ops; raider: trader ambush / satellite deploy; Kha'ak: hive_development / swarm_summon / resonance). See per-archetype pages. |
 | **KIA archive** | Every hero permanently lost. Final stats, cause of death, `$kia_at` timestamp. Records are frozen — no resurrection. |
 | **Retired archive** | Heroes mustered out by [faction succession](../galactic-heroes/mechanics/lineage-succession/) events (faction merger, dissolution). Not the same as KIA. |
 | **Perks catalog** | Full list of all defined perks (common / rare / epic tiers) with unlock rules and effects. See [Perks system](./mechanics/perks/). |
@@ -84,7 +84,7 @@ Every mechanic gets its own page below. Read in the order shown for the full mod
 
 ### Archetypes
 
-- **[Admiral](./archetypes/admiral/)** — faction military leader; multi-sector campaigns; home-space defence + ★3+ combat decisions (outpost defense, брандеры, заманивание)
+- **[Admiral](./archetypes/admiral/)** — faction military leader; multi-sector campaigns; home-space defence + ★3+ combat decisions (outpost defense, fireships, luring)
 - **[Military Coordinator](./archetypes/coordinator/)** — HQ-based faction strategist; commandeers scattered military jobs; ★-scaled capacity 5/10/20/30; mission-driven cascade defense → expansion → personal → XP
 - **[Engineer](./archetypes/engineer/)** — non-combat archetype; travels between own-faction stations; +20/30/50/80% production efficiency buffs at ★1-4 via cargo injection
 - **[Pirate Raider](./archetypes/pirate-raider/)** — freelance criminal; civilian target focus (`purpose.trade` / `.mine` / `.build`); Order Board dispatch + own economic outputs (Joint Raid ★3+, Pirate Base ★4+, base ship spawn cron)
