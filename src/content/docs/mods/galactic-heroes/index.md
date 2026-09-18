@@ -120,10 +120,10 @@ Seventeen supra-faction investment funds that finance, manage and insure but pro
 ### Archetypes
 
 - **[Admiral](./archetypes/admiral/)** — faction military leader; multi-sector campaigns; home-space defence + ★3+ combat decisions (outpost defense, fireships, luring)
-- **[Military Coordinator](./archetypes/coordinator/)** — HQ-based faction strategist; commandeers scattered military jobs; ★-scaled capacity 5/10/20/30; mission-driven cascade defense → expansion → personal → XP
+- **[Military Coordinator](./archetypes/coordinator/)** — HQ-based faction strategist; commandeers scattered military jobs; capacity scales with rank: one captured fleet per star; mission-driven cascade defense → expansion → personal → XP
 - **[Engineer](./archetypes/engineer/)** — non-combat archetype; travels between own-faction stations; +20/30/50/80% production efficiency buffs at ★1-4 via cargo injection
 - **[Pirate Raider](./archetypes/pirate-raider/)** — freelance criminal; civilian target focus (`purpose.trade` / `.mine` / `.build`); Order Board dispatch + own economic outputs (Joint Raid ★3+, Pirate Base ★4+, base ship spawn cron)
-- **[Kha'ak Hive Lord](./archetypes/khaak-hive-lord/)** — psychic hive matriarch; commands scattered Kha'ak fighters (capacity 8/15/25/40); strike > gather > probe > harassment cascade
+- **[Kha'ak Hive Lord](./archetypes/khaak-hive-lord/)** — psychic hive matriarch; commands scattered Kha'ak fighters (RP-gated, flat ceiling of 100); strike > gather > probe > harassment cascade
 - **[Kha'ak Seeder](./archetypes/khaak-seeder/)** — distributed network commander; drops outposts + hives; per-tier abilities ladder (★1 small summon → ★4 big summon apex); teleport-as-escape
 - **[Scout-Saboteur (shared)](./archetypes/saboteur/)** — asymmetric tactical primitive; one-way S-class deploys 2-10 mines, self-destructs; used by raider / coordinator / hive_lord
 

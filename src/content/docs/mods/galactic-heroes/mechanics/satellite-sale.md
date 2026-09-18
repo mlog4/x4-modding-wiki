@@ -111,5 +111,5 @@ The reward table lives in `MlogSatSaleInit` init actions in `mlog_heroes_satelli
 
 ## Related mechanics
 
-- [Faction Missions](../faction-missions/) — another player-driven revenue path
+- [Faction Missions](../faction-missions/) — another player-driven revenue path, designed but not in the release
 - [Perks system](../perks/) — cash rewards from satellite sales feed hero cash → LEARN progression

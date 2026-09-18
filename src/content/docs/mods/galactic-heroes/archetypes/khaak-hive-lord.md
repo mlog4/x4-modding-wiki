@@ -1,6 +1,6 @@
 ---
 title: Kha'ak Hive Lord archetype
-description: "Psychic hive matriarch — commander counterpart to the Seeder. Capacity 8/15/25/40 at ★1-4. Offensive-first cascade — hive defense, strike, gather, probe, harassment. No PCS integration; Kha'ak-native."
+description: "Psychic hive matriarch — commander counterpart to the Seeder. Swarm growth is RP-gated, with a flat ceiling of 100 ships. Offensive-first cascade — hive defense, strike, gather, probe, harassment. No PCS integration; Kha'ak-native."
 ---
 
 Vanilla Kha'ak are **trickle annoyance** — random raids, no concentration, easy to counter once you've fielded a decent patrol. The **Kha'ak Hive Lord** turns them into a **deliberate menace**. Under a Hive Lord, scattered Kha'ak fighters aggregate into coordinated strikes on high-value enemy targets. When you see Kha'ak going after your Argon shipyard specifically (instead of random freighters), you know one is alive.
@@ -26,16 +26,19 @@ Hive Lord is a **hive consciousness shard** — a distributed psychic presence t
 
 ## Command capacity per star rank
 
-**Higher than Coordinator** — Kha'ak fighters are individually weaker than human military, so it takes more of them to project real force:
+**There is no per-star capacity.** The whole power-cap system — power weights, a cap per star, defence and attack power thresholds — was removed. What bounds a swarm today is three ordinary things:
 
-| ★ | Max subordinates | RP tick baseline | Comparable Kha'ak force |
-|---|---|---|---|
-| ★ | **8 ships** | 5 | Small raid group |
-| ★★ | **15 ships** | 6 | Sector incursion |
-| ★★★ | **25 ships** | 8 | Multi-sector campaign |
-| ★★★★ | **40 ships** | 10 | Mass strike — serious threat for 1-2 sectors |
+| Limit | Value |
+|---|---|
+| RP cost to commandeer one ship | **10 RP** |
+| Hard ceiling per Hive Lord | **100 ships** |
+| Supply | how many loose Kha'ak ships the galaxy actually has |
 
-At ★★★★, a Hive Lord can concentrate 40 Kha'ak fighters + a few M-frigate escort on a single target. That's a real invasion. Without a Hive Lord, those 40 fighters would be spread across 8 sectors doing random flybys.
+The ceiling is a performance guard, not a balance number: X4's commander-and-escort order cost scales with fleet size, and very large subordinate groups hurt the frame rate.
+
+So a Hive Lord grows as fast as its Recovery Points allow, and a rich one can concentrate far more than a star rating would suggest. Its internal state machine steps at counts of **10, 20 and 50** rather than at stars. Without a Hive Lord those same ships would be spread across eight sectors doing random flybys; with one, they arrive together.
+
+⚠ An earlier design used a per-star ladder of 8 / 15 / 25 / 40 with its own RP curve. If you have read those figures, that is where they came from — they are not in the mod now.
 
 ## Decision cascade (offensive-first, first-match wins)
 
@@ -99,7 +102,7 @@ The Hive Lord's `gather` decision uses **local Kha'ak scan** to find wandering f
 
 - Every HMW tick, the Hive Lord runs a galaxy-wide scan for Kha'ak ships without an active commander
 - Those ships are **added to the Hive Lord's subordinate list** at no RP cost (they weren't earning anyone else RP anyway)
-- Subordinate list is capped at rank capacity (8 / 15 / 25 / 40)
+- The subordinate list has no per-rank cap. The per-star capacity was removed with the whole power-cap system; what limits a swarm now is the RP each commandeer costs, how many loose Kha'ak ships exist, and a flat hard ceiling of **100 ships per hive lord** to keep X4's fleet-order cost bounded.
 - Excess fighters remain wild (vanilla behaviour)
 
 This is **NOT commandeering** in the vanilla PCS sense — Kha'ak don't have a job system. The mod simulates aggregation via ownership swap in the mod's subordinate registry.

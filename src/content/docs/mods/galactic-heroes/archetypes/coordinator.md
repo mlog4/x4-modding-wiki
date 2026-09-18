@@ -1,6 +1,6 @@
 ---
 title: Military Coordinator archetype
-description: HQ-based faction strategist. Commandeers scattered military jobs into coordinated operations. ★-scaled capacity 5/10/20/30. Mission-first cascade defense → expansion → personal safety → XP.
+description: HQ-based faction strategist. Commandeers whole faction fleets into coordinated operations, one fleet per star rank. Mission-first cascade — defense, expansion, personal safety, XP.
 ---
 
 The problem the Coordinator solves: **vanilla faction defence is chaotic**. Faction patrols react to distress signals via the PCS (Patrol Craft System) logic, but that reaction is loose. You see a lone Argon patrol lose to a Xenon K in a border sector while three other Argon patrols burn cycles two clusters over. There's no strategic hand.
@@ -24,16 +24,21 @@ Result: while the vanilla PCS moves ships to distress signals in ~30-60 sec, the
 
 ## Command capacity per star rank
 
-| ★ | Max subordinates | RP tick baseline |
-|---|---|---|
-| ★ | **5 ships** | 5 |
-| ★★ | **10 ships** | 6 |
-| ★★★ | **20 ships** | 8 |
-| ★★★★ | **30 ships** | 10 |
+The Coordinator holds **whole fleets, not individual ships**, and the number it may hold at once is simply **its star count**:
 
-Higher star = wider strategic reach + more ops budget per tick.
+| ★ | Fleets held at once |
+|---|---|
+| ★ | 1 |
+| ★★ | 2 |
+| ★★★ | 3 |
+| ★★★★ | 4 |
+| ★★★★★ | 5 |
 
-**Subordinate composition** is what the faction has jobs for — S fighter jobs, M frigate jobs, L destroyer jobs. The Coordinator doesn't buy ships; they **borrow** from the job pool and return them when the op completes.
+That is the live figure on the hero page — a ★★ Coordinator between engagements reads `0 / 2 fleets deployed`.
+
+⚠ An earlier design counted **individual subordinates**, on a 5 / 10 / 20 / 30 ladder with its own RP curve. Both are gone. What the Coordinator captures now is a **fleet leader and everything under it**, so one slot is worth far more than one ship and the cap is correspondingly small; and its RP ticks on the same 1 / 2 / 4 / 8 / 16 per-star curve as every other hero (see [Recovery Points](../../mechanics/recovery-points/)).
+
+**Fleet composition** is whatever the faction has jobs for — S fighter jobs, M frigate jobs, L destroyer jobs. The Coordinator doesn't buy ships; it **borrows** them and returns them when the op completes.
 
 ## Decision cascade (mission-first, first-match wins)
 
@@ -119,6 +124,6 @@ Active in a healthy save (per the "Active heroes by faction" screenshot in the o
 ## Related pages
 
 - [Admiral archetype](../admiral/) — the parallel, mobile-based archetype (Admirals fly, Coordinators sit)
-- [Kha'ak Hive Lord](../khaak-hive-lord/) — the Kha'ak analog of a Coordinator, capacity 8/15/25/40 (higher because Kha'ak fighters individually weaker)
+- [Kha'ak Hive Lord](../khaak-hive-lord/) — the Kha'ak analog of a Coordinator. Its swarm is not capped per star: growth is RP-gated with one flat ceiling of 100 ships
 - [Scout-Saboteur](../saboteur/) — a special-ops primitive the Coordinator can dispatch
-- [Faction Missions](../../mechanics/faction-missions/) — the Reserve Shipyard mission is what lets a player raise the Coordinator's faction hero cap by +1
+- [Faction Missions](../../mechanics/faction-missions/) — the Reserve Shipyard mission was to be how a player raised this faction's hero cap by +1. It is **not in the release**: the reward hook survives in the slot arithmetic and nothing can increment it.

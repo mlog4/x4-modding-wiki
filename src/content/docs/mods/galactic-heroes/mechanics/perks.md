@@ -1,6 +1,6 @@
 ---
 title: Perks system
-description: Static catalog of ~28 perks in 3 tiers (common / rare / epic). Authored per pool template, auto-unlock at cash milestones, LEARN new at 20M/50M/100M by tier, preserved across clone respawns.
+description: Static catalog of 28 perks in 3 tiers (common / rare / epic). Authored per pool template, auto-unlock at cash milestones, LEARN new at 20M/50M/100M by tier, preserved across clone respawns.
 ---
 
 Star ranks give a hero a **fleet**. Perks give them a **personality**. Two ★★★ Argon admirals with identical Kowalski-lineage fleets can play very differently if one has **Lucky** (-10% KIA chance) + **Master Logistic** (+100% RP accrual) and the other has **Dedicated Hunter** (+100% XP from combat) + **Capital Ship Expert** (+2 L escorts).
@@ -15,8 +15,8 @@ Perks are categorized into three tiers with different LEARN costs:
 
 | Tier | Perks (count) | LEARN cost | Character |
 |---|---|---|---|
-| **Common** | ~15 | **20 M cr** | Small quality-of-life bumps: +50% XP, +50% RP, +1 escort slot, +200 spawn bonus |
-| **Rare** | ~11 | **50 M cr** | Meaningful power upgrades: +100% XP, +100% RP, doubled escort tier, -10% KIA |
+| **Common** | 15 | **20 M cr** | Small quality-of-life bumps: +50% XP, +50% RP, +1 escort slot, +200 spawn bonus |
+| **Rare** | 11 | **50 M cr** | Meaningful power upgrades: +100% XP, +100% RP, doubled escort tier, -10% KIA |
 | **Epic** | 2 | **100 M cr** | Career-defining: Legendary Veteran (+1000 XP at spawn, instant ★3), Tactical Genius (-50% XP threshold) |
 
 The tier determines **cost** and **prio order** for the LEARN system. Higher-tier perks are learned first once eligible. Prio also breaks ties within a tier (each perk in the catalog has a `$prio` field).
@@ -31,9 +31,22 @@ Each perk in the catalog has:
 - **tier** — `common` / `rare` / `epic`
 - **prio** — priority number for LEARN ordering (higher = learned first)
 - **applies_to** — archetype filter (`admiral`, `raider`, `engineer`, `coordinator`, `hive_lord`, etc. — some perks are universal, some archetype-specific)
-- **effects** — string list of runtime modifiers (`spawn_xp_bonus:200`, `rp_rate_multiplier:0.5`, `kia_chance_modifier:-10`, `expected_s_bonus:2`)
+- **effects** — a **table** of named modifiers, not a string list: `$effects = table[$kia_chance_bonus = -10]`
 
-Effects apply automatically at 5 runtime sites: **RpAccrualWorker** (RP tick math), **KillWorker** (XP gain math), **FleetLossWatcher** (KIA chance math), **LevelUpWorker** (fleet expand math), **Engineer service action** (buff pct / duration / cost math).
+There are **18 distinct effect keys** across the 28 perks, and each is read at the one place it applies:
+
+| Effect key | Read by |
+|---|---|
+| `$xp_gain_modifier`, `$spawn_xp_bonus`, `$promotion_threshold_modifier` | the XP and promotion math |
+| `$rp_rate_modifier`, `$spawn_rp_bonus`, `$escort_rebuild_cost_modifier` | the RP tick and the rebuild |
+| `$kia_chance_bonus` | the death roll |
+| `$expected_s_bonus`, `$expected_m_bonus`, `$expected_l_bonus` | the expected fleet composition |
+| `$buff_pct_modifier`, `$buff_duration_modifier`, `$service_cost_modifier`, `$service_cd_modifier` | the engineer's station service |
+| `$faction_cap_bonus` | the faction's hero-slot arithmetic |
+| `$spawn_weight_modifier`, `$spawn_min_active` | whether and when the hero spawns at all |
+| `$khaak_grief_recipient` | the Kha'ak RP-on-loss path |
+
+A perk never reaches into combat. Every key above lands on a mod-side number.
 
 ## How a hero gets a perk
 
@@ -62,9 +75,12 @@ At spawn, the mod copies this list into the bearer's `$perks_state`. Perks with 
 When a hero's `$money` register reaches **10 M cr** (through gifts, faction favours, mission rewards), all locked perks on the template automatically become active. This is the primary "grind" path — the player can raise a hero's cash through gifts and see the whole authored list unlock at once.
 
 Cash flow into a hero:
-- **Gift buttons** on the hero detail page: +100 k / +500 k / +1 M / +5 M cr per click (also raises faction favours: +1 / +5 / +10 / +50)
-- **Faction Missions** (see [Faction Missions](../faction-missions/)) — cash reward from completed player-facing contracts goes to the faction's hero (Coordinator or top admiral)
-- **Kill-based faction favours** — later expansion
+
+- **Its own kills.** Every kill pays the hero personally, from 10 000 cr for a fighter up to 1 000 000 for a station — see [XP and stars](../xp-and-stars/). This is the path that runs without the player.
+- **Gift buttons** on the hero detail page: +100 k / +500 k / +1 M / +5 M cr per click, which also raise faction favours by +1 / +5 / +10 / +50.
+- **Task rewards.** A hero is paid an advance when it takes an [order-board](../order-board/) task and the balance on completion.
+
+⚠ Older versions of this page listed **Faction Missions** as a cash source. Those missions are [not in the release](../faction-missions/), so they contribute nothing today.
 
 Once cash ≥ 10 M cr, the template's locked perks auto-unlock in one batch. This is the design "milestone" moment — a lineage the player has invested in unlocks its full initial capability.
 
@@ -87,11 +103,11 @@ The **highest-prio** perk (from the pool of `$applies_to` matches not yet in the
 1. Spawn — Logistic active (from template, `$initially_active=true`), Lucky and Master Logistic locked
 2. Gift +5 M cr → hero cash now ~5 M. Nothing changes yet.
 3. Gift +5 M cr again → hero cash now ~10 M. Auto-unlock fires: **Lucky + Master Logistic activate**. All 3 authored perks now active.
-4. Gift +20 M cr → hero cash now ~30 M. LEARN eligible: common tier at 20 M cr. **Attentive (highest common-tier prio matching `admiral`)** learned. Cost deducted from hero's cash.
-5. Gift +20 M cr → hero cash now ~30 M. LEARN eligible: common tier at 20 M cr. **Capital Ship Commander** learned. Cost deducted.
-6. ... progressive purchases up to rare and epic tiers.
+4. Gift +20 M cr → hero cash ~30 M. LEARN eligible at the common tier's 20 M. **Attentive** — the highest common-tier prio matching `admiral` — is learned and **20 M is deducted**, leaving ~10 M.
+5. Gift +20 M cr → hero cash ~30 M again. **Capital Ship Commander** learned, 20 M deducted, ~10 M left.
+6. ... and so on, upward through rare and epic.
 
-**Note:** LEARN uses the hero's own cash (`$money` register), not the player's. Gifts from the player raise the hero's cash. Faction Missions rewards feed the same pool.
+**Note:** LEARN spends the **hero's** cash (`$money`), not the player's. Gifts and the hero's own kill earnings both feed that same balance, and the cost is deducted from it — which is why each purchase needs the balance topped back up above the tier price.
 
 ## Preservation across clone respawns
 
@@ -170,4 +186,4 @@ The lineage's **institutional weight** — the accumulated perks — survives th
 - [XP and star progression](../xp-and-stars/) — the star tier is what perks like Squad Commander, Leader, Capital Ship Expert are keyed off
 - [Recovery Points](../recovery-points/) — the RP tick that Logistic / Master Logistic modify
 - [Lineage succession — the clone system](../lineage-succession/) — how LEARN investments survive clone respawns
-- [Faction Missions](../faction-missions/) — cash rewards that feed hero cash → auto-unlock → LEARN
+- [Faction Missions](../faction-missions/) — a cash path that was designed and then stripped from the release

@@ -124,6 +124,10 @@ The Retired archive is a separate track — heroes mustered out by faction succe
 | **120 (default)** | Balanced — the faction is noticeably weaker for ~2 game-hours after a big loss |
 | 240 | Grimdark — a KIA'd lineage stays vacant for a game-work-shift, faction feels the loss |
 
+⚠ **Not a slider.** Like the [death roll](../death-cycle/), this is a script constant with no row on the Settings screens — changing it means editing `mlog_heroes.xml`.
+
+⚠ **And the release value is not what you are playing.** The current alpha ships with the debug flag on, which sets the vacancy to **10 minutes**, not 120. If successors appear far faster than this page describes, that is why.
+
 ## What the player sees
 
 **Immediately on KIA:**

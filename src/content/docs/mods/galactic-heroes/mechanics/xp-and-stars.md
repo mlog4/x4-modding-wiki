@@ -3,7 +3,7 @@ title: XP and star progression
 description: How heroes gain experience, class-based kill weights, star rank thresholds, and what unlocks at each ★. Concrete numbers for balance discussion.
 ---
 
-Every hero has an XP counter and a star rank (★ → ★★★★★). XP goes up when the hero's fleet kills something meaningful. Higher stars mean a tougher flagship, a bigger escort screen, and (once shipped) per-archetype perks.
+Every hero has an XP counter and a star rank (★ → ★★★★★). XP goes up when the hero's fleet kills something meaningful. Higher stars mean a tougher flagship, a bigger escort screen, and access to the [perks](../perks/) that gate on rank.
 
 ## What counts as a kill
 
@@ -19,21 +19,40 @@ XP is awarded when either **the hero's flagship** or **any escort ship subordina
 
 ## Kill weights per class
 
-| Target class | XP awarded | Design intent |
-|---|---|---|
-| `class.ship_xs` (drones, escape pods) | **0** | Filtered — prevents drone-farm cheese |
-| Mass-traffic NPCs (taxis, civilian filler) | **0** | Filtered — only real combat counts |
-| `class.ship_s` (fighters, Xenon N) | **1** | Baseline unit |
-| `class.ship_m` (corvettes, Xenon P) | **5** | 5× S value |
-| `class.ship_l` (destroyers, Xenon Terraformer) | **25** | 25× S value |
-| `class.ship_xl` (capitals, Xenon K) | **100** | 100× S value — big kills matter |
-| `class.station` | **200** | Highest value — station kills are the top achievement |
+| Target class | XP | Credits to the hero |
+|---|---:|---:|
+| `class.ship_xs` (drones, escape pods) | **0** | 0 |
+| Mass-traffic NPCs (taxis, civilian filler) | **0** | 0 |
+| `class.ship_s` (fighters, Xenon N) | **1** | 10 000 |
+| `class.ship_m` (corvettes, Xenon P) | **2** | 25 000 |
+| `class.ship_l` (destroyers, Xenon Terraformer) | **8** | 125 000 |
+| `class.ship_xl` (capitals, Xenon K) | **16** | 500 000 |
+| `class.station` | **20** | 1 000 000 |
+| `class.module` / `class.buildmodule` | **2** | 10 000 |
 
-Weights are tuned so:
+**Every kill also pays the hero personally.** That second column is not decoration: a hero's private balance is what buys [perks](../perks/), and the tier prices run to tens of millions. Cracking stations is how a hero affords an epic perk; shooting fighters is not.
 
-- One rare XL kill ≈ 20 routine S kills — the mod values "big-target work" over kill-count grinding.
-- Stations are the highest reward — a hero who cracks a Xenon station gets a career milestone.
-- Drone-swarm sectors don't inflate stats.
+### The weights were cut, hard
+
+An earlier build used **S 1, M 5, L 25, XL 100, station 200, module 25** and progression was far too fast — a single admiral reached ★★★, a thousand XP, inside three hours of play. Everything above S was divided down until the third star was a milestone again.
+
+If you have read those older numbers somewhere, that is what they were. They are not the mod's numbers now.
+
+### Archetype changes what a kill is worth
+
+| Archetype | XP from its fleet's kills |
+|---|---|
+| Admiral, coordinator, engineer, hive lord | class weight × **1.0** |
+| Pirate raider | class weight × **0.5**, floored at 1 |
+| Kha'ak seeder | **0 from this path** |
+
+The raider is halved because kills are not what a raider is for — plunder is, and that pays separately.
+
+The seeder is zeroed here deliberately. Its XP comes from a **separate watcher awarding +1 per Kha'ak ship killed anywhere**, so crediting its fleet kills too would count the same event twice. One consciousness, one XP path.
+
+### Perks scale it again
+
+XP gain is multiplied by the hero's own perks — **Attentive** +50%, **Dedicated Hunter** +100% — so two heroes in the same battle do not bank the same number.
 
 ## Star rank thresholds
 
@@ -44,6 +63,10 @@ Weights are tuned so:
 | ★★★ | 1,000 XP |
 | ★★★★ | 10,000 XP |
 | ★★★★★ | 100,000 XP |
+
+**Those thresholds are also per-hero.** Two rare and epic perks lower them: **Quick Learner** −25% and **Tactical Genius** −50% XP needed for the next star. A Tactical Genius reaches ★★★ at 500 XP, not 1 000.
+
+Two more perks skip the bottom of the ladder outright at spawn: **Veteran** grants +200 XP, which is ★★ immediately, and the epic **Legendary Veteran** grants +1 000, which is ★★★ from the first tick.
 
 Progression is **logarithmic** — each rank takes ~10× more XP than the previous. Practical implications:
 
@@ -56,13 +79,19 @@ Progression is **logarithmic** — each rank takes ~10× more XP than the previo
 
 Flagship and escort composition auto-scale with rank. Details are per-archetype (see [Admiral](../../archetypes/admiral/), [Pirate Raider](../../archetypes/pirate-raider/), [Coordinator](../../archetypes/coordinator/), [Engineer](../../archetypes/engineer/), etc.). The **default admiral scaling** used as a baseline:
 
-| Rank | Flagship | S escorts | M escorts | L escorts | Notes |
-|---|---|---:|---:|---:|---|
-| ★ | L destroyer | 4 | 0 | 0 | Starting fleet |
-| ★★ | L destroyer | 8 | 4 | 0 | Add frigate wing |
-| ★★★ | XL carrier | 16 | 4 | 1 | Carrier promotion |
-| ★★★★ | XL carrier | 32 | 8 | 2 | Veteran fleet |
-| ★★★★★ | Per-faction identity | 32+ | 8+ | 2+ | Each faction chooses: keep carrier + scale escorts, swap to a signature capital, or introduce a second flagship (see C-029) |
+| Rank | Flagship | S | M | L | Aux | Notes |
+|---|---|---:|---:|---:|---|---|
+| ★ | L destroyer | 4 | 0 | 0 | — | Starting fleet |
+| ★★ | L destroyer | 8 | 4 | 0 | — | Add frigate wing |
+| ★★★ | XL carrier | 16 | 4 | 1 | — | Carrier promotion |
+| ★★★★ | XL carrier | 32 | 8 | 2 | resupplier | Veteran fleet — and the first rank with a support ship |
+| ★★★★★ | XL carrier | 48 | 16 | 8 | resupplier | The L wing quadruples: eight destroyers, not two |
+
+**★5 is a real tier with real numbers**, not a placeholder. The step that matters is the L column going 2 → 8 — a ★★★★★ admiral fields a destroyer squadron in its own right, on top of the carrier.
+
+**The auxiliary ship arrives at ★4** and is easy to miss because it is not an escort: it is a resupply vessel that follows the fleet.
+
+Counts here are the **base**. A hero's perks add to them — *Squad Commander* is +2 S from the first star, *Capital Ship Commander* +1 L, *Heavy Squad Expert* +4 M — which is why a ★★ admiral in game may show 10 S escorts where this table says 8.
 
 **Faction-flavour applies:** the flagship macro is drawn from the faction's own catalog, so an Argon admiral gets a Behemoth-line destroyer; a Teladi admiral gets an Osaka-line; a Paranid admiral gets a Zeus-line. This is why the same "L destroyer" row looks different for different admirals in the roster.
 
@@ -72,8 +101,8 @@ Flagship and escort composition auto-scale with rank. Details are per-archetype 
 
 - **Pirate Raider** starts on M corvette + S fighter, promotes to L destroyer + M frigate at ★3, XL Erlking-tier at ★4-5. Smaller and more mobile than admiral.
 - **Engineer** is **M-miner-flagship only across all ranks** (no capital promotion) — a small S-fighter escort scales 0→4 at ★1-★4. See [Engineer archetype](../../archetypes/engineer/).
-- **Coordinator has no personal escort** — flagship is stationary at HQ. Instead, ★-scaled `subordinates` capacity (5 / 10 / 20 / 30) determines how many faction military jobs they can commandeer at once. See [Coordinator archetype](../../archetypes/coordinator/).
-- **Kha'ak Hive Lord** parallels Coordinator but for scattered Kha'ak: capacity 8 / 15 / 25 / 40. See [Hive Lord archetype](../../archetypes/khaak-hive-lord/).
+- **Coordinator has no personal escort** — its flagship is stationary at HQ. What scales with rank is how many whole faction **fleets** it may hold at once: one per star. See [Coordinator archetype](../../archetypes/coordinator/).
+- **Kha'ak Hive Lord** parallels the Coordinator but for scattered Kha'ak, and has no per-star cap at all: each ship commandeered costs RP, and one flat ceiling of 100 ships applies. See [Hive Lord archetype](../../archetypes/khaak-hive-lord/).
 - **Kha'ak Seeder** flagship stays M Kha'ak across all ranks; escort screen grows ★2=2S → ★3=2M+4S → ★4=4M+8S. Fleet is small because seeder power is in the **network** (hives + outposts), not in the flagship. See [Seeder archetype](../../archetypes/khaak-seeder/).
 
 ## Perks — the personality layer on top of stars
@@ -105,7 +134,7 @@ Result: heroes who survive many battles become progressively more powerful; hero
 
 The hero detail page shows:
 
-- Current stars (★ / ★★ / ★★★ / ★★★★)
+- Current stars, as a filled/unfilled bar out of five (`**---  (2/5)`)
 - XP total
 - Progress bar to next rank
 - Kill count

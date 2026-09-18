@@ -20,23 +20,29 @@ This is a deliberate MVP simplification. The clean flow is: **flagship dies → 
 When the mod's `MlogHeroesFleetLossWatcher` fires with `event.object == hero.$flagship`, the mod rolls:
 
 ```
-roll = random.range(0, 99)
+crit = clamp($crit_fail_chance + perk modifiers, 0, 100)
+roll = random 1..100
 
-if roll < $crit_fail_chance
-    → KIA
-elif roll < (100 - $crit_fail_chance)
-    → wounded
-else
-    → unscathed
+if   roll <= crit          → KIA
+elif roll <= (100 - crit)  → wounded
+else                       → unscathed
 ```
 
-The distribution is symmetric around the wounded bucket. With default `$crit_fail_chance = 20`, the split is:
+The distribution is symmetric around the wounded bucket. With the default `$crit_fail_chance = 20` and no perks:
 
 | Roll | Outcome | Probability |
 |---|---|---|
-| 0–19 | KIA | 20% |
-| 20–79 | Wounded | 60% |
-| 80–99 | Unscathed | 20% |
+| 1–20 | KIA | 20% |
+| 21–80 | Wounded | 60% |
+| 81–100 | Unscathed | 20% |
+
+### Perks move the dial, per hero
+
+`crit` is not a constant. It is the setting **plus whatever the hero's own perks contribute**, clamped to 0–100.
+
+One perk does this today: **[Lucky](../perks/)** — rare, available to all six archetypes — carries `$kia_chance_bonus = -10`. A Lucky hero rolls **10% KIA / 80% wounded / 10% unscathed**, halving its chance of dying on any given flagship loss.
+
+So 20% KIA is the galaxy default, not a fact about the hero you are watching. Check its perk list before assuming the odds.
 
 ## Outcomes
 
@@ -65,9 +71,11 @@ The distribution is symmetric around the wounded bucket. With default `$crit_fai
 - Same state changes as wounded, but shorter cooldown: **30 game-minutes**.
 - Rationale: faction quickly issues a new command to a proven officer; less institutional shock.
 
+⚠ **Those are release figures.** The current alpha ships with the debug flag on, and in a debug build the cooldowns are **4 minutes wounded, 2 minutes unscathed** and the succession vacancy is **10 minutes** rather than 120. A hero coming back far faster than this page says is the build, not a bug.
+
 ## Configurable difficulty
 
-The KIA / Unscathed % is set by `$crit_fail_chance` in `MlogHeroesInit` actions. Valid range 0–50 (values above 50 flip the distribution).
+The KIA / Unscathed share is set by `$crit_fail_chance` in `MlogHeroesInit`. Values above 50 flip the distribution, so 0–50 is the useful range.
 
 | `$crit_fail_chance` | Distribution | Feel |
 |---|---|---|
@@ -76,7 +84,9 @@ The KIA / Unscathed % is set by `$crit_fail_chance` in `MlogHeroesInit` actions.
 | 35 | 35% / 30% / 35% | "Grimdark" — heroes die often, high succession churn |
 | 50 | 50% / 0% / 50% | "Russian roulette" — every flagship loss is either final or clean escape |
 
-The dial is surfaced in-game: **Galactic Heroes → Settings → Heroes**. Like every other constant in the mod it is declared data with a default, a range and a hint, so the slider and the driver read the same value.
+⚠ **Unlike most of the mod's tuning, this one is not a slider.** It is a script constant, and there is no death-roll row anywhere on the Settings screens — changing it means editing `mlog_heroes.xml`. Much of the rest of the mod is declared data with a default, a range and a hint; the death roll is not, and that is a gap rather than a decision.
+
+What the Settings → Heroes screen does carry for this system is the **Succession test** bench — buttons that simulate a succession, force-spawn an admiral, or audit every hero flagship — plus per-hero *(debug) Force loss → KIA / Wounded / Unscathed* buttons on the hero detail page. Those force an outcome rather than rolling for it, which is how the three branches get exercised without waiting for a real death.
 
 ## Why symmetric 20/60/20?
 

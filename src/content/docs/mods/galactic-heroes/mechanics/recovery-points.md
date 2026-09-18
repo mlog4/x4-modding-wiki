@@ -1,99 +1,113 @@
 ---
 title: Recovery Points
-description: Recovery Points (RP) are the resource that funds hero fleet rebuilding. Tick rates, ship costs, the 200-cap, and why full rebuild takes at least 25 minutes.
+description: Recovery Points fund a hero's fleet rebuilding — a doubling rate per star, a 200 cap, ship costs from 5 to 200 RP, and a rebuild that spends the whole balance in one tick rather than trickling.
 ---
 
-**Recovery Points (RP)** are the mod-side currency that funds a hero's fleet rebuilding after loss. Every living hero accumulates RP over game time; every ship the mod builds for a hero costs RP. The system is designed to make recovery **gradual**, not instant — a faction that just lost an admiral's fleet takes time to put a replacement in the field.
+**Recovery Points (RP)** are the mod-side currency that funds a hero's fleet rebuilding after loss. Every living hero accumulates RP over game time; every ship the mod builds for a hero costs RP. Recovery is meant to be **gradual** — a faction that just lost an admiral's fleet takes time to put a replacement in the field.
 
 ## Accumulation
 
-Every hero in state `active` or `lost_flagship` (with cooldown elapsed) gets RP on a **5-minute game-time cron tick**. The rate scales with star rank:
+Every hero in state `active` or `lost_flagship`, once its cooldown has elapsed, gets RP on a cron tick. The rate doubles with every star:
 
-| Hero rank | RP per tick (5 min) |
+| Hero rank | RP per tick | ×2 at home on replenish |
+|---|---|---|
+| ★ | 1 | 2 |
+| ★★ | 2 | 4 |
+| ★★★ | 4 | 8 |
+| ★★★★ | 8 | 16 |
+| ★★★★★ | 16 | 32 |
+
+**The fifth star doubles like the other four.** It briefly did not: when ★5 was added it was given the same 8/tick as ★4, which made the most expensive star in the game buy nothing at all on the RP curve. The flat step was removed and the rule restored.
+
+A hero on the **replenish** decision at its home station earns at **double rate** — the strongest reason a damaged hero goes home rather than loitering. Perks modify the rate further: *Logistic* is +50%, *Master Logistic* +100%.
+
+**Cap = 200 RP.** Anything past it is discarded. That is deliberate: it forces a choice about which ship to rebuild and when to hold a hero back, and it puts a ceiling on how much fleet can appear at once.
+
+### The tick interval
+
+| | Interval |
 |---|---|
-| ★ | 10 |
-| ★★ | 20 |
-| ★★★ | 40 |
-| ★★★★ | 80 |
+| Release build | 5 minutes |
+| Debug build | 2 minutes |
 
-Higher-rank heroes accumulate faster — the design assumes senior officers have more faction support behind them.
-
-**Cap = 200 RP.** Additional RP is thrown away — you cannot stockpile forever. This is deliberate: it forces the player and the mod to make choices about which ship to rebuild first, when to hold a wounded hero back to bank RP, and when to commit to expensive rebuilds.
+⚠ **The current alpha ships with the debug flag on**, so the build you can install today ticks every **2 minutes**, not 5. The hero detail screen shows the live figure next to the balance — read it there rather than assuming.
 
 **RP does not tick during:**
 
-- **Death cooldown** — the period between a wounded / unscathed outcome and when the hero starts rebuilding. See [Death cycle](../death-cycle/).
-- **Lineage vacancy** — the period between KIA and when a successor spawns. The RP register does not exist yet for the future bearer.
+- **Death cooldown** — between a wounded or unscathed outcome and the start of rebuilding. See [Death cycle](../death-cycle/).
+- **Lineage vacancy** — between KIA and a successor spawning. The RP register does not exist yet for the future bearer.
 
 ## Ship costs
-
-Each ship class has an RP cost when the mod builds it for a hero:
 
 | Ship class | RP cost |
 |---|---|
 | S (fighter) | 5 |
-| M (corvette) | 10 |
+| M (corvette / frigate) | 10 |
 | L (destroyer) | 40 |
-| XL (capital) | 100 |
+| XL | 100 |
+| XL — Xenon K destroyer | 100 |
+| XL — Xenon I carrier | 150 |
+| XL battleship — the Asgard | 200 |
 
-Ship cost **includes full crew** — captain, service, gunners. The mod handles it. The player never needs to supply the faction with a boarding party or logistics chain.
+The last three exist because some flagships are not interchangeable. A Xenon hero flies a **K** at ★1–2 and swaps to an **I** at ★3–4, so the two need different prices; the Asgard is the Terran and Segaris ★5 flagship and is the single most expensive thing the mod will build.
 
-## Rebuild pace
+Cost **includes full crew** — captain, service, gunners. The player never supplies a faction with a boarding party or a logistics chain.
 
-The spend logic is deliberate — the mod builds **at most one ship per tick**. On every tick, for each hero whose state allows rebuild:
+Perks scale these too: *Quartermaster* is −25% on escort rebuilds and *Master Quartermaster* −50%. The result is floored at 1 RP, so no discount ever makes a ship free.
 
-1. If the hero has no flagship → try to build the flagship first. If `$recovery_points >= flagship_cost` → create ship, deduct RP, add to fleet group.
-2. Otherwise, if the escort is short of expected count → try to build **the largest missing escort ship** (L before M before S). If enough RP → build, deduct.
-3. Otherwise → nothing this tick. RP keeps accumulating up to the 200 cap.
+## Rebuild pace — drain, not trickle
 
-Result: a hero at ★★★★ who needs to rebuild a full **1 L + 4 M + 4 S** fleet (40 + 40 + 20 = 100 RP total ignoring escorts sub-costs) still takes at least **9 rebuild ticks = 45 minutes of game time** even if RP is in surplus. There is no instant respawn.
+**A rebuild tick spends as much of the balance as it can**, rebuilding ship after ship in one pass until the RP runs out or the fleet is full. It is not one ship per tick.
 
-This creates the "faction is regrouping" feel:
+The order within a pass is largest first: L escorts, then M, then S, so a hero that has banked enough gets its heavy ships back before its fighters.
 
-- The player sees the hero on the map with just their flagship and one escort.
-- Ten minutes later, another escort has joined.
-- Twenty minutes later, the second capital ship arrives.
-- The fleet slowly re-forms over the course of an in-game hour.
+This is why a hero's fleet appears to return in **bursts** rather than dribbling in. A ★★★★ hero sitting at 8 RP per tick accumulates quietly for several ticks with nothing visible happening, then crosses an escort cost and three ships appear at once.
 
-## Interaction with star rank
-
-Higher-rank heroes recover faster in two dimensions:
-
-- **RP tick is higher** (★★★★ = 80/tick vs ★ = 10/tick, 8× multiplier)
-- **They still need more expensive ships** (★★★★ builds up to XL @ 100 RP; ★ tops out at L @ 40 RP)
-
-Net effect: a ★★★★ hero recovers a full top-tier fleet in ~2 hours of game time; a ★ hero recovers a basic fleet in ~1 hour. Both feel meaningful because higher-rank losses are also bigger in absolute value.
+That is the current model and it replaced a trickle: the earlier design built at most one ship per tick, which at the old rates made a full rebuild a predictable, very long wait. If you remember reading that here, it was true and is not any more.
 
 ## Interaction with death cycle
 
-- After a **wounded** outcome: 120 min cooldown → RP tick resumes → rebuild starts.
-- After an **unscathed** outcome: 30 min cooldown → RP tick resumes → rebuild starts.
-- After a **KIA** outcome: no rebuild. The successor (if any) starts with 0 RP and gets a **full starting fleet as an initial grant** (bypassing the RP system for the first spawn). Then normal accumulation resumes.
+| Outcome | Cooldown before RP resumes |
+|---|---|
+| **Wounded** | 120 min |
+| **Unscathed** | 30 min |
+| **KIA** | no rebuild — see below |
 
-The initial-grant rule for new bearers is a design compromise. Without it, every succession would leave the faction with no admiral for another hour. With it, the faction always has a functional officer as soon as the lineage cooldown expires.
+(In a debug build those are 4 and 2 minutes.)
 
-## Player intervention _(planned)_
+After a **KIA** there is no rebuild at all. The successor starts with 0 RP and is granted a **full starting fleet outright**, bypassing RP for that first spawn. Without that rule every succession would leave the faction with no officer for another hour on top of the succession cooldown; with it, the faction has a functional officer as soon as the lineage cooldown expires.
 
-The concept doc calls out a future feature: **player supplies RP directly** to a favoured hero to accelerate their recovery. Not yet shipped. The interaction path will likely be a "Sponsor recovery" button on the hero detail page, gated behind player rep with the faction.
+## What rank actually buys
 
-Once shipped, it will let the player:
+Higher rank recovers faster in two ways at once, and spends more:
 
-- Save a favoured admiral from a slow rebuild
-- Gain rep with the faction for the sponsorship
-- Feel investment in the individual character, not just the faction
+- **The tick doubles** — ★★★★★ accrues 16× what ★ does, 32× at home.
+- **The fleet is bigger and heavier**, so there is more to pay for, and the expensive classes are only available further up.
+
+The two roughly cancel in *feel*: a senior hero loses more and earns it back faster. What rank genuinely buys is the ability to field classes a junior hero cannot afford at all.
+
+## Player intervention _(not shipped)_
+
+The design calls for the player to **supply RP directly** to a favoured hero. It is not in the mod: there is no sponsor path anywhere in the shipped scripts.
+
+What the hero page does offer instead is **gifting credits for faction favours** — four buttons from 100 000 cr up to 5 000 000 cr. That buys standing with the hero's faction, not recovery speed, and the two should not be confused.
 
 ## UI
 
 ![Captain Sarah Kowalski detail page — Recovery points 65 / 200 (+2 / 2 min), 4/4 S escorts filled, active perks Logistic (+50% RP accrual) and Master Logistic (+100% RP accrual)](/x4-modding-wiki/img/mods/galactic-heroes/rp-balance.jpg)
 
-The hero detail page shows:
+The hero detail page shows the current balance against the cap, the accrual rate and its interval in brackets, and the fleet's escort tally per class with anything pending marked.
 
-- Current RP / cap (e.g. `160 / 200`)
-- Next expected build (which ship class, when the next tick will spend)
-- Fleet status (flagship + escort composition, missing slots highlighted)
+## Honest list
+
+- **The shipped alpha is a debug build.** Tick interval and every death cooldown are the short debug values, not the release ones tabled above.
+- **Rates here have changed three times.** 10/20/40/80 originally, then 2/4/8/16, then halved to today's 1/2/4/8/16 with the ×2 replenish buff restoring the middle figure at home. Older write-ups quoting the first set are describing a mod that no longer exists.
+- **There is no player-facing RP number for a pooled hero.** A hero that has not spawned has no RP register at all, so its detail page shows none.
+- **Nothing decays.** RP sits at the cap indefinitely; a hero that never fights never spends and never loses it.
 
 ## Related mechanics
 
-- [Death cycle](../death-cycle/) — when RP starts / stops flowing
+- [Death cycle](../death-cycle/) — when RP starts and stops flowing
 - [Lineage succession](../lineage-succession/) — why new bearers get a starting-fleet grant
-- [XP and star progression](../xp-and-stars/) — why higher-rank heroes accumulate RP faster
+- [XP and star progression](../xp-and-stars/) — how a hero reaches the ranks that double the rate
+- [Perks](../perks/) — Logistic, Master Logistic, Quartermaster and Master Quartermaster all move these numbers
