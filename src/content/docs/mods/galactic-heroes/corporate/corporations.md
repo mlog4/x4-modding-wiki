@@ -65,19 +65,42 @@ Each company has an **origin faction** (where its money and its politics come fr
 
 Click any row and you get the company's file. It is the same file the mod's own planner reads.
 
-![Cinderhaul Reclamation dossier. About: "Cinderhaul learned the surest way to guarantee salvage is to guarantee a battle. It flies nothing and forges nothing; it funds the raiders who make the wrecks and the crews who strip them, and books the metal in between." Profile: origin faction scaleplate (active), preferred field salvage / reclamation finance; frontier repair-station management, competitive MO finances raiders to make the wrecks it reclaims, capital 83M cr, contracts none yet, stations lost 0, attacks survived 0, scandals 0, favours tracked 18 factions. Intentions: 1. Keep 10000000 Cr in reserve, 2. Hold standing at home, Scale Plate Pact - 2M cr, 3. Break into the Hatikvah Free League market - 5M cr, 4. Break into the Teladi Company market - 5M cr. Standing: Hatikvah Free League 50/1000, Scale Plate Pact (origin) 130/1000, Teladi Company 50/1000](/x4-modding-wiki/img/mods/galactic-heroes/corp-detail.jpg)
+![Cinderhaul Reclamation dossier, tagged bucket A. About: "Cinderhaul learned the surest way to guarantee salvage is to guarantee a battle. It flies nothing and forges nothing; it funds the raiders who make the wrecks and the crews who strip them, and books the metal in between." A Profile block lists origin faction scaleplate (active), preferred field salvage / reclamation finance and frontier repair-station management, competitive MO "finances raiders to make the wrecks it reclaims", its current capital, contracts none yet, stations lost, attacks survived, scandals, and favours tracked across 18 factions. An Intentions block numbers its plans in priority order: keep a cash reserve, discredit Sable Ledger Assurance with the Teladi Company for a stated amount of standing, and break into the Teladi Company market for a stated sum. A Standing block gives its favour with three factions out of 1000, marking Scale Plate Pact as origin. Then Holdings - station-management contracts, none held - and a Chronicle of recent events: spending its standing to discredit Sable Ledger Assurance, and being founded under the patronage of Scale Plate Pact](/x4-modding-wiki/img/mods/galactic-heroes/corp-detail.jpg)
 
 **Intentions** is the part worth watching. Every planning cycle the company writes down what it intends to buy with the capital it has free, in priority order, and how much it has set aside for each. Reading two dossiers side by side tells you which markets are about to be contested.
+
+This one is a small story on its own. Cinderhaul holds **150 favour at home and 10 with the Teladi** — and its second intention is to spend 40 of its Teladi standing discrediting Sable Ledger Assurance, an insurer that funds raiders for the same reason Cinderhaul does. Its third intention is to break into that same Teladi market. It is attacking a rival's reputation in the market it wants, before it bids there. The chronicle two blocks down already records it doing so.
+
+The **Holdings** row is the reality check against all that ambition: *station-management contracts, 0 held.*
 
 ## Favour — the currency of corporate politics
 
 A corporation holds **favour** with each faction separately, on a 0–1000 scale. Favour is not the player's reputation and not the faction relation: it is how much political weight the company can spend inside that faction's administration.
 
-- It **accrues** on an hourly cycle, faster at the origin faction.
-- It is **spent** to bid for station-management contracts and to run political operations.
-- Its **capacity is finite**, so a company that is buying its way into three markets at once is weak in all three.
+It is **spent** to bid for station-management contracts and to run political operations, and its capacity is finite — so a company buying its way into three markets at once is weak in all three. A corporation with money and no favour can do nothing. That is the intended shape: **the constraint on a fund is political access, not cash.**
 
-A corporation with money and no favour can do nothing. That is the intended shape: the constraint on a fund is political access, not cash.
+There are two ways to get it, and they say different things about a company.
+
+![Galactic Heroes - Corporations - favour, accrual and lawsuits. A Lawsuits section, subtitled "corporations sue each other; both sides pay", with Enable lawsuits switched on and Case length set to 8 passes. A Favour buying section, subtitled "corps spend credits on faction favour", with an enable toggle, a buying loop interval of 2 minutes and a favour target per faction of 50. A Passive accrual section, subtitled "favour earned from good relations", with an enable toggle and an accrual loop interval of 12 minutes](/x4-modding-wiki/img/mods/galactic-heroes/settings-corps-favour.jpg)
+
+| Route | Costs | Loop | Meaning |
+|---|---|---|---|
+| **Passive accrual** | nothing | every 12 min | Favour earned from good relations. Slow, free, and a company with none is a company nobody likes. |
+| **Favour buying** | credits | every 2 min | The company spends cash on access, up to a target per faction (50 by default). |
+
+That the buying loop runs **six times more often than the free one** is the balance of the whole layer in two numbers: a rich company can buy political access far faster than a liked one earns it. The target caps how far money alone gets you — past it, buying stops and only relations move the needle.
+
+Cut *favour target per faction* to 0 and corporations can only earn favour; they will bid rarely, and the roster's rich and poor stop separating. Raise it and the buckets with the biggest treasuries take everything.
+
+## Lawsuits
+
+Corporations sue each other, and **both sides pay.**
+
+Two cases are filed per planning pass, and each runs for a fixed number of passes — **8** by default, adjustable from 1 to 16. For the whole of that time both companies carry the cost as an [obligation](#debt-liabilities-and-liquidation), not a fee. That distinction is the mechanic: an obligation cannot be stopped halfway and is not scaled to what either side can afford, which is exactly why a lawsuit is the kind of thing that can bankrupt a company and a bad trade is not.
+
+There is no version of a suit that is free for the winner. That is what stops litigation from becoming the dominant strategy.
+
+**The pairing is random.** A case is filed between two active, solvent companies picked at random — not between two companies with a reason. So the litigation on your galaxy's docket is a background tax on the whole roster rather than a story about anybody, and reading a company's chronicle will not tell you why it is being sued. Grudge-driven suits are the obvious next step and are not built.
 
 ## Station-management contracts
 
@@ -143,10 +166,22 @@ Nothing is required. The layer runs whether you look at it or not. What you *can
 - **Take their work.** Corporations at war with each other hire outsiders — see [Corporation missions](../corporation-missions/). Both sides of a feud hire, so the job you take this week is remembered by the company you took it against.
 - **Watch a war you are not in.** Two funds contesting one faction's stations is a slow, legible conflict with no combat in it at all.
 
+## Watching it move without waiting
+
+The planning cycle runs every few game-minutes and a contract term is measured in hours, so a short session shows you a still photograph of a layer that is meant to be watched over an evening. The settings page carries a row of dev levers for exactly that.
+
+![Galactic Heroes - Corporations settings with debug actions expanded. Above: Enable corporations, and links to the two settings pages, Contracts, campaigns and intrigue, and Favour, accrual and lawsuits. A Debug block holds "(debug) Hide debug actions" and "[dev] re-plan corporations now", then a "-- dev: driver test --" group of buttons: run one favour decision pass now (all corps), run one passive accrual pass now (all corps), seed gang standing on ALL corps, run one contract auction now (all factions), restore ALL station names (remove corp markers), mature ALL contracts now (payout + renewal), simulate losing a managed station (penalty, no boom), and clear ALL contracts to reset the test bench](/x4-modding-wiki/img/mods/galactic-heroes/settings-corps-dev.jpg)
+
+Each button **runs the same code path the timer runs** — it is not a shortcut that fakes the outcome. *Mature ALL contracts now* pays and renews exactly as the expiry check would; *simulate losing a managed station* applies the favour penalty without destroying anything. Press four of them in sequence and you have compressed an hour of corporate history into a few seconds, which is the only practical way to tell whether a change to the bidding shares did what you meant.
+
+The buttons are hidden behind *(debug) Show debug actions* and stay hidden per screen, so a normal game never sees them.
+
 ## Honest list
 
 - **Corporations do not own ships or stations.** They manage, finance and insure. The station stays the faction's.
 - **The planning cycle is coarse.** A pass every few game-minutes, not a live market. It is a strategic layer, not an economic simulator.
 - **Bid shares are provisional.** 100/85/60 is a measured improvement over the diagnostic, not a tuned endpoint. Dedicated tuning is planned once the functionality settles.
 - **Awards and renewals are throughput, not chronicle events.** A contract awarded every cycle would drown the company's history in bookkeeping, so only the rarer events are written.
+- **Lawsuits pair at random.** Two cases per pass between two solvent companies picked arbitrarily. The cost is real and the motive is not modelled.
+- **Favour buying outruns earning it six to one.** A 2-minute buying loop against a 12-minute accrual loop means capital converts to political access much faster than goodwill does. Deliberate, and the single biggest lever on which bucket wins.
 - **`[MISSIONPAID]` has never been observed in a soak.** The payment path for a completed corporation mission is built and unit-checked but has not yet been seen end-to-end in a long run — it needs a player to take and finish one.

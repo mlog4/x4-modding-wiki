@@ -7,7 +7,11 @@ The **Galactic Exchange** is a secondary market in the seventeen [corporations](
 
 Corporations trade too — and for them a share purchase is not an investment. It is a move.
 
-![Galactic Exchange, shares tab. A status row shows the player's Portfolio value, Cash, and the 5 percent Commission. Four tabs run across the screen: [ SHARES ] selected, then Ships, Mod Parts and Seminars. The table columns are CORPORATION, PRICE, CHANGE, CONTRACTS and TREASURY, one row per company with its three-letter ticker in brackets - AMH, AMC, ASR, AXM, BLW, CIN, CVN, GRL, HAL, QTW, RAH, SBL and the rest. Change shows a percentage move or a dash where the price did not move this tick; companies holding more contracts carry visibly higher prices than companies sitting on cash alone](/x4-modding-wiki/img/mods/galactic-heroes/exchange-shares.jpg)
+![Galactic Exchange, shares tab with one company selected. A status row shows the player's Portfolio value, Cash and the 5 percent Commission. Four tabs run across the screen: [ SHARES ] selected, then Ships, Mod Parts and Seminars. The table columns are CORPORATION, PRICE, CHANGE, CONTRACTS, TREASURY, YOU HOLD and VALUE, one row per company with its three-letter ticker in brackets - AMH, AMC, ASR, AXM, BLW, CIN, CVN, GRL, HAL, QTW, RAH, SBL, THL, VRD and the rest. Change shows a percentage move or a dash where the price did not move this tick. Harborlight Commerce Trust is picked out with a caret, and below the table a panel headed "What Harborlight Commerce Trust is trying to do, in the order it will act" numbers four intentions - keep a cash reserve (marked "a limit, not a goal"), have one faction fine a rival over its contracts there (with the standing it spent), hold one market and break into another (each with the standing held against the standing needed, and the credits still to finish). A trade line follows with the lot size, price, 5 percent commission, what buying costs and what selling pays, the outstanding float as a fraction of the 10000 authorized shares and the hours to the next tranche; then a share-count slider, a BUY button and a greyed-out "cannot sell"](/x4-modding-wiki/img/mods/galactic-heroes/exchange-shares.jpg)
+
+Pick a company and the screen stops being a price list. The panel underneath is **the same intention list the planner is working from**, annotated with what the company has and what it still needs — standing held against standing required, credits still to find. You are not reading a summary of the company; you are reading its plan, before it acts on it.
+
+`cannot sell` is greyed because you hold none. There is no short.
 
 ## What a share is worth
 
@@ -81,14 +85,20 @@ A company past the control threshold may **subordinate** rather than absorb. The
 
 ## The other three tabs
 
-The Exchange screen has four tabs. Only the first is a share market:
+The Exchange screen has four tabs and only the first is a share market. The other three sell goods, share one listing skeleton, and have a page of their own: **[Ships, parts and seminars](../markets/)**.
 
-| Tab | What it sells |
-|---|---|
-| **Shares** | Stakes in the 17 corporations |
-| **Ships** | Hero-surplus hulls put up for sale |
-| **Mod Parts** | Equipment mods the mod defines with fixed min==max rolls |
-| **Seminars** | Pilot and crew training, bought with credits |
+| Tab | What it sells | Gated on |
+|---|---|---|
+| **Shares** | Stakes in the 17 corporations | nothing — every company is listed |
+| **Ships** | Decommissioned faction hulls, and Xenon hulls taken as trophies | relation 10 civilian, 20 military, 20 trophies |
+| **Mod Parts** | Equipment mods, asked from the game's own ware database | not sold by the Xenon, the Kha'ak or anyone the engine tags pirate |
+| **Seminars** | Crew training in management and piloting, first three levels | nothing, but priced at ten times shop |
+
+## Everything on this page is a slider
+
+![Galactic Heroes - Exchange settings. A Galactic Exchange (share market) section listing every constant this page describes as its own row with a live value: market tick interval, initial float, issue per period, periods of income priced in, trading commission, hours between issues, subsidiary keeps (percent of founding capital), control threshold, private holder ceiling, self-holding ceiling, shares moved per raid or defence step, defence reserve, threat alarm, faction stake in its own corporations, the three corporation-mission standing values, deeds kept when a hero dies, and the three corporation-mission board settings. Below it a Ship and modification markets section begins with Enable the surplus market, then Who offers what (civilian and military hulls by relation), How much is offered per faction per hour (small and medium hull counts, large and very large hull chances), Condition and price (worst hull damage, decommission discount, damage discount weight, offer shelf life) and a Xenon trophies group](/x4-modding-wiki/img/mods/galactic-heroes/settings-exchange.jpg)
+
+Every number quoted above is one of these rows, not a literal in the code. The slider and the driver read the same declared value, so a constant cannot be changed in one place and stay stale in the other — and the invariants (*private holder ceiling below control threshold*, and the rest) are checked against what the sliders currently say, not against what they said when the code was written.
 
 ## Honest list
 

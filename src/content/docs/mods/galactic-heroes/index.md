@@ -46,30 +46,40 @@ The design goal is **emergent drama from system rules**, not authored quest cont
 
 The Heroes menu is your control panel. Open via **Extensions → Galactic Heroes** (icon appears once SirNukes API is loaded).
 
-![Active heroes by faction — Argon Federation, Godrealm of Paranid, Teladi Company, Antigone Republic, Holy Order of the Pontifex, Ministry of Finance, Hatikvah Free League, Zyarth Patriarchy, Free Families, Quettanauts each showing living admirals/coordinators/engineers with star rank, XP, RP, current decision, sector](/x4-modding-wiki/img/mods/galactic-heroes/menu-roster.jpg)
+![Galactic Heroes - Active. A list headed "Active heroes by faction". Each faction is a header carrying its live slot arithmetic - for example "Argon Federation (3/3, sectors=12, step+2, leadership+0)" - followed by one line per living hero: archetype, star rank, XP, recovery points out of 200, the hero's name, the decision it is currently acting on with its target, and the sector it is in. Antigone Republic, Argon Federation, Duke Buccaneers, Free Families, Godrealm of Paranid, Hatikvah Free League, Holy Order of the Pontifex, Khaak, Ministry of Finance, Queendom of Boron and Quettanauts are visible, with admirals, coordinators, engineers, a raider, a hive lord and a seeder among them](/x4-modding-wiki/img/mods/galactic-heroes/menu-roster.jpg)
 
 The top level has six entries. **Settings**, **Heroes** and **Factions** cover the hero layer; **Corporations**, **Exchange** and **Corporation missions** are the [corporate layer](./corporate/corporations/).
 
+**Heroes** opens onto six screens of its own — the living roster, the pool every hero is drawn from, the two archives, the perk catalogue and the order board:
+
+![Galactic Heroes - Heroes submenu, listing six entries: Active heroes, Hero pool, KIA archive, Retired archive, Perks catalog, Order Board](/x4-modding-wiki/img/mods/galactic-heroes/heroes-menu.jpg)
+
 | Menu section | What it shows |
 |---|---|
-| **Settings** | Declared tuning in four sections — Heroes, FRS, Corporations (two pages: contracts/campaigns/intrigue, and standing/accrual/claims), Exchange. Every constant the mod uses is a slider here, not a literal in the code. |
+| **Settings** | Declared tuning in four sections — Heroes, [FRS](./mechanics/faction-radar-sharing/), Corporations (two pages: contracts/campaigns/intrigue, and favour/accrual/lawsuits), Exchange. Every constant the mod uses is a slider here, not a literal in the code. |
 | **Heroes → Active** | Every living hero grouped by faction: archetype, star rank, XP, RP, current decision, sector. |
 | **Hero detail** (click a row) | Biography, rank, XP breakdown, kill count, RP balance, flagship + escort composition, perks, Track button. |
 | **Heroes → Pool** | All 261 templates and their spawn state, with the per-faction slot arithmetic (`cap = base + territory + leadership`). |
-| **Order Board** | Faction-level task board. Not pirate-only — every faction has a board with archetype-specific order types (31 across admiral / coordinator / raider). Click an order type for the live task list. See per-archetype pages. |
+| **Order Board** | The shared work queue every hero claims from — 31 order types across admiral / coordinator / raider, drilling from a faction list down to individual tasks with their status, claimant, priority and age. See [The Order Board](./mechanics/order-board/). |
 | **KIA archive** | Every hero permanently lost. Final stats, cause of death, `$kia_at` timestamp. Records are frozen — no resurrection. |
 | **Retired archive** | Heroes mustered out by [faction succession](../galactic-heroes/mechanics/lineage-succession/) events (faction merger, dissolution). Not the same as KIA. |
 | **Perks catalog** | All 28 perks — 15 common, 11 rare, 2 epic — with tier cost, `applies_to` filter and effects. See [Perks system](./mechanics/perks/). |
-| **Faction Missions** _(via own submenu)_ | Player-facing build contracts to raise a faction's hero cap or unlock corp archetypes. See [Faction Missions](./mechanics/faction-missions/). |
+| **Factions → Faction missions** | ⚠ **A placeholder.** The build contracts it was to hold were stripped from the release; the screen says "coming in a future iteration". The design is kept on record at [Faction Missions](./mechanics/faction-missions/). |
 | **Corporations** | The 17 investment funds, their buckets, capital and current intentions. See [Corporations](./corporate/corporations/). |
-| **Exchange** | Share market in those 17, plus surplus ships, equipment mods and seminars. See [Galactic Exchange](./corporate/galactic-exchange/). |
+| **Exchange** | Four tabs: a share market in those 17 funds — see [Galactic Exchange](./corporate/galactic-exchange/) — plus decommissioned hulls, equipment mods and crew seminars, covered in [Ships, parts and seminars](./corporate/markets/). |
 | **Corporation missions** | Paid jobs corporations offer you against rivals they are already fighting. See [Corporation missions](./corporate/corporation-missions/). |
 
 Every hero has a **Track button** — attaches a live objective marker to the flagship via vanilla Guidance API. Same tracking overlay you'd get from a story mission.
 
 The **Pool** page shows every template and how many of them a faction may field. `cap = base + territory + leadership` — a faction with more sectors and a senior hero alive supports more heroes at once:
 
-![Galactic Heroes - Pool. Header reads Hero pool - 261 templates across 22 factions, with an Invert all spawn states button. Block header: FACTION SLOTS (22) - cap = base + territory + leadership. Rows per faction, for example Argon Federation with 12 templates, 3 of 3 active (1 admiral, 1 engineer), 11 sectors, 139 stations, cap 1+2+0; Teladi Company 13 templates, 4 of 4 active (2 admirals, 1 engineer), 19 sectors, 216 stations, cap 1+3+0; Court of Curbs 10 templates, no presence, 0 cap](/x4-modding-wiki/img/mods/galactic-heroes/hero-pool.jpg)
+![Galactic Heroes - Pool. Header reads "Hero pool - 261 templates across 22 factions", with an Invert all spawn states button. Below, a block headed "FACTION SLOTS (22) - cap = base + territory + leadership" gives one row per faction: how many templates it has, how many heroes are active out of its cap and of which archetypes, how many sectors and stations it holds, and the three cap terms added up. All 22 factions are listed, from Antigone Republic to Zyarth Patriarchy. Two of them - Court of Curbs and Realm of the Trinity - read "no presence, 0 cap", so their templates can never spawn](/x4-modding-wiki/img/mods/galactic-heroes/hero-pool.jpg)
+
+Every template in the pool is clickable, spawned or not — and you can switch any single one off, so a hero you would rather never meet simply never enters the rotation:
+
+![Galactic Heroes - Rear Admiral Henrique Damasceno, a hero in the pool. A toggle reads "Spawning ENABLED for this hero - click to disable" and the status line reads "in pool (not currently spawned)". A Biography says he authored the post-Sullivan engagement doctrine adopted Republic-wide in 829 NT and believes attrition wins more wars than manoeuvre. The Stats block holds only faction and archetype, followed by the line "(Hero is in the pool but not currently spawned - location and live stats unavailable)". A Perks (preview) block lists three perks with their effects and the condition each unlocks on, marked with a plus or a minus for whether it is active yet](/x4-modding-wiki/img/mods/galactic-heroes/pool-hero-detail.jpg)
+
+A pooled hero shows biography and a **perk preview** but no location and no live stats, because it has none yet. The `+` and `−` marks say which perks would be active from spawn and which wait on a condition.
 
 **Settings** has four sections — Heroes, FRS (Faction Radar Sharing), Corporations and Exchange; Corporations opens two further pages of its own. Every constant in the mod — death-roll difficulty, RP rates, contract prices, exchange thresholds, mission intervals — is declared data with a default, a range and a hint, and the slider and the driver read the same value:
 
@@ -77,9 +87,9 @@ The **Pool** page shows every template and how many of them a faction may field.
 
 The **Factions submenu** lists every faction the mod has spawned heroes into. Relation column is the mod-internal faction disposition (used for admiral decision-making); Favours is the standing the player has built through gifts to heroes; Heroes is the current living count:
 
-![Factions list — Argon Federation (relation 30, favours 8/1000, 3 heroes), Godrealm of Paranid (30, 8, 3), Teladi Company (30, 8, 5), Antigone Republic (30, 8, 2), Holy Order of the Pontifex (30, 8, 2), Realm of the Trinity (30, 8, 0), Court of Curbs (30, 8, 0), Ministry of Finance (30, 8, 1), Hatikvah Free League (30, 8, 1), Zyarth Patriarchy (30, 8, 3), Free Families (30, 8, 3), Quettanauts (30, 8, 2), Terran Protectorate (30, 8, 3), Queendom of Boron (30, 8, 3), Segaris Pioneers (30, 8, 2), Vigor Syndicate (30, 8, 2), Riptide Rakers (30, 8, 2), Scale Plate Pact (30, 8, 1), Duke Buccaneers (30, 8, 1), Yaki Clans (30, 8, 1), Xenon Mil Units (30, 8, 4), Khaak (30, 8, 2)](/x4-modding-wiki/img/mods/galactic-heroes/factions-list.jpg)
+![Galactic Heroes - Factions - Active. A four-column table - Faction, Relation, Favours / 1000, Heroes - with one row for each of the 22 factions the mod spawns into, in alphabetical order from Antigone Republic to Zyarth Patriarchy. On this save every faction shows the same starting relation and the same favours figure, and the Heroes column varies from 0 for the two factions with no territory up to 4 for the largest](/x4-modding-wiki/img/mods/galactic-heroes/factions-list.jpg)
 
-![Captain Sarah Kowalski — Argon admiral ★, RP=65/200 (+2/2 min), 11 XP, 9 kills, 420 000 cr, flagship in Hatikvah's Choice I with 4/4 S-class escorts, perks Logistic + Lucky + Master Logistic, biography and Track hero button](/x4-modding-wiki/img/mods/galactic-heroes/menu-hero-detail.jpg)
+![Galactic Heroes - Captain Aria Vance. A toggle at the top reads "Spawning ENABLED for this hero - click to disable", then "Status: ACTIVE". A Biography names her a former Argon transport captain who rose through Antigone fleet ranks during the Border War. A Stats block gives faction, archetype, stars, recovery points with their accrual rate, experience, kill count, money, and favours owed to her faction out of 1000, followed by four Gift buttons that trade credits for favours at 100k, 500k, 1M and 5M. Then her last kill, state and spawn time. A Location block gives flagship, sector, patrol target, current decision, home sector, flagship class and the escort tally at each class - including "2 / 4 (rebuild pending)" for frigates. A Perks block lists three active perks with their effects, and a Chronicle lists her most recent events: rising to two stars, entering the service of Antigone Republic, and tasks taken and completed with the credits paid](/x4-modding-wiki/img/mods/galactic-heroes/menu-hero-detail.jpg)
 
 ## Deep dives
 
@@ -92,8 +102,10 @@ Every mechanic gets its own page below. Read in the order shown for the full mod
 - **[Recovery Points](./mechanics/recovery-points/)** — RP tick rates per rank, ship rebuild costs, the 200-cap, why rebuilds take at least 25 minutes
 - **[Lineage succession — clone system](./mechanics/lineage-succession/)** — pool templates, clone-of-founder ("Walter Korkov (Clone #1)"), KIA archive, perks inheritance across clones
 - **[Perks system](./mechanics/perks/)** — 28 perks in 3 tiers (common / rare / epic), authored per template, auto-unlock at 10M cr milestone, LEARN new at 20M/50M/100M by tier
-- **[Faction Missions (player-created)](./mechanics/faction-missions/)** — build Trade Hubs and Reserve Shipyards to earn cash + raise a faction's hero cap
+- **[The Order Board](./mechanics/order-board/)** — the shared queue every hero claims from; 31 task types, the claim rule, and how to read the board as a diagnostic
+- **[Faction Radar Sharing](./mechanics/faction-radar-sharing/)** — invulnerable ghost satellites at the stations of factions that trust you, gated on reputation or a trade subscription
 - **[Satellite Sale to Factions](./mechanics/satellite-sale/)** — sell your own basic/advanced satellites to any faction for intel on enemy fleets, stations, and Kha'ak infrastructure
+- **[Faction Missions](./mechanics/faction-missions/)** _(design of record — not in the release)_ — Trade Hubs and Reserve Shipyards, built and then stripped from the shipping build
 
 ### Corporate layer
 
@@ -101,6 +113,7 @@ Seventeen supra-faction investment funds that finance, manage and insure but pro
 
 - **[Corporations](./corporate/corporations/)** — the 17 funds, four buckets, favour as political currency, station-management contract auctions, campaigns against rivals, intrigue, liquidation
 - **[Galactic Exchange](./corporate/galactic-exchange/)** — share valuation, the issued-share control basis, private/self-holding ceilings, raid and defence steps, subsidiaries, and why the takeover pass ships disarmed
+- **[Ships, parts and seminars](./corporate/markets/)** — the Exchange's other three tabs: decommissioned hulls priced off hull damage, Xenon trophies sold whole, equipment mods asked from the ware database, crew training at ten times shop price
 - **[Corporation missions](./corporate/corporation-missions/)** — six paid hack jobs against a rival's managed station, gated on how badly the two companies are already feuding
 - **[Chronicle](./corporate/chronicle/)** — the append-only event log every hero and corporation carries, 36 kinds across three families
 

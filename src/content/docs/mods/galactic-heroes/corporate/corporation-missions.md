@@ -7,9 +7,13 @@ Corporations at war with each other do not only hire pirates — they hire **you
 
 A corporation mission is a paid job against a rival's managed station. It is offered only when the two companies are already fighting, so the board fills as feuds start and empties as they settle. **Both sides of a feud hire**, which means you may be offered work against a company you worked for last week — and it will remember.
 
-![Galactic Heroes - Corporation missions. Header text reads "A corporation pays to hurt a rival it is already fighting on the exchange. Both sides of a feud hire, so you may be offered work against a company you worked for last week - and it will remember." Below: "Nothing is on offer. Corporations hire when they are already fighting one another, so this fills as feuds start - there is nothing here to fix."](/x4-modding-wiki/img/mods/galactic-heroes/corp-missions.jpg)
+![Galactic Heroes - Corporation missions, showing one live offer. The header text reads "A corporation pays to hurt a rival it is already fighting on the exchange. Both sides of a feud hire, so you may be offered work against a company you worked for last week - and it will remember." The offer below is headed "Bleed the line": Client Amitra Concord Capital, Target "ARG Hull Part Factory I [BLW] - managed by Bellwright Capital", Pays 250000 Cr, with an Accept button](/x4-modding-wiki/img/mods/galactic-heroes/corp-missions.jpg)
 
-The empty state above is the normal early-game state, and the screen says so rather than looking broken. On a fresh save the corporations have not yet started fighting each other.
+That single row is the whole layer in miniature. **Amitra Concord Capital** is a peace broker out of bucket D; **Bellwright Capital** finances wars for a living. They are now on opposite sides of a feud, and the peace broker is paying an outsider 250 000 credits to cut the war financier's output.
+
+Read the target's name again: **`ARG Hull Part Factory I [BLW]`**. The station belongs to the Argon Federation — the bracketed code says Bellwright *manages* it. That suffix is a setting (*Show corporation code in station names*), and with it switched on you can read the corporate map straight off the galaxy map without opening a menu.
+
+On a fresh save this screen is empty instead, and says so rather than looking broken: corporations have to start fighting each other before anybody hires.
 
 ## The six jobs
 

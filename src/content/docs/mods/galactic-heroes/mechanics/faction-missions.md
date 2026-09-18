@@ -1,34 +1,52 @@
 ---
-title: Faction Missions (player-created)
-description: Player-facing build contracts. Build a Trade Hub for a Resource Conglomerate (up to 15M cr reward). Build a Reserve Shipyard for a faction (up to 100M cr + hero cap +1). The player becomes the construction arm of a faction's growth.
+title: Faction Missions (not in the release)
+description: Two player-facing build contracts — Trade Hub and Reserve Shipyard — designed and implemented in full, then stripped from the shipping build. The design is documented here; the menu entry in game is a placeholder.
 ---
 
-You can take on **build contracts** from factions to construct specific station types, tightly specified, on their behalf. Each mission has a spec you must meet exactly (only the listed module classes are allowed, forbidden ones make the station unacceptable). On successful validation, the mod transfers ownership to the requesting faction and pays out cash — plus, for the Reserve Shipyard mission, permanently raises that faction's hero cap.
+**Status: this feature is not in the mod you can install.** The in-game screen is a placeholder, and the menu registrations that led to it were removed from the release. Everything below describes a design that was built and then held back — it is documented because the specs are worth keeping, not because you can play it.
 
-This is where the player becomes an economic actor in the mod: their construction skills grow a faction's infrastructure, and their reward is cash + institutional weight (more heroes for that faction). No auto-generation, no jobs system — you build it by hand.
+![Galactic Heroes - Factions - Missions. The page is empty apart from a single line of body text: "Faction missions - coming in a future iteration."](/x4-modding-wiki/img/mods/galactic-heroes/faction-missions-stub.jpg)
 
-## Missions currently shipping
+## What was removed, and what survived
 
-| Mission | Trigger | Reward | Effect |
-|---|---|---|---|
-| **Trade Hub** | Resource Conglomerate submenu → "Build Trade Hub" button (visible when the conglomerate has a member sector without a tradestation) | `min(station.value × 1.5, 15 M cr)` | New tradestation in the conglomerate's sector, transferred to sector controller. Conglomerate gets one active tradestation and one economic hub. |
-| **Reserve Shipyard** | Faction Missions submenu → per-faction row → Accept | `min(station.value × 1.5, 100 M cr)` | New shipyard in a distant faction sector, plus **+1 hero cap for that faction** permanently. Faction can now spawn one more admiral / coordinator / engineer than before. |
+The release strip in build **mlog670** removed the Options-menu registrations for six screens at once: Resource Conglomerates, Energy Zones, Trade Hubs, Faction Missions, Faction Reserves and Small Corporations. The implementations were preserved on a feature branch and a tag rather than deleted, so restoring them is a cherry-pick and not a rewrite.
 
-Both missions use the same pattern: custom mission framework (not vanilla GM_BuildStation, because vanilla can't enforce strict module exclusion), `add_plot` for the plot grant, `event_object_constructed` listener for validation.
+What that means in practice:
 
-Two more designed but not shipped: Fleet Academy (habitation-heavy, hire specialists), Researchers Guild (unlock corp archetype for the faction). Both deferred.
+| | |
+|---|---|
+| **In the shipped mod** | One menu row reading *"Faction missions — coming in a future iteration."* |
+| **Not shipped** | Both missions, their validators, their plot grants and their rewards |
+| **Still true** | The `$mission_cap_bonus` hook the Reserve Shipyard fed still exists in the hero-slot arithmetic — with nothing able to increment it |
+
+That last row is the honest oddity. The **+1 hero cap** reward is still wired into the slot calculation; it simply has no source any more. A faction's cap today is base + territory + leadership, and the mission term is permanently zero.
+
+## The design
+
+You take on **build contracts** from factions to construct specific station types, tightly specified, on their behalf. Each mission has a spec you must meet exactly — only the listed module classes are allowed, and a forbidden one makes the station unacceptable. On successful validation, the mod transfers ownership to the requesting faction and pays out cash.
+
+This is the one place the design made the player an **economic actor** rather than an observer: your construction skills grow a faction's infrastructure, and your reward is cash plus institutional weight. No auto-generation and no jobs system — you build it by hand.
+
+| Mission | Reward | Effect |
+|---|---|---|
+| **Trade Hub** | `min(station.value × 1.5, 15 M cr)` | New tradestation in a Resource Conglomerate member sector, transferred to the sector controller. |
+| **Reserve Shipyard** | `min(station.value × 1.5, 100 M cr)` | New shipyard in a distant faction sector, plus **+1 hero cap for that faction**, permanently. |
+
+Both used the same pattern: a custom mission framework rather than vanilla `GM_BuildStation` — because vanilla cannot enforce strict module exclusion — `add_plot` for the plot grant, and an `event_object_constructed` listener for validation.
+
+Two more were designed and never built: **Fleet Academy** (habitation-heavy, hires specialists) and **Researchers Guild** (unlocks a corp archetype for the faction).
 
 ## Trade Hub — the small mission
 
-### When it appears
+### Where it was reached
 
-Open the SMA menu → **Resource Conglomerates** → pick a conglomerate → detail page shows all its member sectors. If **any** member sector lacks a tradestation owned by that sector's controller (not Xenon / Kha'ak / player), a **"Build Trade Hub"** button appears at the top.
+The Resource Conglomerates screen → a conglomerate → its member sectors. If **any** member sector lacked a tradestation owned by that sector's controller (not Xenon, Kha'ak or player), a **Build Trade Hub** button appeared.
 
-Only **1 active Trade Hub mission per conglomerate** at a time — the button hides while a mission is active or after the station is built.
+Only **one active Trade Hub mission per conglomerate** — the button hid while a mission ran, and after the station was built.
 
 ### Required module spec
 
-The validated station must contain **exactly**:
+The validated station had to contain **exactly**:
 
 | Class / type | Count | Notes |
 |---|---|---|
@@ -38,13 +56,13 @@ The validated station must contain **exactly**:
 | L container cargo storage (`class.storage`, capacity.container > 0) | ≥ 2 | Same |
 | L liquid cargo storage (`class.storage`, capacity.liquid > 0) | ≥ 2 | Same |
 
-**Forbidden modules** (any occurrence fails validation):
+**Forbidden modules** — any occurrence fails validation:
 
 - `class.productionmodule`
 - `class.buildmodule`
 - `class.headquarters`
 
-**Allowed but not validated** (any number OK):
+**Allowed but not validated**, any number:
 
 - `class.connectionmodule` (structural)
 - `class.habitation`
@@ -52,75 +70,57 @@ The validated station must contain **exactly**:
 
 ### Cash reward
 
-`min(station.value × 1.5, 15 M cr)` — vanilla-standard ×1.5 multiplier, capped at 15 M.
+`min(station.value × 1.5, 15 M cr)` — the vanilla-standard ×1.5 multiplier, capped at 15 M.
 
-Practical implication: the cap kicks in once the station value is ≥ 10 M cr. Extra investment beyond that point doesn't raise the reward — you'll want to hit the spec efficiently, not maximally.
+The cap bites once the station is worth 10 M cr or more, so investment past that point raises nothing. The mission rewarded hitting the spec **efficiently, not maximally.**
 
 ### Lifecycle
 
-1. **Accept** — button click → mission created → `add_plot` grants you construction rights in the conglomerate's chosen member sector, plot size ~5 km cube at sector core
-2. **Build** — use your own construction vessel (vanilla mechanic). Every module you place is your own until validation
-3. **Trigger validation** — `event_object_constructed` fires when your station finishes each module. When the mod detects a "complete" station shape, it audits the modules
-4. **Success case** — module count matches spec + no forbidden modules present → cash transfers to you, station transfers to sector controller
-5. **Failure case** — forbidden module present, OR required count not met → banner "Extra: Production module (need 0, have 1)" — you must demolish the extra before validation passes
-6. **Cancel** — the mission stays accepted until you either validate or manually cancel via menu. No timeout.
+1. **Accept** — the button creates the mission; `add_plot` grants construction rights in the chosen member sector, a plot roughly 5 km cube at the sector core.
+2. **Build** — with your own construction vessel, the vanilla way. Every module is yours until validation.
+3. **Validate** — `event_object_constructed` fires per module; when the station looks complete the mod audits it.
+4. **Success** — counts match and no forbidden module is present: cash transfers to you, the station to the sector controller.
+5. **Failure** — a banner names the problem, e.g. *"Extra: Production module (need 0, have 1)"*. You demolish and it re-audits.
+6. **Cancel** — the mission stays accepted until you validate or cancel. No timeout.
 
 ## Reserve Shipyard — the big mission
 
-### When it appears
+### Where it was reached
 
-Open the SMA menu → **Faction Missions** → per-faction row → **"Reserve Shipyard"** row + Accept button.
+The Faction Missions screen → a per-faction row → **Accept**. Eligibility:
 
-Eligibility (locked 2026-06-02):
-
-- Faction must have **≥3 active heroes** of any archetype in `$active_heroes`
-- Faction must have **≥2 sector hops** to any of its existing shipyards or wharves (the shipyard must go somewhere the faction can't easily reach with current infrastructure — reserve reinforcement)
-- Only **1 active per faction** at a time
-
-The mission text describes what shipyard the faction wants and where. The plot grant lands on the chosen sector core.
+- The faction has **≥ 3 active heroes** of any archetype.
+- The target sector is **≥ 2 sector hops** from any of the faction's existing shipyards or wharves — the point is reinforcement where the faction is thin.
+- **One active per faction** at a time.
 
 ### Required module spec
-
-The validated station must contain:
 
 | Class / type | Count | Notes |
 |---|---|---|
 | L container storage | ≥ 5 | High-throughput ship-parts storage |
 | XL build module (`class.buildmodule`, `canbuildclass.{class.ship_xl}`) | ≥ 2 | Capital ship yards |
-| L build module (`canbuildclass.{class.ship_l}`) | ≥ 2 | Destroyer yards. Note: XL build modules typically also satisfy L, so 2× XL + 2× L can double-count as 4× L or as 2× XL + 2× L; either shape validates |
-| S/M build module (`canbuildclass.{class.ship_s}` OR `.ship_m`) | ≥ 2 | Wharf-type |
+| L build module (`canbuildclass.{class.ship_l}`) | ≥ 2 | Destroyer yards. XL build modules usually satisfy L too, so 2×XL + 2×L validates either way |
+| S/M build module (`canbuildclass.{class.ship_s}` or `.ship_m`) | ≥ 2 | Wharf-type |
 | L pier | ≥ 2 | |
 | M dockarea | ≥ 2 | |
-| L habitation (any `class.habitation`, `_l_` in macro name) | ≥ 4 | Crew barracks |
+| L habitation (`class.habitation`, `_l_` in the macro name) | ≥ 4 | Crew barracks |
 
-**Forbidden modules: none.** Vanilla shipyards traditionally include production + admin modules, so the mission is relaxed — you can build a proper faction shipyard with all its ancillary support.
+**Forbidden modules: none.** Vanilla shipyards carry production and admin modules, so the spec stayed relaxed — you could build a proper faction shipyard with all its support.
 
-**Allowed but not validated:**
+### Cash and institutional reward
 
-- `class.connectionmodule`
-- `class.defencemodule`
+Cash: `min(station.value × 1.5, 100 M cr)`.
 
-### Cash + institutional reward
+The institutional half was `+1` to that faction's `$mission_cap_bonus`, added into the hero-slot total. A faction with 3 slots would have 4, and the hero manager would spawn a new lineage on the next tick — a faction measurably stronger, permanently, because of something the player built.
 
-Cash: `min(station.value × 1.5, 100 M cr)` — 100 M cap (vs Trade Hub's 15 M cap).
+### Picking the sector
 
-**Institutional reward:** `+1` to per-faction `$mission_cap_bonus.{$faction}`. This is added to `MlogHeroesComputeFactionSlots` total, meaning **the faction permanently gets one more active hero slot**. If the faction had 3 admiral slots before, they have 4 after — and HeroManager will spawn a new lineage next tick.
+1. Enumerate every sector the target faction owns.
+2. For each candidate, search within 3 sectors.
+3. If any shipyard or wharf of that faction is found in range, the candidate is out.
+4. Take the first survivor.
 
-Consequences of raising the cap:
-- Faction fields more admirals / coordinators / engineers than before
-- Faction's decision surface at HeroManager increases (more independent decisions per tick)
-- Long-term game state: the faction is measurably stronger militarily + strategically
-
-## Sector eligibility check
-
-For Reserve Shipyard, the mod picks an **eligible sector** by:
-
-1. Enumerate all sectors owned by the target faction
-2. For each candidate, `find_sector_in_range object=$candidate maxdistance=3 multiple=true`
-3. For each sector in that range, `find_station_by_true_owner faction=$faction shipyard=true OR wharf=true space=$nearby` → if ANY exists, `$candidate` is ineligible
-4. Pick the first eligible candidate (or sort by ownership area / yield — implementation-specific)
-
-**Edge case:** if the faction has no shipyards or wharves at all, every sector is eligible (constraint is vacuously true).
+**Edge case:** a faction with no shipyards or wharves at all makes every sector eligible, because the constraint is vacuously true.
 
 ## Mission workflow (both types)
 
@@ -140,19 +140,20 @@ flowchart LR
 
 ## Design intent
 
-- **Player as economic actor.** These missions turn the player from a passive observer of faction economy into an active builder-for-hire.
-- **Strict specs.** Missions require exact shapes — no "build anything, get paid for anything". Discipline pays off.
-- **Reserve Shipyard is deliberately expensive.** The 100 M cap is high, and the cap-raise is a **permanent institutional change** to the faction. The player's investment in a faction manifests in a durable way.
-- **No auto-generation.** These missions don't auto-appear as pop-ups. The player has to browse menus to find them. Discovery is part of the gameplay.
+- **Player as economic actor.** The player stops observing the faction economy and starts building it.
+- **Strict specs.** No "build anything, get paid for anything" — discipline is the gameplay.
+- **Reserve Shipyard is deliberately expensive.** A 100 M cap and a permanent institutional change to a faction; the investment shows up durably.
+- **No auto-generation.** Nothing pops up. You find these by browsing, and discovery is part of it.
 
-## What's next
+## Honest list
 
-- **Fleet Academy** _(concept, deferred)_ — habitation-heavy station in a Coordinator faction sector. Reward: +1 hero cap **and** ability to hire advanced specialists (pilot lvl3, engineer lvl3, boarder, manager) from the station.
-- **Researchers Guild** _(concept, deferred)_ — unlocks corp archetype (Researchers Guild = trader guild's science counterpart) for the faction. Ship spec TBD.
-- **Mission chains** _(design open)_ — Trade Hub → Reserve Shipyard for the same conglomerate as a two-part campaign.
+- **None of this is playable in the current build.** The menu row is a placeholder and says so.
+- **Why it was held back is not documented in the code**, only that it happened in the release strip. Treat the specs above as a design of record, not a promise of a date.
+- **The reward hook is still live and unreachable.** `$mission_cap_bonus` is read by the slot arithmetic and written by nothing.
+- **Five sibling screens went with it** — Resource Conglomerates, Energy Zones, Trade Hubs, Faction Reserves and Small Corporations. Anything you read elsewhere that assumes those screens exist is describing the same held-back branch.
 
 ## Related mechanics
 
-- [Perks system](../perks/) — cash rewards feed hero cash → LEARN progression
-- [Coordinator archetype](../../archetypes/coordinator/) — the Reserve Shipyard mission ties institutionally to Coordinators (they benefit most from the +1 cap since larger factions have Coordinators)
-- [Satellite Sale to Factions](../satellite-sale/) — another player-driven revenue path
+- [Perks](../perks/) — cash rewards feed hero cash, which feeds LEARN progression
+- [Coordinator](../../archetypes/coordinator/) — the faction sizes that would have gained most from a +1 cap
+- [Satellite sale to factions](../satellite-sale/) — a player-driven revenue path that **is** in the release

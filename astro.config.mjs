@@ -174,8 +174,10 @@ export default defineConfig({
                     { slug: 'mods/galactic-heroes/mechanics/recovery-points' },
                     { slug: 'mods/galactic-heroes/mechanics/lineage-succession' },
                     { slug: 'mods/galactic-heroes/mechanics/perks' },
-                    { slug: 'mods/galactic-heroes/mechanics/faction-missions' },
+                    { slug: 'mods/galactic-heroes/mechanics/order-board' },
+                    { slug: 'mods/galactic-heroes/mechanics/faction-radar-sharing' },
                     { slug: 'mods/galactic-heroes/mechanics/satellite-sale' },
+                    { slug: 'mods/galactic-heroes/mechanics/faction-missions' },
                   ],
                 },
                 {
@@ -184,6 +186,7 @@ export default defineConfig({
                   items: [
                     { slug: 'mods/galactic-heroes/corporate/corporations' },
                     { slug: 'mods/galactic-heroes/corporate/galactic-exchange' },
+                    { slug: 'mods/galactic-heroes/corporate/markets' },
                     { slug: 'mods/galactic-heroes/corporate/corporation-missions' },
                     { slug: 'mods/galactic-heroes/corporate/chronicle' },
                   ],
