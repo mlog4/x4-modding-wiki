@@ -105,7 +105,9 @@ This is the important part. Sarah Kowalski (original) accumulates 30 M cr throug
 
 The lineage's **institutional weight** — the accumulated perks — survives the individual clone's death. This is the mechanical reason to care about a specific lineage across multiple bearers. See [Lineage succession](../lineage-succession/) for the full clone model.
 
-## Full catalog (v0.1)
+## Full catalog
+
+28 perks ship: **15 common, 11 rare, 2 epic**. The in-game Perks page prints the same list with each perk's priority, LEARN cost and `applies_to` filter.
 
 ### Tier: common (20 M cr to LEARN)
 

@@ -179,6 +179,16 @@ export default defineConfig({
                   ],
                 },
                 {
+                  label: 'Corporate layer',
+                  collapsed: true,
+                  items: [
+                    { slug: 'mods/galactic-heroes/corporate/corporations' },
+                    { slug: 'mods/galactic-heroes/corporate/galactic-exchange' },
+                    { slug: 'mods/galactic-heroes/corporate/corporation-missions' },
+                    { slug: 'mods/galactic-heroes/corporate/chronicle' },
+                  ],
+                },
+                {
                   label: 'Archetypes',
                   collapsed: true,
                   items: [

@@ -76,7 +76,7 @@ The KIA / Unscathed % is set by `$crit_fail_chance` in `MlogHeroesInit` actions.
 | 35 | 35% / 30% / 35% | "Grimdark" — heroes die often, high succession churn |
 | 50 | 50% / 0% / 50% | "Russian roulette" — every flagship loss is either final or clean escape |
 
-Once the Settings menu ships (planned), the dial will be surfaced in-game. Currently the parameter is edited in `deploy/md/mlog_heroes.xml` `MlogHeroesInit` init actions.
+The dial is surfaced in-game: **Galactic Heroes → Settings → Heroes**. Like every other constant in the mod it is declared data with a default, a range and a hint, so the slider and the driver read the same value.
 
 ## Why symmetric 20/60/20?
 
@@ -87,7 +87,7 @@ Once the Settings menu ships (planned), the dial will be surfaced in-game. Curre
 ## What the player sees
 
 - **Immediate on flagship destruction**: a notification banner names the hero and the outcome ("KIA" / "Wounded" / "Escaped").
-- **After a KIA**: the hero disappears from the [roster](../../#in-game-menu-tour). Their entry moves to the KIA archive (planned UI — currently accessible only via debug).
+- **After a KIA**: the hero disappears from the [roster](../../#in-game-menu-tour). Their entry moves to the **KIA archive**, which is a menu page of its own — final stats, cause of death, and the last deeds the [chronicle](../../corporate/chronicle/) kept under the memorial cap.
 - **After a wounded / unscathed outcome**: the hero remains in the roster with state = `lost_flagship`. The Track button is hidden. The detail page shows "Awaiting recovery" and a countdown to cooldown end.
 
 ![Xenon Mil Unit Model 6 — admiral ★★, state = lost_flagship, decision = Retreating; flagship XL_K destroyed; escorts show "0 / 4 (rebuild pending)" for M-class and "0 / 8 (rebuild pending)" for S-class; RP=37/200 rebuilding at +2/2 min](/x4-modding-wiki/img/mods/galactic-heroes/recovery-lost-flagship.jpg)

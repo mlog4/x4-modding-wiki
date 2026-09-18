@@ -1,6 +1,6 @@
 ---
 title: Galactic Heroes
-description: Named NPC heroes for X4 9.x — admirals, pirate raiders, Kha'ak hive lords, seeders. Real flying quest-NPCs with XP, star ranks, d100 death cycle, lineage succession. Overview + deep-dive links.
+description: Named NPC heroes for X4 9.x — admirals, coordinators, engineers, pirate raiders, Kha'ak hive lords and seeders. Real flying quest-NPCs with XP, star ranks, d100 death cycle and lineage succession, plus a corporate layer of 17 investment funds and a share exchange. Overview + deep-dive links.
 ---
 
 X4's galaxy simulates trade, war, and station-building — at the level of factions, not people. A war between Argon and Holy Order is a relation value, a few job queues, some patrol routes. There is no **Argon admiral whose loss the empire feels**. There is no **infamous Buccaneer raider players hunt across sectors**.
@@ -9,7 +9,7 @@ X4's galaxy simulates trade, war, and station-building — at the level of facti
 
 The design goal is **emergent drama from system rules**, not authored quest content.
 
-> **⚠ Alpha status.** Three archetypes ship in a working state (Admiral, Kha'ak Hive Lord + Seeder, Pirate Raider). ~10 more are designed but unbuilt. Save-compat is best-effort within a major version. Not recommended for casual playthroughs yet — but stable enough for observation, testing, and feedback.
+> **⚠ Alpha status.** Six archetypes ship in a working state — Admiral, Military Coordinator, Engineer, Pirate Raider, Kha'ak Hive Lord and Kha'ak Seeder — across **261 hand-authored hero templates in 22 factions**. On top of them sits a [corporate layer](./corporate/corporations/): 17 investment funds, a share exchange, and paid work for the player. Save-compat is best-effort within a major version. Not recommended for casual playthroughs yet — but stable enough for observation, testing, and feedback.
 
 ## Installation & configuration
 
@@ -33,7 +33,7 @@ The design goal is **emergent drama from system rules**, not authored quest cont
 4. **After ~30–60 minutes**, heroes have committed to their first campaigns. Admirals are patrolling contested borders. Pirate Raiders are pulling Order Board tasks. Kha'ak Hive Lords are on the warfront.
 5. Open **Extensions → Galactic Heroes** menu any time to see who is alive and what they are doing.
 
-![Galactic Heroes top-level menu — Active heroes / Hero pool / KIA archive / Retired archive / Perks catalog / Order Board](/x4-modding-wiki/img/mods/galactic-heroes/menu-topmenu.jpg)
+![Galactic Heroes top-level menu with six entries — Settings, Heroes, Factions, Corporations, Exchange, Corporation missions](/x4-modding-wiki/img/mods/galactic-heroes/menu-topmenu.jpg)
 
 ### Recommended play patterns
 
@@ -48,19 +48,32 @@ The Heroes menu is your control panel. Open via **Extensions → Galactic Heroes
 
 ![Active heroes by faction — Argon Federation, Godrealm of Paranid, Teladi Company, Antigone Republic, Holy Order of the Pontifex, Ministry of Finance, Hatikvah Free League, Zyarth Patriarchy, Free Families, Quettanauts each showing living admirals/coordinators/engineers with star rank, XP, RP, current decision, sector](/x4-modding-wiki/img/mods/galactic-heroes/menu-roster.jpg)
 
-Top-level items:
+The top level has six entries. **Settings**, **Heroes** and **Factions** cover the hero layer; **Corporations**, **Exchange** and **Corporation missions** are the [corporate layer](./corporate/corporations/).
 
 | Menu section | What it shows |
 |---|---|
-| **Roster** | Every living hero: name, faction, archetype, star rank, current activity, home sector. Filter by faction / archetype / star. |
-| **Hero detail** (click a row) | Biography, XP breakdown, kill count, RP balance, flagship + escort composition, current activity, Track button. |
-| **Order Board** | Faction-level task board. Not pirate-only — every faction has a board with archetype-specific order types (admiral: station/fishing/recon/satellite/hunting; coordinator: commandeer ops; raider: trader ambush / satellite deploy; Kha'ak: hive_development / swarm_summon / resonance). See per-archetype pages. |
+| **Settings** | Declared tuning in four sections — Heroes, FRS, Corporations (two pages: contracts/campaigns/intrigue, and standing/accrual/claims), Exchange. Every constant the mod uses is a slider here, not a literal in the code. |
+| **Heroes → Active** | Every living hero grouped by faction: archetype, star rank, XP, RP, current decision, sector. |
+| **Hero detail** (click a row) | Biography, rank, XP breakdown, kill count, RP balance, flagship + escort composition, perks, Track button. |
+| **Heroes → Pool** | All 261 templates and their spawn state, with the per-faction slot arithmetic (`cap = base + territory + leadership`). |
+| **Order Board** | Faction-level task board. Not pirate-only — every faction has a board with archetype-specific order types (31 across admiral / coordinator / raider). Click an order type for the live task list. See per-archetype pages. |
 | **KIA archive** | Every hero permanently lost. Final stats, cause of death, `$kia_at` timestamp. Records are frozen — no resurrection. |
 | **Retired archive** | Heroes mustered out by [faction succession](../galactic-heroes/mechanics/lineage-succession/) events (faction merger, dissolution). Not the same as KIA. |
-| **Perks catalog** | Full list of all defined perks (common / rare / epic tiers) with unlock rules and effects. See [Perks system](./mechanics/perks/). |
+| **Perks catalog** | All 28 perks — 15 common, 11 rare, 2 epic — with tier cost, `applies_to` filter and effects. See [Perks system](./mechanics/perks/). |
 | **Faction Missions** _(via own submenu)_ | Player-facing build contracts to raise a faction's hero cap or unlock corp archetypes. See [Faction Missions](./mechanics/faction-missions/). |
+| **Corporations** | The 17 investment funds, their buckets, capital and current intentions. See [Corporations](./corporate/corporations/). |
+| **Exchange** | Share market in those 17, plus surplus ships, equipment mods and seminars. See [Galactic Exchange](./corporate/galactic-exchange/). |
+| **Corporation missions** | Paid jobs corporations offer you against rivals they are already fighting. See [Corporation missions](./corporate/corporation-missions/). |
 
 Every hero has a **Track button** — attaches a live objective marker to the flagship via vanilla Guidance API. Same tracking overlay you'd get from a story mission.
+
+The **Pool** page shows every template and how many of them a faction may field. `cap = base + territory + leadership` — a faction with more sectors and a senior hero alive supports more heroes at once:
+
+![Galactic Heroes - Pool. Header reads Hero pool - 261 templates across 22 factions, with an Invert all spawn states button. Block header: FACTION SLOTS (22) - cap = base + territory + leadership. Rows per faction, for example Argon Federation with 12 templates, 3 of 3 active (1 admiral, 1 engineer), 11 sectors, 139 stations, cap 1+2+0; Teladi Company 13 templates, 4 of 4 active (2 admirals, 1 engineer), 19 sectors, 216 stations, cap 1+3+0; Court of Curbs 10 templates, no presence, 0 cap](/x4-modding-wiki/img/mods/galactic-heroes/hero-pool.jpg)
+
+**Settings** has four sections — Heroes, FRS (Faction Radar Sharing), Corporations and Exchange; Corporations opens two further pages of its own. Every constant in the mod — death-roll difficulty, RP rates, contract prices, exchange thresholds, mission intervals — is declared data with a default, a range and a hint, and the slider and the driver read the same value:
+
+![Galactic Heroes - Settings, headed "Galactic Heroes - runtime settings", listing four sections: Heroes, FRS (Faction Radar Sharing), Corporations, Exchange](/x4-modding-wiki/img/mods/galactic-heroes/settings-menu.jpg)
 
 The **Factions submenu** lists every faction the mod has spawned heroes into. Relation column is the mod-internal faction disposition (used for admiral decision-making); Favours is the standing the player has built through gifts to heroes; Heroes is the current living count:
 
@@ -81,6 +94,15 @@ Every mechanic gets its own page below. Read in the order shown for the full mod
 - **[Perks system](./mechanics/perks/)** — 28 perks in 3 tiers (common / rare / epic), authored per template, auto-unlock at 10M cr milestone, LEARN new at 20M/50M/100M by tier
 - **[Faction Missions (player-created)](./mechanics/faction-missions/)** — build Trade Hubs and Reserve Shipyards to earn cash + raise a faction's hero cap
 - **[Satellite Sale to Factions](./mechanics/satellite-sale/)** — sell your own basic/advanced satellites to any faction for intel on enemy fleets, stations, and Kha'ak infrastructure
+
+### Corporate layer
+
+Seventeen supra-faction investment funds that finance, manage and insure but produce nothing — and the market they fight each other on.
+
+- **[Corporations](./corporate/corporations/)** — the 17 funds, four buckets, favour as political currency, station-management contract auctions, campaigns against rivals, intrigue, liquidation
+- **[Galactic Exchange](./corporate/galactic-exchange/)** — share valuation, the issued-share control basis, private/self-holding ceilings, raid and defence steps, subsidiaries, and why the takeover pass ships disarmed
+- **[Corporation missions](./corporate/corporation-missions/)** — six paid hack jobs against a rival's managed station, gated on how badly the two companies are already feuding
+- **[Chronicle](./corporate/chronicle/)** — the append-only event log every hero and corporation carries, 36 kinds across three families
 
 ### Archetypes
 
@@ -119,12 +141,12 @@ Result: **minimal engine footprint, low frame cost, deep integration with X4's l
 
 Honest list. None are blockers, but they are real:
 
-- **Performance tested up to ~45 active heroes across 22 factions** (multi-day soak 2026-07-04). No measurements past 60.
+- **Performance tested up to ~45 active heroes across 22 factions**, in multi-day soaks. A representative late session: 44 living heroes in 19 factions with **1 007 open tasks** on the order board, at full frame rate. No measurements past 60 heroes.
 - **Xenon** currently uses Admiral templates — mechanically works and their fleets look distinctive (XL_K flagships, no S/M escort — they use pure Xenon composition), but narrative model isn't Xenon-native. Proper Xenon-flavour design pending.
 - **Perks Phase 2 (game-event unlock triggers)** — the framework exists and is used by the auto-unlock at 10M cr milestone + LEARN system, but the "unlock on kill of 500 enemies" / "unlock on age 24h" style is deferred. Perks currently activate via cash milestone, LEARN purchase, or authored `$initially_active=true` on the pool template.
 - **Modded faction support** (Apus / ETW / Kaiori) — architecture supports it, but hand-authored hero pools for these factions aren't shipped yet. Base-game and DLC factions are fully covered.
 - **Player rep gating on hero visibility** — heroes visible at rep ≥ 0, bio at ≥ 10, live tracking at ≥ 20 — spec'd but not enforced yet. Currently all heroes visible unconditionally.
-- **Localization** — text mostly inline. EN + RU baseline. Full t-file extraction pending.
+- **Corporate takeovers ship disarmed.** The pass that decides who controls whom computes and logs its verdicts without executing them, because arming it would reclassify stakes that already exist in a running save. See [Galactic Exchange](./corporate/galactic-exchange/#the-takeover-pass-ships-disarmed).
 - **Retired archive UI** — populated only by faction merger events (which don't fire yet at any regular rate); mostly empty in current saves.
 
 ## Links and source
@@ -143,6 +165,10 @@ Honest list. None are blockers, but they are real:
 
 ## Version notes
 
-**v0.1 (alpha, current):** Three shipping archetypes (Admiral × 10 templates × 8 factions, Kha'ak Hive Lord × 6 templates, Kha'ak Seeder × 4 templates, Pirate Raider × 4 templates with 4 task types on Order Board). LoA HeroManager cron, XP + star progression proven, death cycle + d100 outcome + lineage succession proven, Heroes menu via SirNukes API, "Track this hero" via vanilla Guidance API.
+**v0.20.0-alpha3 (current):** Six shipping archetypes across **261 hand-authored templates in 22 factions** — Admiral 190, Pirate Raider 30, Engineer 17, Military Coordinator 14, Kha'ak Hive Lord 6, Kha'ak Seeder 4. Order Board carries **31 task types** (admiral 15, coordinator 8, raider 8) with a per-type live task list. 28 perks in three tiers. The corporate layer ships: 17 corporations in four buckets, station-management contract auctions, campaigns and intrigue, the Galactic Exchange, six corporation missions, and a 36-kind chronicle. Settings menu exposes every tuning constant as declared data across five pages.
 
-**Next release targets:** Xenon proper archetype, Coordinator, Engineer, perk system C-009, player-rep gating.
+**Fully localised.** All display text lives on text page 65644 — **1 388 ids, complete in English and Russian**, with no string left inline. The build refuses to ship if an id is referenced and missing from any language page, if a parenthesis on a text page would be eaten as a comment, if a glyph outside Latin-1 would draw as a box, or if a localised value is used to build an identifier.
+
+**Source:** 42 MD files, ~58 600 lines.
+
+**Next release targets:** Xenon proper archetype, player-rep gating, arming the corporate takeover pass, modded-faction hero pools.
