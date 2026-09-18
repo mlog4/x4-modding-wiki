@@ -60,7 +60,7 @@ The top level has six entries. **Settings**, **Heroes** and **Factions** cover t
 | **Heroes → Active** | Every living hero grouped by faction: archetype, star rank, XP, RP, current decision, sector. |
 | **Hero detail** (click a row) | Biography, rank, XP breakdown, kill count, RP balance, flagship + escort composition, perks, Track button. |
 | **Heroes → Pool** | All 261 templates and their spawn state, with the per-faction slot arithmetic (`cap = base + territory + leadership`). |
-| **Order Board** | The shared work queue every hero claims from — 31 order types across admiral / coordinator / raider, drilling from a faction list down to individual tasks with their status, claimant, priority and age. See [The Order Board](./mechanics/order-board/). |
+| **Order Board** | The shared work queue every hero claims from — 31 order types across five archetypes, drilling from a faction list down to individual tasks with their status, claimant, priority and age. See [The Order Board](./mechanics/order-board/). |
 | **KIA archive** | Every hero permanently lost. Final stats, cause of death, `$kia_at` timestamp. Records are frozen — no resurrection. |
 | **Retired archive** | Heroes mustered out by [faction succession](../galactic-heroes/mechanics/lineage-succession/) events (faction merger, dissolution). Not the same as KIA. |
 | **Perks catalog** | All 28 perks — 15 common, 11 rare, 2 epic — with tier cost, `applies_to` filter and effects. See [Perks system](./mechanics/perks/). |

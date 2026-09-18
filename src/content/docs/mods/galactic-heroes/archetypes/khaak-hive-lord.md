@@ -78,17 +78,18 @@ This is what changes Kha'ak from "background noise" to "hostile intelligence".
 
 ## No player-vs-Kha'ak Order Board interaction
 
-The Kha'ak Order Board has its own order types:
+The Kha'ak have nine order types of their own on the shared [Order Board](../../mechanics/order-board/), and they are split between the two Kha'ak archetypes. **The Hive Lord claims four:**
 
-- **$hive_development** — build up hive infrastructure (grows over time)
-- **$swarm_summon** — spawn additional Kha'ak fighters at random hive location
-- **$small_resonance** — psychic communication event (network coherence, small)
-- **$big_resonance** — psychic communication event (large; scales power output)
-- **$system_resonance** — network-wide psychic ceremony (biggest tier)
+- **$swarm_summon** — spawn additional Kha'ak fighters at a random hive location
+- **$gate_defense** — hold a gate against incursion
 - **$call_for_help** — request Kha'ak reinforcement in a threatened sector
 - **$fleet_defense** — coordinated defence around a specific hive
 
-Players don't interact with these — they're Kha'ak-internal state. The Hive Lord processes them via their normal HMW cycle, generating threat activity as a side-effect. See screenshot below.
+The other five — `$big_resonance`, `$expansion`, `$system_resonance`, `$small_resonance` and `$hive_development` — belong to the **[Seeder](../khaak-seeder/)**, which takes them in exactly that priority order and will not touch any of them until it has banked enough Recovery Points to afford the expensive tiers.
+
+Players don't interact with any of the nine — they are Kha'ak-internal state. Both archetypes process them on their normal cycle, generating threat activity as a side-effect. See screenshot below.
+
+**About the headings in that screenshot:** the board prints only three section labels, and the Kha'ak types are declared into the *admiral* one because there is no Kha'ak section to declare them into. The label is a display bug; the claim gates underneath are correct, and no admiral of any faction can take one of these.
 
 ![Kha'ak Order Board — no coordinator or raider tasks; admiral-type order types: $hive_development 26 tasks, $swarm_summon 1 task, $small_resonance 1 task, $big_resonance 1 task, $system_resonance 7 tasks, $call_for_help 3 tasks, $fleet_defense 3 tasks. Active heroes: Manifold-of-Spires (hive_lord ★★, idle) and Brood-Mother (seeder ★★★, guard_hive)](/x4-modding-wiki/img/mods/galactic-heroes/khaak-order-board.jpg)
 

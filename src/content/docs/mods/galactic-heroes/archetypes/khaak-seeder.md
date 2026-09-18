@@ -181,6 +181,22 @@ Same [d100 death roll](../../mechanics/death-cycle/) on flagship destruction. Kh
 - **Wounded/unscathed** — normal cooldown, RP tick resumes, Seeder rebuilds fleet from RP
 - **KIA** — lineage archived, 120-min vacancy, then next [clone](../../mechanics/lineage-succession/) spawns with inherited perks. Kha'ak network persists throughout.
 
+## Order Board types the Seeder claims
+
+Of the nine Kha'ak types on the shared [Order Board](../../mechanics/order-board/), **five are the Seeder's** — and it takes them in a fixed priority order:
+
+| Priority | Type | |
+|---|---|---|
+| 1 | `$big_resonance` | psychic ceremony, galaxy-wide, the expensive tier |
+| 2 | `$expansion` | claim a neutral sector |
+| 3 | `$system_resonance` | per-sector ceremony |
+| 4 | `$small_resonance` | the cheap resonance tier |
+| 5 | `$hive_development` | build up hive infrastructure — last, opportunistic |
+
+**The Seeder claims nothing at all until it has banked a savings floor of Recovery Points**, even when a cheap task is sitting open and affordable. Without that floor it would spend every tick on small resonances and never accumulate enough for a big one, so the expensive tiers would exist on paper and never fire.
+
+The remaining four — `$swarm_summon`, `$gate_defense`, `$call_for_help`, `$fleet_defense` — belong to the [Hive Lord](../khaak-hive-lord/).
+
 ## Relationship to Hive Lord
 
 - **Seeder** = builder (creator role) — creates hives + outposts, spawns new units at those locations

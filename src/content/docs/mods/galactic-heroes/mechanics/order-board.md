@@ -1,6 +1,6 @@
 ---
 title: The Order Board
-description: The shared work queue every hero acts from — 31 task types across three archetypes, posted by faction planners, claimed by priority and reachability, and readable in game through a live read-only inspector.
+description: The shared work queue every hero acts from — 31 task types across five archetypes, posted by faction planners, claimed by priority and reachability, and readable in game through a live read-only inspector that only prints three sections.
 ---
 
 Heroes in this mod do not run a private script each. They all read one queue.
@@ -21,11 +21,13 @@ Two things in that list are worth reading twice. The Xenon are carrying **233 ta
 
 ## One faction's board
 
-Click a faction and the work is grouped by the archetype that can do it.
+Click a faction and the work is grouped into sections.
 
 ![Galactic Heroes - Order Board - Teladi Company. Order types for the admiral: station duty 16 tasks, fishing 1, recon 19, satellite 70, urgent defence 1. Coordinator order types: invasion 2, defensive build 2, fishing 1, satellite 67, recon 19. A Pirate / Raider order types section reads "no active raider tasks". Below, an Active heroes table lists Karyo admiral 2 stars on Urgent defence, Ryyzz admiral 2 stars on Strike a station, Risi-Lik coordinator 2 stars Idle, and Krrztt engineer 2 stars on Replenish](/x4-modding-wiki/img/mods/galactic-heroes/order-board-faction.jpg)
 
-The split into three sections is not cosmetic. **A task is typed to an archetype and only that archetype claims it.** A raider will never pick up station duty, and an admiral will never run a saboteur job — so the Pirate/Raider section here is empty not because nothing is wrong, but because the Teladi employ no raiders.
+The split is not cosmetic. **A task is typed to an archetype and only that archetype claims it.** A raider will never pick up station duty, and an admiral will never run a saboteur job — so the Pirate/Raider section here is empty not because anything is wrong, but because the Teladi employ no raiders.
+
+There are only three section headings, and the mod has five archetypes that produce work. [What that costs the screen](#why-the-screen-says-otherwise) is worth reading before you take the first heading at face value.
 
 The *Active heroes* table below is the other half of the picture: it shows what each hero actually decided, which is how you catch a hero idling next to a board full of work it cannot reach.
 
@@ -62,20 +64,15 @@ Reachability in step 2 is why the board can be long and a hero still idle. Work 
 
 ## The 31 task types
 
-Every type is declared once, with its archetype and its display name, and both the planner and the screen read that one declaration.
+Five archetypes produce and claim work. The board, however, has **three sections** — and that mismatch is the one thing to understand before reading the screen.
 
-### Admiral — 15
+### Admiral — 6
 
 | Type | | Type | |
 |---|---|---|---|
-| `station` | station duty | `swarm_summon` | swarm summon |
-| `fishing` | fishing | `gate_defense` | gate defence |
-| `recon` | recon | `small_resonance` | small resonance |
-| `satellite` | satellite | `big_resonance` | big resonance |
-| `urgent_defense` | urgent defence | `system_resonance` | system resonance |
-| `hunting` | hunting | `call_for_help` | call for help |
-| `expansion` | expansion | `fleet_defense` | fleet defence |
-| `hive_development` | hive development | | |
+| `station` | station duty | `urgent_defense` | urgent defence |
+| `fishing` | fishing | `hunting` | hunting |
+| `recon` | recon | `satellite` | satellite |
 
 ### Coordinator — 8
 
@@ -95,9 +92,27 @@ Every type is declared once, with its archetype and its display name, and both t
 | `satellite` | satellite deploy | `base_build` | base build |
 | `recon` | recon | `joint_raid` | joint raid |
 
-Four names repeat across archetypes — `fishing`, `satellite`, `recon` in all three, and the defensive family in the coordinator's column. **The same word is a different task.** A raider's `satellite deploy` is not an admiral's `satellite`; they are separate rows on the board, produced by different planners, and claimable only by their own archetype.
+### Kha'ak — 9
 
-The Kha'ak-only types (`swarm_summon`, the three resonance tiers, `hive_development`) sit in the admiral column because the [hive lord](../../archetypes/khaak-hive-lord/) is an admiral variant — see also the [seeder](../../archetypes/khaak-seeder/).
+These are not faction work. The whole block is written only when a faction has a Kha'ak [hive lord](../../archetypes/khaak-hive-lord/) or [seeder](../../archetypes/khaak-seeder/), and each type is claimable by one of them alone.
+
+| Hive lord — 4 | | Seeder — 5 | |
+|---|---|---|---|
+| `swarm_summon` | swarm summon | `small_resonance` | small resonance |
+| `gate_defense` | gate defence | `big_resonance` | big resonance |
+| `call_for_help` | call for help | `system_resonance` | system resonance |
+| `fleet_defense` | fleet defence | `hive_development` | hive development |
+| | | `expansion` | expansion |
+
+Four names repeat across archetypes — `fishing`, `satellite` and `recon` for the admiral, the coordinator and the raider alike. **The same word is a different task.** A raider's `satellite deploy` is not an admiral's `satellite`; they are separate rows on the board, produced by different planners, and claimable only by their own archetype.
+
+### Why the screen says otherwise
+
+The board prints **three** sections — *Order types*, *Coordinator order types*, *Pirate / Raider order types* — from a field on each declared row. There is no Kha'ak section, so all nine Kha'ak types carry that field set to `admiral` and appear under the first heading.
+
+**That heading is wrong for them, and it is a display bug rather than a design.** No Argon admiral has ever summoned a swarm or tuned a resonance; the claim for every one of those nine is gated on the hero being a Kha'ak hive lord or seeder. You only ever see them on the Kha'ak faction's own page, where the section label is the only misleading thing on screen.
+
+The tables above are grouped by the archetype that actually does the work, taken from those claim gates rather than from the section field.
 
 ## Reading the board as a diagnostic
 
@@ -111,6 +126,7 @@ The inspector was built to answer questions about the AI that no log line answer
 ## Honest list
 
 - **The board is read-only.** By design for now: the queue is the AI's, and a player-editable queue is a different feature with different failure modes.
+- **⚠ The Kha'ak types are printed under the admiral heading.** A real display bug: the board has three section headings and five archetypes produce work, so the nine hive lord and seeder types are declared into the admiral section for want of anywhere else. Only the label is wrong — the claim gates are correct, and no admiral can take one.
 - **Priority is not explained in the UI.** You see the number, not its terms. That is deliberate while the weights are still being tuned — a documented formula that then changes is worse than a visible score.
 - **Counts are live, not historical.** The screen shows what is on the board now. Completed tasks leave it, and their record goes to the hero's [chronicle](../../corporate/chronicle/) instead.
 - **Per-faction pages are registered lazily.** A faction's detail page exists after you first open it, so a fresh session registers them as you browse. This is a Simple Menu API constraint, not a choice.
