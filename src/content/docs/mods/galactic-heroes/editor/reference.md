@@ -157,8 +157,14 @@ The archetype table is the most useful thing on this screen, because **it is whe
 | **Kha'ak only** | seeder and hive lord |
 | **subordinate cap** | coordinator 5, hive lord 8; zero for the rest |
 
-:::caution[Perk names read as `readtext` ids]
-Galactic Heroes moved all of its text into a translatable text page. The editor does not yet resolve those ids back to words, so perk names and descriptions on this screen — and host hero names in the Heroes tab list — display as `readtext.{65644}.{6567}` rather than "Veteran". The **ids themselves are correct and authoring works normally**; only the display label is affected.
+:::note[Where the words come from]
+Galactic Heroes keeps all of its text on a translatable page rather than inline, so a perk name is stored as `readtext.{65644}.{6567}` and a rank as `readtext.{65644}.{6935}`. The editor reads the mod's own text file and resolves them, which is why this screen says "Veteran" and not a number.
+
+It reads the **default** page — the one X4 falls back to for every language that has no page of its own, and which is therefore always complete. Translations beside it are found and listed on the *Reading* screen, but not used for display. A reference the page does not hold is **left visible** rather than blanked: an id that resolves to nothing is a defect in the mod, and showing it is how anybody finds out.
+
+An older host with no `t` folder still carries its text inline, and everything simply displays as it always did.
+
+*The screenshot above predates this reader and still shows the raw ids.*
 :::
 
 ### Decisions — the two halves, compared
