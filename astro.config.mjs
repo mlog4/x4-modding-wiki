@@ -204,6 +204,15 @@ export default defineConfig({
                     { slug: 'mods/galactic-heroes/archetypes/saboteur' },
                   ],
                 },
+                {
+                  label: 'Editor',
+                  collapsed: true,
+                  items: [
+                    { slug: 'mods/galactic-heroes/editor', label: 'Overview' },
+                    { slug: 'mods/galactic-heroes/editor/walkthrough' },
+                    { slug: 'mods/galactic-heroes/editor/reference' },
+                  ],
+                },
               ],
             },
             { slug: 'mods/apus-compat' },

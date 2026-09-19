@@ -127,6 +127,14 @@ Seventeen supra-faction investment funds that finance, manage and insure but pro
 - **[Kha'ak Seeder](./archetypes/khaak-seeder/)** — distributed network commander; drops outposts + hives; per-tier abilities ladder (★1 small summon → ★4 big summon apex); teleport-as-escape
 - **[Scout-Saboteur (shared)](./archetypes/saboteur/)** — asymmetric tactical primitive; one-way S-class deploys 2-10 mines, self-destructs; used by raider / coordinator / hive_lord
 
+### Extending the mod
+
+The mod publishes registration windows, so a **separate extension** can add heroes, fleets, spend plans, corporations and corporation missions without editing it — and without breaking on the next release. A desktop app writes those extensions for you.
+
+- **[The Galactic Heroes Editor](./editor/)** — what it is, why nothing about the mod is hardcoded in it, and how to get it running
+- **[Walkthrough — your first pack](./editor/walkthrough/)** — empty window to a hero flying in game, in about fifteen minutes
+- **[Editor reference](./editor/reference/)** — every screen, the 86 validation rules, and why corporations are the one object you cannot take back
+
 ## Design philosophy — why the mod is thin
 
 Under the hood, the mod is deliberately minimal. Explicitly out of scope:
