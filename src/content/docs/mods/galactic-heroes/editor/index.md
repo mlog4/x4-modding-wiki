@@ -9,7 +9,7 @@ Editing the mod is the worst possible answer. It breaks on the next release, it 
 
 The **Galactic Heroes Editor** is the other answer. It is a small Windows desktop app that writes a **separate X4 extension** which registers into the host mod through a published seam. You never open the host. You never write a line of MD. And the editor refuses to export a pack that the host would reject — or that a save could not recover from.
 
-![Galactic Heroes Editor, Pack tab. The window title reads "Galactic Heroes Editor - ewt32.ghpack.json [build 2026-09-13 13:33]". A toolbar carries New, Open, Save, Save as, Check, Export and "Export into the game". Eight tabs run below it. The Pack tab holds two sections: "The extension" with Pack id ewt32, Display name test221, Author mlog4, Version 1 and a Description box; and "Where things are" with the X4 game folder, the Galactic Heroes md folder and an export folder, each with a Browse button, and a "Reload from these folders" button. The status bar reads "1 fleet template(s), 1 hero(es) in this pack - 17 fleet(s) and 261 hero(es) already in the game, shown read only" on the left and "6 archetypes - 28 perks - 390 ships - 17 host fleets - 261 host heroes - 1 PROBLEM(S)" on the right](/x4-modding-wiki/img/mods/galactic-heroes/editor-pack.jpg)
+![Galactic Heroes Editor, Pack tab. The window title reads "Galactic Heroes Editor - ewt32.ghpack.json [build 2026-09-18 17:15]". A toolbar carries New, Open, Save, Save as, Check, Export and "Export into the game". Eight tabs run below it: Pack, Fleets, Heroes, Missions, Spend plans, Corporations, Check and "What was read". The Pack tab holds two sections: "The extension" with Pack id ewt32, Display name test221, Author mlog4, Version 1 and a Description box reading "rwar"; and "Where things are" with the X4 game folder, the Galactic Heroes md folder and an export folder, each with a Browse button, and a "Reload from these folders" button. The status bar reads "1 fleet template(s), 1 hero(es) in this pack - 17 fleet(s) and 261 hero(es) already in the game, shown read only" on the left and "6 archetypes - 28 perks - 390 ships - 17 host fleets - 261 host heroes - 1 PROBLEM(S)" on the right](/x4-modding-wiki/img/mods/galactic-heroes/editor-pack.jpg)
 
 ## The three layers
 
@@ -87,7 +87,7 @@ powershell -ExecutionPolicy Bypass -File tools/make-shortcut.ps1
 
 Use `build.ps1` rather than a bare `dotnet build`. The bare command defaults to **Debug** while the desktop shortcut launches **Release**, and the two can drift by a day without anything looking wrong. `build.ps1` builds Release, runs both test lanes **from the Release binary**, and refuses outright if the binary is older than a source file.
 
-The window title carries its own build stamp for the same reason — `[build 2026-09-13 13:33]`, and `DEBUG` when it is one. Which build am I looking at should be a reading, not a deduction from file timestamps.
+The window title carries its own build stamp for the same reason — `[build 2026-09-18 17:15]`, and `DEBUG` when it is one. Which build am I looking at should be a reading, not a deduction from file timestamps.
 
 ## First run
 
