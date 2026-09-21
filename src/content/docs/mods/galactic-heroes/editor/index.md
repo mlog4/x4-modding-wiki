@@ -1,6 +1,6 @@
 ---
 title: The Galactic Heroes Editor
-description: A Windows desktop app that builds extensions to Galactic Heroes without writing Mission Director script — fleets, heroes, spend plans, corporations and corporation missions, validated by 86 rules before anything reaches a save. What it is, why nothing about the mod is hardcoded in it, and how to get it running.
+description: A Windows desktop app that builds extensions to Galactic Heroes without writing Mission Director script — fleets, heroes, spend plans, corporations and corporation missions, validated by 104 rules before anything reaches a save, every finding shown on the page it is about. What it is, why nothing about the mod is hardcoded in it, and how to get it running.
 ---
 
 Galactic Heroes ships **261 hero templates in 22 factions**. Sooner or later somebody wants the 262nd — their own admiral, their own fleet, a company of their own invention — and the honest answer used to be "learn Mission Director, then edit the mod."
@@ -107,7 +107,7 @@ The paths are remembered between sessions in `%AppData%\GalacticHeroesEditor\set
 
 1. **Pack tab** — pick a pack id. It becomes the folder name in the game, the name of the generated script, and the prefix every id in the pack must carry. Ids are permanent once a save has seen them, so pick one nobody else will: your own name plus the pack is the usual answer.
 2. **Author** fleets, heroes, plans, missions, companies — or copy something the host already has and edit the copy.
-3. **Check** — 86 rules. Errors block export; warnings do not.
+3. **Check** — 104 rules, and they run by themselves a moment after every edit. A finding shows on the tab header, on the object's row, above the form, and as a red or amber outline on the very box that sets the field. Errors block export; warnings do not.
 4. **Export…** to a folder, or **Export into the game** to write straight into `extensions/<packid>`.
 5. Start the game and look in `debug.log` for the pack's own build banner.
 
@@ -115,16 +115,19 @@ The [walkthrough](./walkthrough/) does all five with one hero, and the [referenc
 
 ## Where a pack ends up
 
-Export writes a complete X4 extension — three files, nothing else:
+Export writes a complete X4 extension — four files, nothing else:
 
 ```
 <packid>/
 ├── content.xml        the manifest
 ├── md/<packid>.xml    the script: a build banner and one registration call per object
-└── README.txt         what was exported, and where it goes
+├── t/0001.xml         the text page: every name, rank, story and mission line, numbered
+└── README.txt         what was exported, where it goes, and how to translate it
 ```
 
 The script is the same shape as the hand-written example pack: cues marked `instantiate="true"`, a build banner written as a **literal** so a deploy tool can verify the mod on disk is the one running, and one registrar call per template. It contains no `<diff>` and writes into no host table directly, so **load order between your pack and the host does not matter**.
+
+**The text page is what makes a pack translatable.** Every string a player reads — a founder's name, a biography, a company's name and story, a mission's title — is written to `t/0001.xml` on the pack's own page, and the script refers to it as `readtext.{page}.{id}`, exactly as the host refers to its own text. That file is the *default* page: it holds every string in the language you wrote, and X4 shows it to every player whose language has no page of its own. To add a language, copy it to `t/0001-l007.xml` (Russian; the generated `README.txt` lists the others) and translate the entries, keeping the ids — they never move between exports. A rank the host already has is written as the host's own reference, so it stays translated in every language the host ships without you doing anything. The page number is chosen free of every page the installed game, DLC and mods declare, and shown on the Pack tab; keep it, because a translation names it.
 
 Every DLC a chosen ship comes from is declared an **optional** dependency, exactly as the host does it. A hard dependency makes the extensions menu scream at a player who does not own that DLC; an optional one lets the pack load and simply not build that ship.
 

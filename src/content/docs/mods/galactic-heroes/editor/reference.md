@@ -1,6 +1,6 @@
 ---
 title: Editor reference — every screen
-description: Screen-by-screen reference for the Galactic Heroes Editor — the eight tabs, the corporation permanence rules, the 86 validation codes and their three kinds, and the six "What was read" screens that prove the harvest worked.
+description: Screen-by-screen reference for the Galactic Heroes Editor — the eight tabs, the corporation permanence rules, the 104 validation codes and their three kinds, where a finding is shown, the text page a pack carries, and the six "What was read" screens that prove the harvest worked.
 ---
 
 The [walkthrough](../walkthrough/) builds one pack end to end. This page is the reference: what every screen holds, and why.
@@ -24,13 +24,13 @@ The status bar is two halves. On the left, what is in this pack and what the hos
 
 | Tab | Authors | Notes |
 |---|---|---|
-| **Pack** | the manifest and the three folders | [covered in the overview](../#first-run) |
+| **Pack** | the manifest, the text page number and the three folders | [covered in the overview](../#first-run) |
 | **Fleets** | fleet templates | a ladder, one tier per hero star |
 | **Heroes** | hero templates | [covered in the walkthrough](../walkthrough/#3-write-the-hero) |
 | **Missions** | corporation missions | see below |
 | **Spend plans** | what heroes buy, in order | [covered in the walkthrough](../walkthrough/#4-spend-plans-optional) |
 | **Corporations** | companies | not a catalogue entry — see below |
-| **Check** | nothing — it reports | 86 rules |
+| **Check** | nothing — it reports | 104 rules, the full list; the same findings are shown on every other tab |
 | **What was read** | nothing — it reports | six screens proving the harvest |
 
 **Fleets**, **Heroes** and **Corporations** share a left-hand shape: a filter box, then **In this pack** above **Already in Galactic Heroes — read only**, then **Add**, **Copy into this pack** and **Remove**. Host objects are shown so you can read, filter and copy them; they can never be edited, because an edit to something the host owns would be silently discarded and the host may reshape it in any later version.
@@ -89,7 +89,22 @@ The **What this company will be** line at the bottom says what the three add up 
 
 ## What it refuses
 
-86 rules: **54 errors, 25 warnings, 7 notes.** Errors block export; warnings and notes do not. Every issue says what to do about it, and double-clicking a row jumps to the template it is about.
+104 rules: **68 errors, 28 warnings, 8 notes.** Errors block export; warnings and notes do not. Every issue says what to do about it, and double-clicking a row on the Check tab jumps to the field it is about.
+
+### Where it says it
+
+The check runs by itself about a third of a second after any edit, and every finding carries an address — the object, the nested object (a tier, a perk row, a plan step) and the field. That address is used in four places at once:
+
+| Where | What you see |
+|---|---|
+| the tab header | `Heroes ✖ 2` or `Fleets ⚠ 1` — the worst kind and the count, so a problem two tabs away is visible |
+| the object's row in the list | the same mark; a perk row, a plan step or a tier is tinted, with the findings as its tool tip |
+| above the form | one line per error or warning, message and fix together, five at a time and then a scroll bar; notes are counted underneath and listed on the Check tab |
+| the field itself | a red or amber outline on the box that sets it, with the message and the fix as its tool tip |
+
+Fix the field and every mark goes. The Check tab remains the full list, notes included, and its double-click lands on the tab, selects the object and the row, and focuses the field.
+
+One finding is not a rule about the pack but about the screen: **text typed into a number box** (`GH140`). WPF keeps the previous number and says nothing; the editor shows the box outlined, names the value the field still holds, and refuses to export until the box holds a number again.
 
 The rules fall into three kinds, and keeping them apart is the point:
 
@@ -101,12 +116,15 @@ The rules fall into three kinds, and keeping them apart is the point:
 
 | Codes | About |
 |---|---|
-| `GH001`–`GH007` | the pack itself: id, prefix length, display name, registering nothing |
+| `GH001`–`GH009` | the pack itself: id, prefix length, display name, registering nothing, version, the text page |
 | `GH010`–`GH023` | fleet templates: tiers, flagships, escort counts, ship sources |
-| `GH030`–`GH055` | heroes: ids, group, rank, faction, archetype, fleet, biography |
+| `GH030`–`GH057` | heroes: ids, group, rank, faction, archetype, fleet, biography, the spend plan it names |
 | `GH060`–`GH069` | perks on a hero: unknown, duplicated, unreachable, wrong archetype |
 | `GH080`–`GH096` | corporations: collisions, origin faction, capital, aggression, reserve |
 | `GH100`–`GH111` | corporation missions: ids, title, objective, panel, reward, grudge |
+| `GH120`–`GH131` | spend plans: ids, label, steps, a perk step naming nothing or a perk twice, a shares target |
+| `GH140` | text typed into a number box |
+| `GH150` | a brace in a name or a story — X4 reads `{…}` on a text page as a reference to another entry |
 
 The generator also handles what an author cannot see coming: an apostrophe in a biography would end an MD string literal, a `"` would end the XML attribute, and `--` is illegal inside an XML comment. All three are neutralised at the one place they are written.
 
@@ -164,6 +182,8 @@ It reads the **default** page — the one X4 falls back to for every language th
 
 An older host with no `t` folder still carries its text inline, and everything simply displays as it always did.
 
+The editor also **writes** a page. Every string a player reads in your pack — founder name, a rank the host does not have, biography, a company's name, field, dirty side and backstory, mission title, briefing and objective — goes to `t/0001.xml` on the pack's own page, and the script refers to it exactly the way the host does. A rank the host already has is written as the host's reference, so it stays translated wherever the host is. The page number is picked free of every page the installed game, DLC and mods declare (the harvester reads one language of every source's `t` folder for its page ids) and shown on the Pack tab; the ids on the page are assigned at the first export, saved into the pack file, and never move — a translation lines up by them.
+
 :::
 
 ### Decisions — the two halves, compared
@@ -205,15 +225,19 @@ It needs the game to have written a dump — asked for through the mod's dev bri
 Both must pass before a build is worth shipping, and `tools/build.ps1` runs both **from the Release binary**:
 
 ```
-GalacticHeroesEditor.exe --selftest <dir>   # headless: harvest, validate, generate, read back
-GalacticHeroesEditor.exe --uitest <file>    # opens the real window: 8 tabs, 27 behaviour checks
+GalacticHeroesEditor.exe --selftest <dir>   # headless: harvest, validate, generate, read back; every rule made to fire
+GalacticHeroesEditor.exe --uitest <file>    # opens the real window: 8 tabs, 34 behaviour checks
 ```
+
+The self-test walks the validator's own table of codes and refuses to finish green while a code exists that no case has ever made fire. Measured before that check was written: 86 codes, 23 ever exercised. It also feeds the editor pack files it did not write — nulls, unknown fields, not JSON at all — and the generated text page back through the editor's own reader.
 
 `--uitest` exists because **a XAML binding is not checked at compile time.** A misspelled binding path builds cleanly and shows an empty combo box to someone with no way to know four hundred ships were meant to be in it. WPF reports every one of those, but only to a trace listener nobody attaches. This one attaches, and fails the run. It caught a real crash — `RowHeight="Auto"`, where `RowHeight` is a `double` — on its first run.
 
 It has since earned its keep twice more. A reported bug — a group name typed into a hero, gone the moment you left the tab — was **reproduced** in it before anything was changed, one step per dispatcher tick, so the step that destroyed the value named itself: not typing, not the list rebuild, not saving. Leaving the tab and coming back.
 
 The cause is a trap in WPF rather than in this program, and it is worth knowing if you write WPF: the group box is an editable `ComboBox` whose `Text` is bound **TwoWay**, and whose `ItemsSource` is a list of suggestions. Clearing that list makes the box reset its `Text` — and a TwoWay `Text` writes the empty string straight back over the model. Two rules came out of it: a suggestion list feeding an editable control is **append-only**, and nothing may be selected while the whole vocabulary is replaced.
+
+A second WPF trap, found on 2026-09-21 and worth knowing for the same reason: **the UI lane could not fail the build.** It ended with `Application.Shutdown(1)`, and a WPF app's generated `Main` is `void` — it discards what `Run()` returns — so the process exited 0 whatever the lane found, and the build script read every UI failure as a pass. It exits through `Environment.Exit` now, the script also reads the verdict the lane prints, and `--uitest-fail` provokes a red on demand to prove the path carries one. Nothing green before that date was evidence about the UI lane.
 
 ## Related
 

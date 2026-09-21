@@ -109,15 +109,19 @@ A pack can also author **corporation missions** and **corporations**, and neithe
 
 ![Galactic Heroes Editor, Check tab. A "Check now" button sits beside the summary "2 error(s), 3 warning(s), 21 note(s). Errors block export: each one is something the host would refuse, or something that cannot be undone once a save has seen it." A hint reads "Double-click a line to go to the template it is about." The grid has columns for severity, Code, Where, What is wrong and What to do. Two red ERROR rows come first: GH085 on corporation ewt32_corp_001, no name, with "this is what the player sees in every corporation list and chronicle line"; and GH086 on the same corporation, no origin faction, with "favour accrual, relation gates and market access all key off it - a corporation without one is invisible to three systems at once while looking fine in the list". Three yellow WARNING rows follow: GH004 saying the short pack id ewt32 makes a short prefix and a short prefix collides, and two GH069 rows saying the perks tactical_genius and master_quartermaster are active at spawn and also have an unlock condition, so the unlock is dead weight. Then twenty INFO GH023 rows, each naming a ship macro in the fleet that comes from ego_dlc_terran or ego_dlc_timelines and explaining that the exported manifest declares that source as an OPTIONAL dependency so the pack still loads without it, and a final INFO GH096 saying the corporation has no backstory, which the host's own seventeen each carry and the chronicle quotes](/x4-modding-wiki/img/mods/galactic-heroes/editor-check.jpg)
 
-86 rules, in three severities:
+104 rules, in three severities:
 
 | | |
 |---|---|
-| **54 errors** | block export. Every one is something the host would refuse at load, or something a save could not recover from. |
-| **25 warnings** | do not block. The pack will load; the warning says what it will look like in game. |
-| **7 notes** | information the author could not otherwise have. Most of them are the DLC dependency lines above. |
+| **68 errors** | block export. Every one is something the host would refuse at load, or something a save could not recover from. |
+| **28 warnings** | do not block. The pack will load; the warning says what it will look like in game. |
+| **8 notes** | information the author could not otherwise have. Most of them are the DLC dependency lines above. |
 
-Every row says **what to do about it**, and **double-clicking a row jumps to the template it is about**.
+Every row says **what to do about it**, and **double-clicking a row jumps to the field it is about** — the tab, the object, the row inside it, and the box itself.
+
+You will rarely need to come here first, though. The check runs by itself a moment after every edit, and each finding is shown where you are looking: a count on the tab header (`Heroes ✖ 2`), a mark on the object's row in the list, a short panel above the form — errors and warnings, five at a time, with the notes counted underneath — and a red or amber outline on the box that sets the field, with the message and the fix as its tool tip. Fix the field and the mark goes. The Check tab is the full list, notes included.
+
+One finding has no rule behind it in the usual sense: text typed into a number box. The founding capital, an escort count, a reward — type `abc` into one and the editor keeps the last number it had, outlines the box, and refuses to export until the box holds a number again. Without that the old value would have been exported silently.
 
 The shot above is a pack that **cannot be exported yet**, and it is worth walking. The two red rows are one half-written corporation: no name and no origin faction. Both are errors rather than warnings because the host refuses a company without either, and a company is the one object a save keeps forever — so there is no fixing it later. The three warnings will export fine: a pack id short enough to collide with somebody else's, and two perks that are switched on at spawn *and* carry an unlock condition that can therefore never do anything. The twenty-one notes are mostly the DLC ledger — which Terran ship came from which extension, each of which becomes an optional dependency line in the manifest.
 
@@ -127,9 +131,11 @@ The [reference](./reference/#what-it-refuses) explains the three kinds of rule a
 
 Two buttons, and the difference matters.
 
-**Export…** writes the pack into your export folder — `<export folder>/<packid>/` with `content.xml`, `md/<packid>.xml` and `README.txt`. Copy that folder into `X4 Foundations/extensions/` yourself. This is what you upload.
+**Export…** writes the pack into your export folder — `<export folder>/<packid>/` with `content.xml`, `md/<packid>.xml`, `t/0001.xml` and `README.txt`. Copy that folder into `X4 Foundations/extensions/` yourself. This is what you upload.
 
-**Export into the game** writes the same three files straight into `extensions/<packid>` in your install. It asks first, it names the exact folder, and it overwrites what is there. **The game must be closed.**
+**Export into the game** writes the same four files straight into `extensions/<packid>` in your install. It asks first, it names the exact folder, and it overwrites what is there. **The game must be closed.**
+
+`t/0001.xml` is the pack's text page: your hero's name and story and your company's name are on it, numbered, and the script points at them. That is what lets somebody translate your pack without touching the script — the `README.txt` in the export says how. The first export assigns the numbers and saves them into your pack file, so a translation made from it still lines up with the next export.
 
 Either way the check runs first. If the pack has errors, nothing is written and you land on the Check tab with the count.
 
@@ -153,4 +159,7 @@ After that, your hero is in the pool like any other: it spawns when its faction 
 | The hero never appears | its faction has no `claimspace` tag, so there is no home sector to spawn into — or **Spawns** is unchecked. |
 | The fleet never grows | the archetype has `fleet upgrades` off. Coordinators and hive lords do; they command differently. See the [archetype pages](../archetypes/coordinator/). |
 | The banner is not in the log | the game is loading a different copy of the pack, or the extension is disabled in the extensions menu. |
+| A number box is outlined red and the row says ✖ | what you typed is not a number. The field still holds its last number, and export waits until the box holds one again. |
+| The Pack tab says *text page N is already used by …* | another installed mod declares that page. Pick another number on the Pack tab — before you export, because a translation names the page. |
+| Names show as `readtext.{…}` in game | the pack's `t` folder did not reach the game. Copy the whole export folder, not only `md`. |
 | An edit to a corporation did nothing | founding capital is read **once**, at founding. [The rest of that story](./reference/#corporations-are-not-like-the-rest) is on the reference page. |
